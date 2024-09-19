@@ -1,8 +1,10 @@
+import { Typography } from "@mui/material";
+
 export default function Home() {
 
   return (
     <div>
-      <h1>Vista Home</h1>
+      <Typography variant="h1" color="secondary">Vista Home</Typography>
     </div>
   )
 }
