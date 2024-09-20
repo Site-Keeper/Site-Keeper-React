@@ -1,5 +1,5 @@
 export const USERS_API_ENDPOINTS = () =>{
-    const resourse = '/user';
+    const resourse = '/users';
 
     return {
         GET_ALL: `${resourse}`,

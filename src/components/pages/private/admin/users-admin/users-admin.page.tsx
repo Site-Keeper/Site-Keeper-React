@@ -11,7 +11,7 @@ import { IUserToRows } from "../../../../../models/interfaces/user-to-rows.inter
 
 
 const columns = [
-  { id: "id", label: "ID", width: "10%", filter: "String" },
+  { id: "name", label: "name", width: "20%", filter: "String" },
   { id: "email", label: "Email", width: "20%", filter: "String" },
   { id: "doc_number", label: "Documento", width: "20%", filter: "String" },
   {
