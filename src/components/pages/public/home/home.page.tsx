@@ -5,6 +5,7 @@ import { ISpace } from '../../../../models/interfaces';
 import hero from "../../../../assets/redd-f-5U_28ojjgms-unsplash.jpg"
 import { SearchInput } from './components/search.components';
 import { useEffect, useState } from 'react';
+import { SpacesService } from '../../../../services/spaces/spaces.service';
 
 const spacesQ: ISpace[] = [
   {
@@ -110,8 +111,10 @@ const spacesQ: ISpace[] = [
 export function Home() {
   const [spaces, setSpaces ]  = useState<ISpace[]>(spacesQ)
   const [search, setSearch] = useState<string>("")
-  function getSpaces(){
-    console.log('asdd')
+  async function getSpaces(){
+    // const spacesRes = await SpacesService.getAll()
+    // setSpaces(spacesRes.data)
+    console.log("search", search)
   }
 
   useEffect(() => {

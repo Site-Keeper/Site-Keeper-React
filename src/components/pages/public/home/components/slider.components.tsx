@@ -22,7 +22,7 @@ interface Props {
 export function Slider3d({Spaces}: Props ) {
 
   return (
-    <Box className="box-container" sx={{width : "100%", height: "70vh",}}>
+    <Box className="box-container" sx={{width : "100%", height: "650px",}}>
       <Swiper
         effect={'coverflow'}
         grabCursor={true}
