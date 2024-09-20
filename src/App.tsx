@@ -1,6 +1,6 @@
 import { Route } from 'react-router-dom';
 import './App.css';
-import Home from './components/pages/public/home/home.page';
+import {Home} from './components/pages/public/home/home.page';
 import { RoutesWithNotFound } from './components/utilities/routes-with-not-found.utility';
 import { PublicRoutes } from './models/routes/routes.model';
 import { RiwiTheme } from './state/context/riwiTheme';
@@ -13,6 +13,9 @@ function App() {
         <RoutesWithNotFound>
           <Route element={<ClientLayout />}>
             <Route path={PublicRoutes.HOME} element={<Home />} />
+          </Route>
+          <Route>
+            
           </Route>
         </RoutesWithNotFound>
       </RiwiTheme>
