@@ -1,11 +1,10 @@
 import { perssonelType } from "../enums/perssonelType.enum";
-import { IRole } from "./role.interface";
 
-export interface IUser{
+export interface IUserToRows{
     id: number;
     name: string;
     email: string
     doc_number: string;
     perssonel_type?: perssonelType; 
-    role: IRole;
+    role: string;
 }

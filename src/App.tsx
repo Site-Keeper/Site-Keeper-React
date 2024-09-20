@@ -7,6 +7,7 @@ import { RiwiTheme } from './state/context/riwiTheme';
 import ClientLayout from './components/layout/client.layout';
 import AdminLayout from './components/layout/admin.layout';
 import Dashboard from './components/pages/private/admin/dashboard/dashboard.page';
+import { UserAdmin } from './components/pages/private/admin/users-admin/users-admin.page';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           </Route>
           <Route element={<AdminLayout/>}>
             <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
+            <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
           </Route>
         </RoutesWithNotFound>
       </RiwiTheme>
