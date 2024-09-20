@@ -17,7 +17,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import logoRiwi from "../../../assets/logoRiwi.png";
+import logoRiwi from "../../../assets/img/logoRiwi.png";
 import { useLoginSubmit } from "../hooks/use-login-submit";
 import { useDispatch } from "react-redux";
 

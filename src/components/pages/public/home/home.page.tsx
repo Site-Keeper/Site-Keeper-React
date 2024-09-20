@@ -1,4 +1,3 @@
-
 import { Box } from '@mui/material';
 import { Slider3d } from './components/slider.components';
 import { ISpace } from '../../../../models/interfaces';
