@@ -44,7 +44,7 @@ const Navbar = () => {
   };
   console.log(location.pathname)
   return (
-          <Box sx={{ display: "flex", position: "static", padding:"0 50px ", justifyContent: "space-between", alignItems: 'center', width:'100%' , height: '100px',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'}}>
+          <Box sx={{ display: "flex", position: "static", padding:"0 50px ", justifyContent: "space-between", alignItems: 'center', width:'100%' , height: '100px',  boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px'}}>
             <Box sx={{ height: '10vh', display: "flex", alignContent: "center"}}>
               <img src={logo} style={{ height: "90%" }} alt="RIWI" />
             </Box>
