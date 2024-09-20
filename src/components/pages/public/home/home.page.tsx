@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { Slider3d } from './components/slider.components';
 import { ISpace } from '../../../../models/interfaces';
-import hero from "../../../../assets/redd-f-5U_28ojjgms-unsplash.jpg"
+import hero from "../../../../assets/img/redd-f-5U_28ojjgms-unsplash.jpg"
 import { SearchInput } from './components/search.components';
 import { useEffect, useState } from 'react';
 import { SpacesService } from '../../../../services/spaces/spaces.service';
