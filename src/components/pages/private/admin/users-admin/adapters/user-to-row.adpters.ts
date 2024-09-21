@@ -12,7 +12,7 @@ export function usersToRows(
             email: user.email,
             doc_number: user.doc_number,
             perssonel_type: user.perssonel_type,
-            rol : user.role.name
+            rol: 'null'
         })
     });
   }
