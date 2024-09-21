@@ -112,9 +112,10 @@ export function Home() {
   const [search, setSearch] = useState<string>("")
   async function getSpaces(){
     const spacesRes = await SpacesService.getAll()
-    setSpaces(spacesRes.data)
+    setSpaces(spacesRes)
   }
 
+  
   useEffect(() => {
     getSpaces()
   },[search])  

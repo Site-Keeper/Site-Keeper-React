@@ -1,5 +1,5 @@
 import { AddCircleOutlineOutlined} from "@mui/icons-material";
-import { Box, Button, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { ITask } from "../../../../../../models/interfaces/task.interface";
 import { TasksService } from "../../../../../../services/task/task.service";
@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
+import DynamicIcon from "../../../../../utilities/DynamicIcon";
 
 interface IModalMoreInformation {
     open: boolean;
@@ -34,7 +35,7 @@ const style = {
 export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInformation) {
     const [task, setTask] = useState<ITask[]>([])
   async function getTaskByRoutines() {
-    if (!id) return
+    console.log(id)
     const tasksReq = await TasksService.getTaskByRoutines(id)
     const tasks = tasksReq.data
     setTask(tasks)
@@ -47,10 +48,26 @@ export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInform
   const columns = [
     { id: "title", label: "Título", width: "20%", filter: "String" },
     { id: "description", label: "Descripción", width: "20%", filter: "String" },
-    { id: "space_id", label: "Space", width: "20%", filter: "String" },
-    { id: "status", label: "Estado", width: "20%", filter: "String" },
+    { id: "spaceName", label: "Space", width: "20%", filter: "String" },
+    { id: "state", label: "Estado", width: "20%", filter: "String" },
     { id: "object_id", label: "Objetos", width: "20%", filter: "String" },
-    { id: "topic_id", label: "Temas", width: "20%", filter: "String" },
+    {
+      id: "ss",
+      label: "Temas",
+      width: "20%",
+      filter: "String",
+      renderCell: (value: ITask) => (
+        <Chip
+          icon={<DynamicIcon iconName={value.topic.icon} />}
+          label={value.topic.name} 
+          sx={{
+            backgroundColor: "#E0F7FA", 
+            color: "#006064", 
+            fontWeight: "bold",
+          }}
+        />
+      ),
+    },
     {
       id: "actions",
       label: "Actions",

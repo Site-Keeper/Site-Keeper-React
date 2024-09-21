@@ -6,6 +6,10 @@ import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import DomainOutlinedIcon from '@mui/icons-material/DomainOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import CleanHandsIcon from '@mui/icons-material/CleanHands';
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 interface DynamicIconProps extends SvgIconProps {
   iconName: string;
@@ -17,7 +21,12 @@ const iconMapping: { [key: string]: React.ElementType } = {
   ClassOutlinedIcon:ClassOutlinedIcon,
   DomainOutlinedIcon:DomainOutlinedIcon,
   DescriptionOutlinedIcon:DescriptionOutlinedIcon,
-  Inventory2OutlinedIcon:Inventory2OutlinedIcon
+  Inventory2OutlinedIcon:Inventory2OutlinedIcon,
+  CleanHandsIcon:CleanHandsIcon,
+  EngineeringIcon: EngineeringIcon,
+  AdminPanelSettingsIcon: AdminPanelSettingsIcon,
+  MoreHorizIcon: MoreHorizIcon
+
 };
 
 const DynamicIcon: React.FC<DynamicIconProps> = ({ iconName, ...props }) => {

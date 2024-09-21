@@ -1,10 +1,10 @@
 import { ApiResponse } from "../api";
-import { IRoutine } from "../interfaces/routines.interface";
+import { ISpace } from "../interfaces";
 
 
-export interface IGetAllRoutineReq {
+export interface IGetAllSpacesReq {
   // parámetros necesarios para la solicitud
 }
 
-export interface IGetAllRoutineResp extends ApiResponse<IRoutine[]> {
+export interface IGetAllSpacesResp extends ApiResponse<ISpace[]> {
 }
