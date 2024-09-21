@@ -41,7 +41,7 @@ const columns = [
             backgroundColor: "#3B82F6",
             ":hover": { backgroundColor: "#3269C2" },
           }}
-          key={value.id}
+          key={`edit-${value.id}`}
           aria-label="delete"
         >
           <EditIcon sx={{ color: "#fff" }} />
@@ -51,7 +51,7 @@ const columns = [
             backgroundColor: "#EF4444",
             ":hover": { backgroundColor: "#E04040" },
           }}
-          key={value.id}
+          key={`delete-${value.id}`}
           aria-label="delete"
         >
           <DeleteIcon sx={{ color: "#fff" }} />
