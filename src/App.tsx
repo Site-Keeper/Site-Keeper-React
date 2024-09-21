@@ -5,6 +5,7 @@ import { RoutesWithNotFound } from './components/utilities/routes-with-not-found
 import { PrivateRoutes, PublicRoutes } from './models/routes/routes.model';
 import { RiwiTheme } from './state/context/riwiTheme';
 import ClientLayout from './components/layout/client.layout';
+import LostObject from './components/pages/private/client/lostObjects/lost-objects.page';
 import AdminLayout from './components/layout/admin.layout';
 import Dashboard from './components/pages/private/admin/dashboard/dashboard.page';
 import { UserAdmin } from './components/pages/private/admin/users-admin/users-admin.page';
@@ -12,11 +13,12 @@ import AuthGuard from './components/guard/auth.guard';
 
 function App() {
   return (
-    <div className='app'>
+    <div className='app' style={{minHeight: '100vh'}}>
         <RiwiTheme>
         <RoutesWithNotFound>
           <Route element={<ClientLayout />}>
             <Route path={PublicRoutes.HOME} element={<Home />} />
+            <Route path={PrivateRoutes.LOST_OBJECTS} element={<LostObject />} />
           </Route>
           <Route element={<AuthGuard/>}>
             <Route element={<AdminLayout/>}>
