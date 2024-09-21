@@ -7,6 +7,7 @@ import { LoginModal } from "./login.component";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import logo from '../../../assets/img/favicon-removebg-preview.png'
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 
 const pages = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -15,15 +16,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const checkAuthentication = () => {
-    // Verificar si hay token y user en sessionStorage
-    const token = sessionStorage.getItem("token");
-    const user = sessionStorage.getItem("user");
-
-    setIsAuthenticated(!!token && !!user);
-  };
+  const { isAuthenticated, setIsAuthenticated, checkAuthentication } = useAuth();
 
   const handleCloseModal = () => {
     setOpen(false);
