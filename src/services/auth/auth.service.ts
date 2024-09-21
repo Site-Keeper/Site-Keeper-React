@@ -1,9 +1,9 @@
 import { axiosNestInstance } from "../../axios.config";
 import { ILoginReq, ILoginResp } from "../../models/services/auth.interfaces";
-import { USERS_API_ENDPOINTS, TEndpointKeys } from "./auth.endpoints";
+import { AUTH_API_ENDPOINTS, TEndpointKeys } from "./auth.endpoints";
 
 const getEnpoint = (method: TEndpointKeys): string => {
-    return USERS_API_ENDPOINTS()[method];
+    return AUTH_API_ENDPOINTS()[method];
 };
 
 export class AuthService {
