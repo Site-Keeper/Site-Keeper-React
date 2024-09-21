@@ -13,7 +13,7 @@ export enum PrivateRoutes {
   MY_PROFILE = "my-profile",
   MY_BOOKINGS = "my-bookings",
   ADMIN_RESERVATIONS = "admin-reservations",
-  PRIVATE_DASHBOARD = "dashboard",
+  PRIVATE_DASHBOARD = "admin-dashboard",
   ADMIN_SPACES = "admin-spaces",
   CREATE_SPACE = "create-space",
   EDIT_SPACE = "edit-space",
