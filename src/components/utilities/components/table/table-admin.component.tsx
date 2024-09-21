@@ -110,7 +110,7 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
         setColumInMoment={setColumInMoment}
       />
 
-      {paginatedData.map((row, rowIndex) => (
+      {!rows[0] ? <div style={{height: '60px',display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Typography variant='subtitle2'>No hay datos</Typography></div> :paginatedData.map((row, rowIndex) => (
         <div
           key={rowIndex}
           style={{
@@ -125,17 +125,18 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
             const column = columns.find(col => col.id === columnId);
             if (!column) return null;
             const renderCell = column.renderCell || getRenderCell<T>(column);
+            const cellValueOp = column.renderCell? row : 'NUll';
             return (
               <Cell
                 key={String(columnId)}
-                value={row[columnId as keyof T] || row || 'NUll'}
+                value={row[columnId as keyof T] || cellValueOp }
                 renderCell={renderCell}
                 width={column.width}
               />
             );
           })}
         </div>
-      ))}
+      )) }
 
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#E8E8E8', height: '60px'}}>
         <div style={{marginLeft: "20px"}}>
