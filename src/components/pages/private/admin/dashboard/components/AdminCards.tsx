@@ -48,7 +48,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, total, icon, stats }) => (
             </Typography>
             <Grid2 container spacing={2} justifyContent="space-between">
                 {stats.map((stat, index) => (
-                    <Grid2 item key={index}>
+                    <Grid2 key={index}>
                         <Typography variant="body2" color="text.secondary">
                             {stat.label}
                         </Typography>

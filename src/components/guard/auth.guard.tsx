@@ -16,9 +16,7 @@ export const AuthGuard = () => {
   if(!user.id){
     return<Navigate replace to={PublicRoutes.HOME} />
   }
-  console.log('as',privateRoutesArray.some(path => path === currentPath))
   if( !(user.role.name === 'admin') && privateRoutesArray.some(path => path === currentPath)){
-    console.log('as',!(user.role.name === 'admin') && privateRoutesArray.includes(currentPath as PrivateRoutes))
     return(<Navigate replace to={PublicRoutes.HOME} />)
   }
 
