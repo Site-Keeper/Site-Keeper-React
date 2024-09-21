@@ -5,5 +5,6 @@ export enum PublicRoutes {
 export enum PrivateRoutes {
   LOST_OBJECTS = "lost-objects",
   PRIVATE_DASHBOARD = "admin-dashboard",
-  ADMIN_USERS = "admin-users"
+  ADMIN_USERS = "admin-users",
+  ADMIN_RUTINES = "admin-routines",
 }
