@@ -12,4 +12,5 @@ export enum PublicRoutes {
 export enum PrivateRoutes {
   PRIVATE_DASHBOARD = "admin-dashboard",
   ADMIN_USERS = "admin-users",
+  ADMIN_RUTINES = "admin-routines",
 }

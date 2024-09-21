@@ -6,4 +6,5 @@ export interface IRoutine{
     start_time: Date;
     end_time: Date;
     days: string[];
+    assignedTo : string
 }

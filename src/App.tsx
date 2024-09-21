@@ -9,6 +9,7 @@ import AdminLayout from './components/layout/admin.layout';
 import Dashboard from './components/pages/private/admin/dashboard/dashboard.page';
 import { UserAdmin } from './components/pages/private/admin/users-admin/users-admin.page';
 import AuthGuard from './components/guard/auth.guard';
+import { RoutineAdmin } from './components/pages/private/admin/admin-routines/admin-routines.page';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route element={<AdminLayout/>}>
               <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
+              <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin/>}/>
             </Route>
           </Route>
         </RoutesWithNotFound>

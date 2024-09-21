@@ -27,7 +27,6 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
   const [sortConfig, setSortConfig] = React.useState<{ columnId: string | number; direction: 'asc' | 'desc' } | null>(null);
   const [columInMoment, setColumInMoment] = React.useState<Column<T> | null>(null)
   const [itemsPerPage, setItemsPerPage] = React.useState<number>(limit);
-
   React.useEffect(() => {
     setColumnOrder(columns.map(col => col.id));
   }, [columns]);
@@ -129,7 +128,7 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
             return (
               <Cell
                 key={String(columnId)}
-                value={row[columnId as keyof T] || column.renderCell || 'NUll'}
+                value={row[columnId as keyof T] || row || 'NUll'}
                 renderCell={renderCell}
                 width={column.width}
               />
