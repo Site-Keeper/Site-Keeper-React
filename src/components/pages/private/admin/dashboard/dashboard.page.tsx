@@ -1,6 +1,6 @@
 export default function Dashboard() {
   return (
-    <div>
+    <div style={{height: "90vh"}}>
       <h1>Vista Dashboard</h1>
     </div>
   )
