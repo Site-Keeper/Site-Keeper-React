@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import DynamicIcon from "../../utilities/DynamicIcon";
-import { Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { List, ListItemButton, Typography } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 
 interface IPages {
   icon: string;
@@ -15,7 +15,7 @@ const pages: IPages[] = [
     name: "Admin Dashboard",
     pathname: "/admin-dashboard",
   },
-  { icon: "PeopleAltOutlinedIcon", name: "Gestión Usuarios", pathname: "/Gestións" },
+  { icon: "PeopleAltOutlinedIcon", name: "Gestión Usuarios", pathname: "/admin-users" },
   { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/Gestiónss" },
   { icon: "DomainOutlinedIcon", name: "Gestión Espacios", pathname: "/Gestiónsss" },
   { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/Gestiónsssss" },
@@ -28,22 +28,30 @@ export function SideBarAdmin() {
   return (
     <Box
       sx={{
-        width: "300px",
+        width: "360px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         paddingTop: "30px",
-        boxShadow:
-          "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-        height: "90vh",
+        minHeight: '89vh',
+        height: "100%",
         gap: "20px",
       }}
     >
+      <List sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "20px",
+      }}>
       {pages.map((page) => {
         return (
-          <Box
+          <ListItemButton
+            component={Link}
+            to={`${page.pathname}`}
             key={page.pathname}
             sx={{
+              padding: '0px',
               width: "280px",
               height: "40px",
               display: "flex",
@@ -75,9 +83,10 @@ export function SideBarAdmin() {
             >
               {page.name}
             </Typography>
-          </Box>
+          </ListItemButton>
         );
       })}
+      </List>
     </Box>
   );
 }
