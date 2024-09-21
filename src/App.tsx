@@ -9,12 +9,14 @@ import AdminLayout from './components/layout/admin.layout';
 import Dashboard from './components/pages/private/admin/dashboard/dashboard.page';
 import { UserAdmin } from './components/pages/private/admin/users-admin/users-admin.page';
 import AuthGuard from './components/guard/auth.guard';
+import ClientHome from './components/pages/public/clientHome/clientHome.page';
 
 function App() {
   return (
     <div className='app'>
         <RiwiTheme>
         <RoutesWithNotFound>
+          <Route path={'site-keeper'} element={<ClientHome />}/>
           <Route element={<ClientLayout />}>
             <Route path={PublicRoutes.HOME} element={<Home />} />
           </Route>

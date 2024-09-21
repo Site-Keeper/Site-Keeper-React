@@ -20,7 +20,7 @@ const materialTheme = createTheme(
                 main: "rgb(4, 167, 119)",
             },
             warning: {
-                main: "rgb(255,222,91)",
+                main: "rgb(242,205,97)",
             },
             error: {
                 main: "rgb(254, 101, 79)",
