@@ -7,18 +7,15 @@ interface IProps {
 
 
 export default function AttachedCards({ object }: IProps) {
-  const containerStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gridGap: '20px',
-    padding: '20px',
-    margin: "50px 50px",
-    border: "1px solid #ccc",
-    borderRadius: "25px"
-  };
 
   return (
-    <div style={containerStyle}>
+    <div style={{display: 'flex',
+      gap: '20px',
+      flexWrap: 'wrap',
+      padding: '20px',
+      margin: "50px 50px",
+      border: "1px solid #ccc",
+      borderRadius: "25px"}}>
       {object.map(obj => <ItemBox key={obj.id} object={obj} />)}
     </div>
   );

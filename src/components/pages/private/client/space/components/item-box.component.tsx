@@ -1,5 +1,7 @@
 import { CSSProperties } from "react";
 import { IObject } from "../../../../../../models/interfaces";
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 interface IProps {
     object: IObject;
@@ -11,13 +13,10 @@ export default function ItemBox({ object }: IProps) {
         padding: "10px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         borderRadius: "25px",
+        gap: "10px",
+        width: "300px",
     }
-    const imageStyle = {
-        width: "150px",
-        height: "100px",
-    };
     const buttonStyle = {
         marginTop: "10px",
         backgroundColor: "#6B5CFF",
@@ -30,9 +29,12 @@ export default function ItemBox({ object }: IProps) {
     
     return (
         <div style={boxStyle}>
-            <img src={object.image} alt={object.name} style={imageStyle} />
-            <h3>{object.name}</h3>
-            <p>Cantidad: {object.quantity}</p>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+                <img src={object.image} alt={object.name} style={{ width: "100px", height: "100px", marginRight: "10px" }} />
+                <Typography variant="subtitle1">{object.name}</Typography>
+            </Box>
+            <Typography variant="body1">Cantidad: {object.quantity}</Typography>
+            <Typography variant="body1">{object.description}</Typography>
             <button onClick={() => console.log("Reportar", object.id)} style={buttonStyle}>
                 Reportar
             </button>

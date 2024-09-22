@@ -8,21 +8,24 @@ const objectsInSpace: IObject[] = [
       name: "Mesa de conferencias",
       description: "Una gran mesa de madera para reuniones y conferencias, con capacidad para 10 personas.",
       image: "https://cdn.pixabay.com/photo/2023/10/24/05/08/dog-8337394_1280.jpg",
-      quantity: 5
+      quantity: 5,
+      space_Id: 1
   },
   {
       id: 2,
       name: "Pizarra digital",
       description: "Pizarra interactiva digital con conexión a Internet y herramientas para presentaciones en vivo.",
       image: "https://example.com/images/pizarra-digital.jpg",
-      quantity: 2
+      quantity: 2,
+      space_Id: 1
   },
   {
       id: 3,
       name: "Proyector",
       description: "Proyector de alta definición para presentaciones y proyecciones de video.",
       image: "https://example.com/images/proyector.jpg",
-      quantity: 3
+      quantity: 3,
+      space_Id: 1
   }
 ];
 
