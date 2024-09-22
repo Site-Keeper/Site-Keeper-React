@@ -124,7 +124,7 @@ export function RoutineAdmin() {
       ),
     },
   ];
-
+  console.log(routines)
   return (
     <div
       style={{

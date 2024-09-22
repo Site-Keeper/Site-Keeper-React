@@ -8,3 +8,10 @@ export interface IGetTaskByRoutineReq {
 
 export interface IGetTaskByRoutineResp extends ApiResponse<ITask[]> {
 }
+
+export interface IGetStatisticsTaskResp extends ApiResponse<any> {
+
+  total: number
+  completed : number
+  cancelled : number
+}
