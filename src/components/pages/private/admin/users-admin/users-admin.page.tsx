@@ -20,7 +20,7 @@ const columns = [
     width: "20%",
     filter: "String",
   },
-  { id: "role", label: "Role", width: "20%", filter: "String" },
+  { id: "rol", label: "Role", width: "20%", filter: "String" },
   {
     id: "actions",
     label: "Actions",

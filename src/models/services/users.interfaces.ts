@@ -8,3 +8,10 @@ export interface IGetAllUserReq {
 
 export interface IGetAllUserResp extends ApiResponse<IUser[]> {
 }
+
+export interface IGetStatisticsUserResp extends ApiResponse<any> {
+  total: number;
+  admin: number;
+  perssonel: number;
+  employed: number;
+}

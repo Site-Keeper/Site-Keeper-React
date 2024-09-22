@@ -67,7 +67,7 @@ const Navbar = () => {
       </Box>
       {(location.pathname == "/" || location.pathname == "/lost-objects") && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
         {rolpage.map((page) => (
-          page.name !== "Gestion De Usarios" && page.name !== "Gestion De Rutinas"  ? ( // Aquí puedes hacer la condición que desees
+          page.name !== "Gestión De Usuarios" && page.name !== "Gestión De Rutinas"  ? ( // Aquí puedes hacer la condición que desees
             <Button
               key={page.name}
               color="primary"

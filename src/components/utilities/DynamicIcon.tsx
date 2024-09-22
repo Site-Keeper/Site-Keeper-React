@@ -10,6 +10,7 @@ import CleanHandsIcon from '@mui/icons-material/CleanHands';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 
 interface DynamicIconProps extends SvgIconProps {
   iconName: string;
@@ -25,8 +26,8 @@ const iconMapping: { [key: string]: React.ElementType } = {
   CleanHandsIcon:CleanHandsIcon,
   EngineeringIcon: EngineeringIcon,
   AdminPanelSettingsIcon: AdminPanelSettingsIcon,
-  MoreHorizIcon: MoreHorizIcon
-
+  MoreHorizIcon: MoreHorizIcon,
+  AssignmentOutlinedIcon:AssignmentOutlinedIcon
 };
 
 const DynamicIcon: React.FC<DynamicIconProps> = ({ iconName, ...props }) => {
