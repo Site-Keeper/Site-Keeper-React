@@ -19,7 +19,7 @@ const pages: IPages[] = [
   { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/admin-routines" },
   { icon: "DomainOutlinedIcon", name: "Gestión Espacios", pathname: "/Gestiónsss" },
   { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/Gestiónsssss" },
-  { icon: "GridViewIcon", name: "Gestión Objetos Perdidos", pathname: "/Gestiónssssssssss" },
+  { icon: "Inventory2OutlinedIcon", name: "Gestión Objetos Perdidos", pathname: "/Gestiónssssssssss" },
 ];
 
 export function SideBarAdmin() {

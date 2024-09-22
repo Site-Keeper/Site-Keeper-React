@@ -1,16 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, Typography, Box, Grid2 } from '@mui/material';
-import { People as PeopleIcon, Inventory as InventoryIcon } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-
-// Create a custom theme
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#8B5CF6', // Purple color from the image
-        },
-    },
-});
+import DynamicIcon from '../../../../../utilities/DynamicIcon';
 
 interface StatCardProps {
     title: string;
@@ -21,10 +11,11 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ title, total, icon, stats }) => (
     <Card sx={{
-        width: 300,
+        width: 260,
+        height: 160,
         border: 2,
         borderTop: 15,  
-        borderColor: 'primary.main',
+        borderColor: 'secondary.main',
         borderRadius: 2,
         '& .MuiCardHeader-root': {
             paddingBottom: 0,
@@ -36,56 +27,52 @@ const StatCard: React.FC<StatCardProps> = ({ title, total, icon, stats }) => (
     }}>
         <CardHeader
             title={
-                <Typography variant="subtitle1" component="div">
+                <Typography variant="h3" component="div">
                     {title}
                 </Typography>
             }
             action={icon}
         />
         <CardContent>
-            <Typography variant="h4" component="div" gutterBottom>
+            <Typography variant="subtitle1" component="div" gutterBottom>
                 Total {total.toLocaleString()}
             </Typography>
+            <hr style={{ color: '#E5E7EB', margin: "0", width: '100%'}}></hr>
             <Grid2 container spacing={2} justifyContent="space-between">
                 {stats.map((stat, index) => (
-                    <Grid2 key={index}>
-                        <Typography variant="body2" color="text.secondary">
+                    <Box key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <Typography variant="body1" >
                             {stat.label}
                         </Typography>
-                        <Typography variant="body1" fontWeight="bold">
+                        <Typography variant="body1" >
                             {stat.value.toLocaleString()}
                         </Typography>
-                    </Grid2>
+                    </Box>
                 ))}
             </Grid2>
         </CardContent>
     </Card>
 );
 
+const info = [
+    { title : 'Usuarios', Total : 1500, icon :  'PeopleAltOutlinedIcon', stats : [{ label : 'Admin', value : 1 }, { label : 'Personnel', value : 49 }, { label : 'Employed', value : 1000 }] },
+    { title : 'Objetos Perdidos', Total : 50, icon :  'Inventory2OutlinedIcon', stats : [{ label : 'Recuperados', value : 55 }, { label : 'No Encontrados', value : 55 }] },
+    { title : 'Reportes', Total : 250, icon :  'DescriptionOutlinedIcon', stats : [{ label : 'Completados', value : 245 }, { label : 'Cancelados', value : 5 }] },
+    { title : 'Tareas', Total : 5000, icon :  'AssignmentOutlinedIcon', stats : [{ label : 'Completados', value : 4.900}, { label : 'Cancelados', value : 1 }] },
+]
+
 export default function DashboardCardsMUI() {
     return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-                <StatCard 
-                    title="Usuarios"
-                    total={1500}
-                    icon={<PeopleIcon color="primary" />}
-                    stats={[
-                        { label: "Admin", value: 1 },
-                        { label: "Personnel", value: 49 },
-                        { label: "Employed", value: 1000 },
-                    ]}
-                />
-                <StatCard
-                    title="Objetos Perdidos"
-                    total={55}
-                    icon={<InventoryIcon color="primary" />}
-                    stats={[
-                        { label: "Recuperados", value: 5 },
-                        { label: "No Encontrados", value: 50 },
-                    ]}
-                />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
+                {info.map((info, index) => (
+                    <StatCard
+                        key={index}
+                        title={info.title}
+                        total={info.Total}
+                        icon={<DynamicIcon iconName={info.icon} sx={{color: 'secondary.main'}}/>}
+                        stats={info.stats}
+                    />
+                ))}
             </Box>
-        </ThemeProvider>
     );
 }
