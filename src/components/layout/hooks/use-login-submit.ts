@@ -2,7 +2,7 @@ import { AuthService } from "../../../services/auth/auth.service";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { IUser } from "../../../models/interfaces";
-import { setUser } from "../../../state/redux/states/user";
+import { emptyUserState, setUser } from "../../../state/redux/states/user";
 import { AxiosError } from "axios";
 
 type TProps = {
@@ -29,7 +29,7 @@ export const useLoginSubmit = async ({
   try {
     const response = await AuthService.login({ doc_number, password });
     const decodedToken = jwtDecode(response.data.token);
-
+    
     storeToken(response.data.token);
     dispatch(setUser(decodedToken as IUser));
     if (navigate) {

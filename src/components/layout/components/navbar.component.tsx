@@ -8,8 +8,12 @@ import { Avatar, Menu, MenuItem } from "@mui/material";
 import logo from '../../../assets/img/favicon-removebg-preview.png'
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
+import { IUser } from "../../../models/interfaces";
+import { emptyUserState } from "../../../state/redux/states/user";
 
-const pages = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
+const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
+const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' },{ name: 'Gestión De Rutinas', path: '/admin-routines' } ];
+const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -17,6 +21,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { isAuthenticated, setIsAuthenticated, checkAuthentication } = useAuth();
+  const [ rolpage, setRolePages ] = useState(pagesEmployed)
+  let user: IUser = emptyUserState; 
+  if(sessionStorage.getItem("user") != null && sessionStorage.getItem("token")){
+    user = JSON.parse(sessionStorage.getItem("user") ?? "");
+  }
 
   const handleCloseModal = () => {
     setOpen(false);
@@ -24,7 +33,6 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    console.log('hpl;a')
     // Eliminar token y user del sessionStorage
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
@@ -43,30 +51,44 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  console.log(location.pathname)
+  
+  useEffect(() => {
+    if( user.role.name === "admin"){
+      setRolePages(pagesAdmin)
+    } else if (user.role.name === "perssonel"){
+      setRolePages(pagesPersonel)
+    } else {
+      setRolePages(pagesEmployed)
+      console.log(rolpage,user)
+    }
+  }, [location]);
+
   return (
     <Box sx={{ display: "flex", position: "static", padding: "0 50px ", justifyContent: "space-between", alignItems: 'center', width: '100%', height: '100px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
-      <Box sx={{ height: '10vh', display: "flex", alignContent: "center" }}>
-        <img src={logo} style={{ height: "90%" }} alt="RIWI" />
+      <Box sx={{ height: '10vh', display: "flex", alignItems: "center", gap: "20px" }}>
+        <img src={logo} style={{ height: "90%" }} alt="RIWI" onClick={() => navigate('/')}/>
+        {!(location.pathname == "/" || location.pathname == "/lost-objects") && <Typography variant="h2">{pagesAdmin.find((page) => page.path === location.pathname)?.name}</Typography>}
       </Box>
-      {isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
-        {pages.map((page) => (
-          <Button
-            key={page.name}
-            color="primary"
-            onClick={() => navigate(page.path)}
-            sx={{
-              display: "block",
-              padding: '5px',
-              textTransform: 'capitalize',
-              borderBottom:
-              location.pathname === page.path
-              ? '3px solid rgb(107, 92, 255)'
-              : "none"
-            }}
-          >
-            <Typography variant="h3">{page.name}</Typography>
-          </Button>
+      {(location.pathname == "/" || location.pathname == "/lost-objects") && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
+        {rolpage.map((page) => (
+          page.name !== "Gestion De Usarios" && page.name !== "Gestion De Rutinas"  ? ( // Aquí puedes hacer la condición que desees
+            <Button
+              key={page.name}
+              color="primary"
+              onClick={() => navigate(page.path)}
+              sx={{
+                display: "block",
+                padding: '5px',
+                textTransform: 'capitalize',
+                borderBottom:
+                  location.pathname === page.path
+                    ? '3px solid rgb(107, 92, 255)'
+                    : "none"
+              }}
+            >
+              <Typography variant="h3">{page.name}</Typography>
+            </Button>
+          ) : null
         ))}
       </Box>}
       <Box sx={{ flexGrow: 0 }}>
