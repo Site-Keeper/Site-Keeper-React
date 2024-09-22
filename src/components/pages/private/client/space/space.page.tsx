@@ -1,37 +1,39 @@
 import DescriptionHeader from './components/description-header.component'
 import AttechedCards from './components/atteched-cards.component'
 import { IObject, ISpace } from '../../../../../models/interfaces';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { SpacesService } from '../../../../../services/spaces/spaces.service';
 
 const objectsInSpace: IObject[] = [
   {
       id: 1,
       name: "Mesa de conferencias",
       description: "Una gran mesa de madera para reuniones y conferencias, con capacidad para 10 personas.",
-      image: "https://cdn.pixabay.com/photo/2023/10/24/05/08/dog-8337394_1280.jpg",
+      image: "TableRestaurantIcon",
       quantity: 5,
-      space_Id: 1
+      space_id: 1
   },
   {
       id: 2,
       name: "Pizarra digital",
       description: "Pizarra interactiva digital con conexión a Internet y herramientas para presentaciones en vivo.",
-      image: "https://example.com/images/pizarra-digital.jpg",
+      image: "FilterFramesIcon",
       quantity: 2,
-      space_Id: 1
+      space_id: 1
   },
   {
       id: 3,
       name: "Proyector",
       description: "Proyector de alta definición para presentaciones y proyecciones de video.",
-      image: "https://example.com/images/proyector.jpg",
+      image: "AirplayIcon",
       quantity: 3,
-      space_Id: 1
+      space_id: 1
   }
 ];
 
-
-// Ejemplo de un espacio
 const mainConferenceRoom: ISpace = {
+    id: 1,
     name: "Sala de Conferencias Principal ",
     location: "Edificio Central, Planta 2, Sala 5B",
     description: "Esta sala está equipada con tecnología de punta para facilitar conferencias y reuniones efectivas.",
@@ -39,10 +41,22 @@ const mainConferenceRoom: ISpace = {
     objects: objectsInSpace
 };
 export default function Space() {
+  const { id } = useParams<{ id: string }>();
+  const [space, setSpace] = useState<ISpace>(mainConferenceRoom);
+
+  async function getSpace(id: string | undefined) {
+    const spacesreps = await SpacesService.getOne(id);
+    setSpace(spacesreps);
+  }
+  
+  useEffect(() => {
+    getSpace(id);
+  }, [id]);
+
   return (
     <>
-      <DescriptionHeader space={mainConferenceRoom} />
-      <AttechedCards object={objectsInSpace} />
+      <DescriptionHeader space={space} />
+      <AttechedCards object={space.objects} />
     </>
   )
 }

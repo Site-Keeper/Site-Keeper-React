@@ -7,6 +7,6 @@ export enum PrivateRoutes {
   PRIVATE_DASHBOARD = "admin-dashboard",
   ADMIN_USERS = "admin-users",
   ADMIN_RUTINES = "admin-routines",
-  ADMIN_SPACES = "admin-spaces"
+  ADMIN_SPACES = "admin-spaces",
   SPACE="space/:id"
 }
