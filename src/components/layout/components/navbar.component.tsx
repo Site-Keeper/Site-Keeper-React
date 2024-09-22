@@ -39,11 +39,6 @@ const Navbar = () => {
     setIsAuthenticated(false); // Actualizar estado
     handleCloseUserMenu()
   };
-
-  useEffect(() => {
-    // Verificar autenticación al montar el componente
-    checkAuthentication();
-  }, []);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -53,6 +48,7 @@ const Navbar = () => {
   };
   
   useEffect(() => {
+    checkAuthentication();
     if( user.role.name === "admin"){
       setRolePages(pagesAdmin)
     } else if (user.role.name === "perssonel"){

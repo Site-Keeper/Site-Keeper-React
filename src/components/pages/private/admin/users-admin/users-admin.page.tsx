@@ -11,7 +11,7 @@ import { IUserToRows } from "../../../../../models/interfaces/user-to-rows.inter
 
 
 const columns = [
-  { id: "name", label: "name", width: "20%", filter: "String" },
+  { id: "name", label: "Name", width: "20%", filter: "String" },
   { id: "email", label: "Email", width: "20%", filter: "String" },
   { id: "doc_number", label: "Documento", width: "20%", filter: "String" },
   {
@@ -96,15 +96,15 @@ export function UserAdmin() {
         <Button
           variant="contained"
           sx={{
-            height: "60px",
-            width: "250px",
+            height: "40px",
+            width: "220px",
             backgroundColor: "success.main",
             borderRadius: "50px",
             gap: '10px'
           }}
         >
           <AddCircleOutlineIcon sx={{width: '25px', height: '25px'}}/>  
-          <Typography variant="h3">Crear Usuarios</Typography>
+          <Typography variant="subtitle2">Crear Usuarios</Typography>
         </Button>
         <TableAdmin rows={users} columns={columns} limit={5}></TableAdmin>
       </Box>
