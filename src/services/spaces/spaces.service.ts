@@ -1,5 +1,5 @@
 import { axiosJavaInstance} from "../../axios.config";
-import { IGetAllSpacesResp } from "../../models/services/spaces.interfaces";
+import { ISpace } from "../../models/interfaces";
 import { SPACES_API_ENDPOINTS, TEndpointKeys } from "./spaces.endpoints";
 
 const getEnpoint = (method: TEndpointKeys): string => {
@@ -7,8 +7,8 @@ const getEnpoint = (method: TEndpointKeys): string => {
 };
 
 export class SpacesService {
-    static getAll = async (): Promise<IGetAllSpacesResp> => {
+    static getAll = async (): Promise<ISpace[]> => {
         const endpoint = getEnpoint("GET_ALL");
-        return await axiosJavaInstance.get<IGetAllSpacesResp>(endpoint).then(response => response.data);
+        return await axiosJavaInstance.get<ISpace[]>(endpoint).then(response => response.data);
     };
 }

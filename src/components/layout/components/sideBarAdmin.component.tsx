@@ -16,10 +16,10 @@ const pages: IPages[] = [
     pathname: "/admin-dashboard",
   },
   { icon: "PeopleAltOutlinedIcon", name: "Gestión Usuarios", pathname: "/admin-users" },
-  { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/Gestiónss" },
-  { icon: "DomainOutlinedIcon", name: "Gestión Espacios", pathname: "/Gestiónsss" },
+  { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/admin-routines" },
+  { icon: "DomainOutlinedIcon", name: "Gestión Espacios", pathname: "/admin-spaces" },
   { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/Gestiónsssss" },
-  { icon: "GridViewIcon", name: "Gestión Objetos Perdidos", pathname: "/Gestiónssssssssss" },
+  { icon: "Inventory2OutlinedIcon", name: "Gestión Objetos Perdidos", pathname: "/Gestiónssssssssss" },
 ];
 
 export function SideBarAdmin() {

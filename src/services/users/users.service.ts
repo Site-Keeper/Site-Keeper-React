@@ -1,5 +1,5 @@
 import { axiosNestInstance} from "../../axios.config";
-import { IGetAllUserResp } from "../../models/services/users.interfaces";
+import { IGetAllUserResp, IGetStatisticsUserResp, IPostUsersReq, IPostUsersResp } from "../../models/services/users.interfaces";
 import { TEndpointKeys, USERS_API_ENDPOINTS } from "./users.endpoints";
 
 const getEnpoint = (method: TEndpointKeys): string => {
@@ -11,4 +11,14 @@ export class USersService {
         const endpoint = getEnpoint("GET_ALL");
         return await axiosNestInstance.get<IGetAllUserResp>(endpoint).then(response => response.data);
     };
+
+    static getStats = async (): Promise<IGetStatisticsUserResp> => {
+        const endpoint = getEnpoint("GET_STATS");
+        return await axiosNestInstance.get<IGetStatisticsUserResp>(endpoint).then(response => response.data);
+    };
+
+    static postUser = async (req: IPostUsersReq): Promise<IPostUsersResp> => {
+        const endpoint = getEnpoint("POST");
+        return await axiosNestInstance.post<IPostUsersResp>(endpoint, req).then(response => response.data);
+    }
 }

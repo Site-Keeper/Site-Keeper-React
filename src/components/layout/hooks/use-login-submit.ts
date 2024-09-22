@@ -2,7 +2,8 @@ import { AuthService } from "../../../services/auth/auth.service";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { IUser } from "../../../models/interfaces";
-import { setUser } from "../../../state/redux/states/user";
+import { emptyUserState, setUser } from "../../../state/redux/states/user";
+import { AxiosError } from "axios";
 
 type TProps = {
   doc_number: string;
@@ -25,10 +26,10 @@ export const useLoginSubmit = async ({
   navigate,
   handleCloseModal,
 }: TProps) => {
-  const response = await AuthService.login({ doc_number, password });
   try {
+    const response = await AuthService.login({ doc_number, password });
     const decodedToken = jwtDecode(response.data.token);
-
+    
     storeToken(response.data.token);
     dispatch(setUser(decodedToken as IUser));
     if (navigate) {
@@ -39,7 +40,9 @@ export const useLoginSubmit = async ({
     } else if (handleCloseModal) {
       handleCloseModal();
     }
-  } catch (error) {
-    console.warn(error)
+  } catch (error: unknown) {
+    const axiosError = error as AxiosError
+    console.warn(axiosError.response?.data)
+    throw error
   }
 };
