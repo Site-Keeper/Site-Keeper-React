@@ -14,6 +14,7 @@ import ClientHome from './components/pages/public/clientHome/clientHome.page';
 import { RoutineAdmin } from './components/pages/private/admin/admin-routines/admin-routines.page';
 import { AdminSpaces } from './components/pages/private/admin/admin-spaces/admin-spaces.page';
 import Space from './components/pages/private/client/space/space.page';
+import { AdminLostObjects } from './components/pages/private/admin/admin-lost-objects/admin-lost-objects.component';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
               <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin/>}/>
               <Route path={PrivateRoutes.ADMIN_SPACES} element={<AdminSpaces />} />
+              <Route path={PrivateRoutes.ADMIN_LOST_OBJECTS} element={<AdminLostObjects />} />
             </Route>
           </Route>
         </RoutesWithNotFound>
