@@ -18,4 +18,5 @@ export enum PrivateRoutes {
   CREATE_SPACE = "create-space",
   EDIT_SPACE = "edit-space",
   CREATE_RESERVATION = "create-reservation",
+  SPACE="space/:id"
 }
