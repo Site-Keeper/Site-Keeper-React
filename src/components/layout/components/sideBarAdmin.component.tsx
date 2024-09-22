@@ -18,7 +18,7 @@ const pages: IPages[] = [
   { icon: "PeopleAltOutlinedIcon", name: "Gestión Usuarios", pathname: "/admin-users" },
   { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/admin-routines" },
   { icon: "DomainOutlinedIcon", name: "Gestión Espacios", pathname: "/admin-spaces" },
-  { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/Gestiónsssss" },
+  { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/admin-reports" },
   { icon: "Inventory2OutlinedIcon", name: "Gestión Objetos Perdidos", pathname: "/admin-lost-objects" },
 ];
 

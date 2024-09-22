@@ -9,5 +9,6 @@ export enum PrivateRoutes {
   ADMIN_RUTINES = "admin-routines",
   ADMIN_SPACES = "admin-spaces",
   SPACE="space/:id",
-  ADMIN_LOST_OBJECTS = "admin-lost-objects"
+  ADMIN_LOST_OBJECTS = "admin-lost-objects",
+  ADMIN_REPORTS = 'admin-reports'
 }

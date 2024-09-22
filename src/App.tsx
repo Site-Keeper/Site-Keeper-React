@@ -15,6 +15,7 @@ import { RoutineAdmin } from './components/pages/private/admin/admin-routines/ad
 import { AdminSpaces } from './components/pages/private/admin/admin-spaces/admin-spaces.page';
 import Space from './components/pages/private/client/space/space.page';
 import { AdminLostObjects } from './components/pages/private/admin/admin-lost-objects/admin-lost-objects.component';
+import { ReportsAdmin } from './components/pages/private/admin/admin-reports/admin-reports.page';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             </Route> 
             
             <Route element={<AdminLayout/>}>
+              <Route path={PrivateRoutes.ADMIN_REPORTS} element={<ReportsAdmin />} />
               <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
               <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin/>}/>
