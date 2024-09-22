@@ -32,7 +32,7 @@ const style = {
 };
 
 
-export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInformation) {
+export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMoreInformation) {
   const [task, setTask] = useState<ITask[]>([])
   async function getTaskByRoutines() {
     console.log(id)

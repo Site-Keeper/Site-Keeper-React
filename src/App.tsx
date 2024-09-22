@@ -12,6 +12,7 @@ import { UserAdmin } from './components/pages/private/admin/users-admin/users-ad
 import AuthGuard from './components/guard/auth.guard';
 import ClientHome from './components/pages/public/clientHome/clientHome.page';
 import { RoutineAdmin } from './components/pages/private/admin/admin-routines/admin-routines.page';
+import { AdminSpaces } from './components/pages/private/admin/admin-spaces/admin-spaces.page';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
               <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin/>}/>
+              <Route path={PrivateRoutes.ADMIN_SPACES} element={<AdminSpaces />} />
             </Route>
           </Route>
         </RoutesWithNotFound>

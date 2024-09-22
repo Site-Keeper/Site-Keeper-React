@@ -12,7 +12,7 @@ import { IUser } from "../../../models/interfaces";
 import { emptyUserState } from "../../../state/redux/states/user";
 
 const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
-const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' },{ name: 'Gestión De Rutinas', path: '/admin-routines' } ];
+const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }];
 const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -21,9 +21,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { isAuthenticated, setIsAuthenticated, checkAuthentication } = useAuth();
-  const [ rolpage, setRolePages ] = useState(pagesEmployed)
-  let user: IUser = emptyUserState; 
-  if(sessionStorage.getItem("user") != null && sessionStorage.getItem("token")){
+  const [rolpage, setRolePages] = useState(pagesEmployed)
+  let user: IUser = emptyUserState;
+  if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
     user = JSON.parse(sessionStorage.getItem("user") ?? "");
   }
 
@@ -46,28 +46,28 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+
   useEffect(() => {
     checkAuthentication();
-    if( user.role.name === "admin"){
+    if (user.role.name === "admin") {
       setRolePages(pagesAdmin)
-    } else if (user.role.name === "perssonel"){
+    } else if (user.role.name === "Perssonel") {
       setRolePages(pagesPersonel)
     } else {
       setRolePages(pagesEmployed)
-      console.log(rolpage,user)
+      console.log(rolpage, user)
     }
   }, [location]);
 
   return (
     <Box sx={{ display: "flex", position: "static", padding: "0 50px ", justifyContent: "space-between", alignItems: 'center', width: '100%', height: '100px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
       <Box sx={{ height: '10vh', display: "flex", alignItems: "center", gap: "20px" }}>
-        <img src={logo} style={{ height: "90%" }} alt="RIWI" onClick={() => navigate('/')}/>
+        <img src={logo} style={{ height: "90%" }} alt="RIWI" onClick={() => navigate('/')} />
         {!(location.pathname == "/" || location.pathname == "/lost-objects") && <Typography variant="h2">{pagesAdmin.find((page) => page.path === location.pathname)?.name}</Typography>}
       </Box>
       {(location.pathname == "/" || location.pathname == "/lost-objects") && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
         {rolpage.map((page) => (
-          page.name !== "Gestión De Usuarios" && page.name !== "Gestión De Rutinas"  ? ( // Aquí puedes hacer la condición que desees
+          page.name !== "Gestión De Usuarios" && page.name !== "Gestión De Rutinas" && page.name !== "Gestión De Espacios" ? ( 
             <Button
               key={page.name}
               color="primary"
