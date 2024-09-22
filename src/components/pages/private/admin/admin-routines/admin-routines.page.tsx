@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { IRoutine } from "../../../../../models/interfaces/routines.interface";
 import { RoutinesService } from "../../../../../services/routines/routines.service";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { ModalMoreInformation } from "./components/modal-more-information.vomponents";
+import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
 
 export function RoutineAdmin() {
   const [routines, setRoutines] = useState<IRoutine[]>([])
@@ -99,7 +99,7 @@ export function RoutineAdmin() {
           > 
             <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
           </IconButton>
-          <ModalMoreInformation id={selectedId} open={openInfo} handleClose={handleClose} />
+          <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
           <IconButton
             sx={{
               backgroundColor: "#FBBF24",
@@ -124,7 +124,6 @@ export function RoutineAdmin() {
       ),
     },
   ];
-  console.log(routines)
   return (
     <div
       style={{
