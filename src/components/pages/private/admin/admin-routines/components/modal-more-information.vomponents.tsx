@@ -1,4 +1,4 @@
-import { AddCircleOutlineOutlined} from "@mui/icons-material";
+import { AddCircleOutlineOutlined } from "@mui/icons-material";
 import { Box, Button, Chip, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { ITask } from "../../../../../../models/interfaces/task.interface";
@@ -10,30 +10,30 @@ import { TableAdmin } from "../../../../../utilities/components/table/table-admi
 import DynamicIcon from "../../../../../utilities/DynamicIcon";
 
 interface IModalMoreInformation {
-    open: boolean;
-    handleClose: React.Dispatch<React.SetStateAction<boolean>>;
-    id: number
+  open: boolean;
+  handleClose: React.Dispatch<React.SetStateAction<boolean>>;
+  id: number
 }
 
 const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: "980px",
-    bgcolor: 'background.paper',
-    boxShadow: 'none',
-    borderRadius: "20px",
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "980px",
+  bgcolor: 'background.paper',
+  boxShadow: 'none',
+  borderRadius: "20px",
+  padding: "20px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 
 export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInformation) {
-    const [task, setTask] = useState<ITask[]>([])
+  const [task, setTask] = useState<ITask[]>([])
   async function getTaskByRoutines() {
     console.log(id)
     const tasksReq = await TasksService.getTaskByRoutines(id)
@@ -59,10 +59,10 @@ export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInform
       renderCell: (value: ITask) => (
         <Chip
           icon={<DynamicIcon iconName={value.topic.icon} />}
-          label={value.topic.name} 
+          label={value.topic.name}
           sx={{
-            backgroundColor: "#E0F7FA", 
-            color: "#006064", 
+            backgroundColor: "#E0F7FA",
+            color: "#006064",
             fontWeight: "bold",
           }}
         />
@@ -82,7 +82,7 @@ export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInform
             justifyContent: "center",
             gap: "10px",
           }}
-        >  
+        >
           <IconButton
             sx={{
               backgroundColor: "#FBBF24",
@@ -108,54 +108,54 @@ export function ModalMoreInformation({ open, handleClose, id }: IModalMoreInform
     },
   ];
 
-    return (
-        <Modal
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="keep-mounted-modal-title"
-            aria-describedby="keep-mounted-modal-description"
-            BackdropProps={{
-                style: { backgroundColor: 'rgba(0, 0, 0, 0.08)' } // Ajusta la opacidad (0.2 es más clara)
-            }}
+  return (
+    <Modal
+      keepMounted
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="keep-mounted-modal-title"
+      aria-describedby="keep-mounted-modal-description"
+      BackdropProps={{
+        style: { backgroundColor: 'rgba(0, 0, 0, 0.08)' } // Ajusta la opacidad (0.2 es más clara)
+      }}
+    >
+      <Box sx={style}>
+        <IconButton
+          aria-label="close"
+          onClick={() => handleClose(false)}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            color: 'secondary.main',
+          }}
         >
-            <Box sx={style}>
-                <IconButton
-                    aria-label="close"
-                    onClick={() => handleClose(false)}
-                    sx={{
-                        position: 'absolute',
-                        top: 8,
-                        right: 8,
-                        color: 'secondary.main',
-                    }}
-                >
-                    <CloseIcon />
-                </IconButton>
+          <CloseIcon />
+        </IconButton>
 
-                <Typography id="keep-mounted-modal-title" variant="h2" component="h2">
-                    Rutina {id}
-                </Typography>
-                <Box sx={{ display: "flex", width: "100%", flexDirection: "column", gap: "20px", border: '1px solid #B3B3B3', padding: '20px' }}>
-                    <Typography variant="h2" sx={{ fontSize: "34px" }} >
-                        Tareas
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        sx={{
-                            height: "60px",
-                            width: "250px",
-                            backgroundColor: "success.main",
-                            borderRadius: "50px",
-                            gap: '10px'
-                        }}
-                    >
-                        <AddCircleOutlineOutlined sx={{ width: '25px', height: '25px' }} />
-                        <Typography variant="subtitle1">Crear Rutinas</Typography>
-                    </Button>
-                    <TableAdmin rows={task} columns={columns} limit={5}></TableAdmin>
-                </Box>
-            </Box>
-        </Modal>
-    )
+        <Typography id="keep-mounted-modal-title" variant="h2" component="h2">
+          Rutina {id}
+        </Typography>
+        <Box sx={{ display: "flex", width: "100%", flexDirection: "column", gap: "20px", border: '1px solid #B3B3B3', padding: '20px' }}>
+          <Typography variant="h2" sx={{ fontSize: "34px" }} >
+            Tareas
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              height: "60px",
+              width: "250px",
+              backgroundColor: "success.main",
+              borderRadius: "50px",
+              gap: '10px'
+            }}
+          >
+            <AddCircleOutlineOutlined sx={{ width: '25px', height: '25px' }} />
+            <Typography variant="subtitle1">Crear Rutinas</Typography>
+          </Button>
+          <TableAdmin rows={task} columns={columns} limit={5}></TableAdmin>
+        </Box>
+      </Box>
+    </Modal>
+  )
 }

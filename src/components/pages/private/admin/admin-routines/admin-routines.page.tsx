@@ -146,15 +146,15 @@ export function RoutineAdmin() {
         <Button
           variant="contained"
           sx={{
-            height: "60px",
-            width: "250px",
+            height: "40px",
+            width: "220px",
             backgroundColor: "success.main",
             borderRadius: "50px",
             gap: '10px'
           }}
         >
           <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
-          <Typography variant="h3">Crear Rutinas</Typography>
+          <Typography variant="subtitle2">Crear Rutinas</Typography>
         </Button>
         <TableAdmin rows={routines} columns={columns} limit={5}></TableAdmin>
       </Box>
