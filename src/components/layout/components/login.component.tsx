@@ -20,6 +20,7 @@ import * as yup from "yup";
 import logoRiwi from "../../../assets/img/logoRiwi.png";
 import { useLoginSubmit } from "../hooks/use-login-submit";
 import { useDispatch } from "react-redux";
+import { AxiosError } from "axios";
 
 type FormValues = {
   documentNumber: string;
@@ -73,12 +74,31 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
     shouldUseNativeValidation: false,
     criteriaMode: "firstError",
     mode: "onSubmit",
-  }); // Inicializa useForm
+  });
+
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const onSubmit = async ({ documentNumber, password }: FormValues) => {
-    setIsLoading(true)
-    await useLoginSubmit({ doc_number: String(documentNumber), password, dispatch, handleCloseModal });
-    setIsLoading(false)
+    try {
+      setIsLoading(true);
+      setLoginError(null);
+      await useLoginSubmit({
+        doc_number: String(documentNumber),
+        password,
+        dispatch,
+        handleCloseModal,
+      });
+    } catch (error) {
+      const axiosError = error as AxiosError
+      console.error(error);
+      if (axiosError.response?.status === 404) {
+        setLoginError("Credenciales incorrectas. Verifique su número de documento o contraseña.");
+      } else {
+        setLoginError("Ha ocurrido un error. Intente nuevamente.");
+      }
+    } finally {
+      setIsLoading(false)
+    }
   };
 
   const handleValidateAndSubmit = async () => {
@@ -133,11 +153,12 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
                   color="secondary"
                   fullWidth
                   {...field}
-                  error={!!errors?.documentNumber}
+                  error={!!errors?.documentNumber || !!loginError}
                   helperText={errors?.documentNumber?.message}
                 />
               )}
             />
+
             <Controller
               name="password"
               control={control}
@@ -149,7 +170,7 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
                   size="medium"
                   variant="outlined"
                   {...field}
-                  error={!!errors?.password}
+                  error={!!errors?.password || !!loginError} // Si hay error o mensaje de loginError
                 >
                   <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
                   <OutlinedInput
@@ -170,7 +191,7 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
                     label="Contraseña"
                     // Aquí se añade la detección de la tecla Enter
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         handleValidateAndSubmit(); // Llamada al método de validación y envío
                       }
                     }}
@@ -179,6 +200,10 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
                     <FormHelperText error={!!errors?.password}>
                       {errors?.password?.message}
                     </FormHelperText>
+                  )}
+                  {/* Mostrar el mensaje de error general de loginError */}
+                  {loginError && (
+                    <FormHelperText error={!!loginError}>{loginError}</FormHelperText>
                   )}
                 </FormControl>
               )}

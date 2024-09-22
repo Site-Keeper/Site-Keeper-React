@@ -1,15 +1,10 @@
 export enum PublicRoutes {
-  REGISTER = "register",
-  HOME = "",
-  MAIL_CONFIRMATION = "mail-confirmation",
-  LOGIN = "login",
-  SINGLE_SPACE = "single-space",
-  TERMS_AND_CONDITIONS = "terms-and-conditions",
-  FORGOT_PASSWORD = "forgot-password",
-  NOT_FOUND = "404",
+  HOME = ""
 }
 
 export enum PrivateRoutes {
+  LOST_OBJECTS = "lost-objects",
   PRIVATE_DASHBOARD = "admin-dashboard",
   ADMIN_USERS = "admin-users",
+  ADMIN_RUTINES = "admin-routines",
 }

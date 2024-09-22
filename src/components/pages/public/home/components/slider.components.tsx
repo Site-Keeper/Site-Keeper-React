@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function Slider3d({Spaces}: Props ) {
-
+  console.log(Spaces)
   return (
     <Box className="box-container" sx={{width : "100%", height: "650px",}}>
       <Swiper

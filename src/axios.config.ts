@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 
 const nestBaseURL = "https://site-keeper-nestjs.onrender.com/";
 // const nestBaseURL = "http://localhost:3000/";
-const javaBaseURL = "https://site-keeper-springboot.onrender.com/";
+const javaBaseURL = "https://site-keeper-springboot.onrender.com/api/";
 
 const axiosNestInstance: AxiosInstance = axios.create({
   baseURL: nestBaseURL,

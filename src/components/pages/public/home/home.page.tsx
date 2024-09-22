@@ -111,11 +111,11 @@ export function Home() {
   const [spaces, setSpaces ]  = useState<ISpace[]>(spacesQ)
   const [search, setSearch] = useState<string>("")
   async function getSpaces(){
-    // const spacesRes = await SpacesService.getAll()
-    // setSpaces(spacesRes.data)
-    console.log("search", search)
+    const spacesRes = await SpacesService.getAll()
+    setSpaces(spacesRes)
   }
 
+  
   useEffect(() => {
     getSpaces()
   },[search])  

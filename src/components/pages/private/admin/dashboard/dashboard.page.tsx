@@ -1,4 +1,4 @@
-import DashboardCardsMUI from "../components/AdminCards";
+import DashboardCardsMUI from "./components/AdminCards";
 
 export default function Dashboard() {
   return (
