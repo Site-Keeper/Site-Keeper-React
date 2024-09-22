@@ -65,9 +65,9 @@ const Navbar = () => {
         <img src={logo} style={{ height: "90%" }} alt="RIWI" onClick={() => navigate('/')} />
         {!(location.pathname == "/" || location.pathname == "/lost-objects") && <Typography variant="h2">{pagesAdmin.find((page) => page.path === location.pathname)?.name}</Typography>}
       </Box>
-      {(location.pathname == "/" || location.pathname == "/lost-objects") && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
+      {(location.pathname == "/" || location.pathname == "/lost-objects" || location.pathname.includes("space")) && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
         {rolpage.map((page) => (
-          page.name !== "Gestión De Usuarios" && page.name !== "Gestión De Rutinas" && page.name !== "Gestión De Espacios" ? ( 
+          !(page.path.includes('admin')) ? ( 
             <Button
               key={page.name}
               color="primary"

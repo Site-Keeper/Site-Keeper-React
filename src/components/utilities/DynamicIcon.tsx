@@ -11,6 +11,9 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+import AirplayIcon from '@mui/icons-material/Airplay';
 
 interface DynamicIconProps extends SvgIconProps {
   iconName: string;
@@ -27,7 +30,10 @@ const iconMapping: { [key: string]: React.ElementType } = {
   EngineeringIcon: EngineeringIcon,
   AdminPanelSettingsIcon: AdminPanelSettingsIcon,
   MoreHorizIcon: MoreHorizIcon,
-  AssignmentOutlinedIcon:AssignmentOutlinedIcon
+  AssignmentOutlinedIcon:AssignmentOutlinedIcon,
+  TableRestaurantIcon:TableRestaurantIcon,
+  FilterFramesIcon:FilterFramesIcon,
+  AirplayIcon:AirplayIcon
 };
 
 const DynamicIcon: React.FC<DynamicIconProps> = ({ iconName, ...props }) => {

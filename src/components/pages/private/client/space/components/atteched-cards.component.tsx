@@ -13,7 +13,7 @@ export default function AttachedCards({ object }: IProps) {
       gap: '20px',
       flexWrap: 'wrap',
       padding: '20px',
-      margin: "50px 50px",
+      margin: "20px 20px",
       border: "1px solid #ccc",
       borderRadius: "25px"}}>
       {object.map(obj => <ItemBox key={obj.id} object={obj} />)}
