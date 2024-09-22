@@ -5,6 +5,7 @@ import { RoutesWithNotFound } from './components/utilities/routes-with-not-found
 import { PrivateRoutes, PublicRoutes } from './models/routes/routes.model';
 import { RiwiTheme } from './state/context/riwiTheme';
 import ClientLayout from './components/layout/client.layout';
+
 import LostObject from './components/pages/private/client/lostObjects/lost-objects.page';
 import AdminLayout from './components/layout/admin.layout';
 import Dashboard from './components/pages/private/admin/dashboard/dashboard.page';
@@ -13,6 +14,7 @@ import AuthGuard from './components/guard/auth.guard';
 import ClientHome from './components/pages/public/clientHome/clientHome.page';
 import { RoutineAdmin } from './components/pages/private/admin/admin-routines/admin-routines.page';
 import { AdminSpaces } from './components/pages/private/admin/admin-spaces/admin-spaces.page';
+import Space from './components/pages/private/client/space/space.page';
 
 function App() {
   return (
@@ -22,9 +24,11 @@ function App() {
           <Route path={'site-keeper'} element={<ClientHome />}/>
           <Route element={<ClientLayout />}>
             <Route path={PublicRoutes.HOME} element={<Home />} />
+
             <Route path={PrivateRoutes.LOST_OBJECTS} element={<LostObject />} />
           </Route>
           <Route element={<AuthGuard/>}>
+            <Route path={PrivateRoutes.SPACE} element={<Space />} />
             <Route element={<AdminLayout/>}>
               <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
