@@ -4,34 +4,28 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useEffect, useState } from "react";
-import { USersService } from "../../../../../services/users/users.service";
-import { usersToRows } from "./adapters/user-to-row.adpters";
-import { IUserToRows } from "../../../../../models/interfaces/user-to-rows.interface";
-import { ModalFormCreateUsers } from "./components/create-users-form.components";
+import { LostObjectsService } from "../../../../../services/lostObjects/lost-objects.service";
+import { ILostObject } from "../../../../../models/interfaces/lost-object.interface";
 
-export function UserAdmin() {
-  const [ users, setUsers ] = useState<IUserToRows[]>([])
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-  const handleOpen = () => setOpenModalCreate(true);
-  const handleClose = () => setOpenModalCreate(false);
+export function AdminLostObjects() {
+  const [ lostObjects, setLostObjects ] = useState<ILostObject[]>([])
 
   const columns = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
-    { id: "email", label: "Email", width: "20%", filter: "String" },
-    { id: "doc_number", label: "Documento", width: "20%", filter: "String" },
+    { id: "description", label: "Descripción", width: "20%", filter: "String" },
+    { id: "spaceId", label: "Space", width: "20%", filter: "String" },
     {
-      id: "perssonel_type",
-      label: "Tipo De Personal",
+      id: "status",
+      label: "Estados",
       width: "20%",
       filter: "String",
     },
-    { id: "rol", label: "Role", width: "20%", filter: "String" },
     {
       id: "actions",
       label: "Actions",
       width: "170px",
       filter: "string",
-      renderCell: (value: IUserToRows) => (
+      renderCell: (value: ILostObject) => (
         <Box
           sx={{
             width: "100%",
@@ -66,14 +60,13 @@ export function UserAdmin() {
     },
   ];
 
-  async function getAllUser(){
-    const usersReq = await USersService.getAll()
-    const user = usersToRows(usersReq.data)
-    setUsers(user)
+  async function getAllLostObjects(){
+    const lostObjects = await LostObjectsService.get_all()
+    setLostObjects(lostObjects)
   }
 
   useEffect(() => {
-    getAllUser()
+    getAllLostObjects()
   }, [])
   
 
@@ -104,13 +97,11 @@ export function UserAdmin() {
             borderRadius: "50px",
             gap: '10px'
           }}
-          onClick={handleOpen}
         >
           <AddCircleOutlineIcon sx={{width: '25px', height: '25px'}}/>  
           <Typography variant="subtitle2">Crear Usuarios</Typography>
         </Button>
-        <ModalFormCreateUsers handleClose={handleClose} open={openModalCreate} />
-        <TableAdmin rows={users} columns={columns} limit={5}></TableAdmin>
+        <TableAdmin rows={lostObjects} columns={columns} limit={5}></TableAdmin>
       </Box>
     </div>
   );

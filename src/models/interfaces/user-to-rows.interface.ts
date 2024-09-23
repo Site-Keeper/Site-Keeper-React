@@ -6,5 +6,5 @@ export interface IUserToRows{
     email: string
     doc_number: string;
     perssonel_type?: perssonelType; 
-    rol: string;
+    role: string;
 }

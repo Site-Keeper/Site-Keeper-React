@@ -12,6 +12,10 @@ import { UserAdmin } from './components/pages/private/admin/users-admin/users-ad
 import AuthGuard from './components/guard/auth.guard';
 import ClientHome from './components/pages/public/clientHome/clientHome.page';
 import { RoutineAdmin } from './components/pages/private/admin/admin-routines/admin-routines.page';
+import { AdminSpaces } from './components/pages/private/admin/admin-spaces/admin-spaces.page';
+import Space from './components/pages/private/client/space/space.page';
+import { AdminLostObjects } from './components/pages/private/admin/admin-lost-objects/admin-lost-objects.component';
+import { ReportsAdmin } from './components/pages/private/admin/admin-reports/admin-reports.page';
 
 function App() {
   return (
@@ -21,13 +25,22 @@ function App() {
           <Route path={'site-keeper'} element={<ClientHome />}/>
           <Route element={<ClientLayout />}>
             <Route path={PublicRoutes.HOME} element={<Home />} />
+
             <Route path={PrivateRoutes.LOST_OBJECTS} element={<LostObject />} />
           </Route>
           <Route element={<AuthGuard/>}>
+
+            <Route element={<ClientLayout />}>   
+              <Route path={PrivateRoutes.SPACE} element={<Space />} />
+            </Route> 
+            
             <Route element={<AdminLayout/>}>
+              <Route path={PrivateRoutes.ADMIN_REPORTS} element={<ReportsAdmin />} />
               <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
               <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin/>}/>
+              <Route path={PrivateRoutes.ADMIN_SPACES} element={<AdminSpaces />} />
+              <Route path={PrivateRoutes.ADMIN_LOST_OBJECTS} element={<AdminLostObjects />} />
             </Route>
           </Route>
         </RoutesWithNotFound>

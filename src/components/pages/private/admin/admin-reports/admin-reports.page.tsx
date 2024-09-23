@@ -4,45 +4,49 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useEffect, useState } from "react";
-import { IRoutine } from "../../../../../models/interfaces/routines.interface";
-import { RoutinesService } from "../../../../../services/routines/routines.service";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
+import { ReportsService } from "../../../../../services/Reports/reports.service";
+import { IReport } from "../../../../../models/interfaces/reports.interface";
 
-export function RoutineAdmin() {
-  const [routines, setRoutines] = useState<IRoutine[]>([])
+export function ReportsAdmin() {
+  const [reports, setReports] = useState<IReport[]>([])
   const [openInfo, setOpenInfo] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(0);
 
-  async function getAllRoutine() {
-    const routinesReq = await RoutinesService.getAll()
-    const routines = routinesReq.data
-    setRoutines(routines)
+  async function getAllReports() {
+    const response = await ReportsService.getAll()
+    const reports = response
+    setReports(reports)
   }
 
   useEffect(() => {
-    getAllRoutine()
+    getAllReports()
   }, [])
 
   const handleOpen = (id: number) => {
-    setSelectedId(id); // Establece el ID seleccionado
+    setSelectedId(id);
     setOpenInfo(true);
   };
   const handleClose = () => setOpenInfo(false);
 
-
-  
-
   const columns = [
-    { id: "name", label: "name", width: "20%", filter: "String" },
-    { id: "start_time", label: "Hora de Inicio", width: "20%", filter: "String" },
-    { id: "end_time", label: "Hora de Fin", width: "20%", filter: "String" },
+    { id: "name", label: "Nombre", width: "20%", filter: "String" },
+    { id: "space", label: "Espacio", width: "20%", filter: "String" },
+    { id: "date", label: "Hora", width: "20%", filter: "String" },
     {
-      id: "day",
-      label: "frecuencia",
+      id: "topic",
+      label: "Asunto",
       width: "20%",
+      filter: "String"
+    },
+    { id: "stuatus", label: "Estado", width: "20%", filter: "String" },
+    {
+      id: "actions",
+      label: "Actions",
+      width: "170px",
       filter: "String",
-      renderCell: (value: IRoutine) => (
+      renderCell: (value: IReport) => (
         <Box
           sx={{
             width: "100%",
@@ -52,42 +56,6 @@ export function RoutineAdmin() {
             gap: "10px",
           }}
         >
-          {value.days.map((day: string) => (
-            <div
-              key={`${value.id} + ${day}`}
-              style={{
-                backgroundColor: "#8c8c8c",
-                width: "20px",
-                height: "20px",
-                display: "flex",
-                borderRadius: "50%",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "10px",
-                color: "#fff",
-              }}
-            >
-              {day.charAt(0).toUpperCase()}
-            </div>
-          ))}
-        </Box>)
-    },
-    { id: "assignedTo", label: "Encargado", width: "20%", filter: "String" },
-    {
-      id: "actions",
-      label: "Actions",
-      width: "170px",
-      filter: "string",
-      renderCell: (value: IRoutine) => (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >  
           <IconButton
             sx={{
               backgroundColor: "#3B82F6",
@@ -96,7 +64,7 @@ export function RoutineAdmin() {
             key={`See-${value.id}`}
             aria-label="see"
             onClick={() => handleOpen(value.id)}
-          > 
+          >
             <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
           </IconButton>
           <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
@@ -124,6 +92,7 @@ export function RoutineAdmin() {
       ),
     },
   ];
+
   return (
     <div
       style={{
@@ -155,7 +124,7 @@ export function RoutineAdmin() {
           <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
           <Typography variant="subtitle2">Crear Rutinas</Typography>
         </Button>
-        <TableAdmin rows={routines} columns={columns} limit={5}></TableAdmin>
+        <TableAdmin rows={reports} columns={columns} limit={5}></TableAdmin>
       </Box>
     </div>
   );

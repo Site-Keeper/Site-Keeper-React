@@ -4,16 +4,16 @@ import logoSiteKeeper from '../../../assets/img/sitekeeper-logo-image.ico'
 
 export function Footer() {
     return (
-        <Box sx={{width: '100%', height: '140px', display: 'flex', justifyContent: 'center', alignItems: 'space-between', borderTop: '1px solid #E0E0E0'}}>
-            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '33%'}}>
-                <img src={logo} style={{height: '100px'}} alt="logo" />
+        <Box sx={{width: '100%', height: '100px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', borderTop: '0.5px solid #E0E0E0', marginTop:'20px'}}>
+            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '70px'}}>
+                <img src={logo} style={{height: '100%'}} alt="logo" />
             </Box>
-            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '33%'}}>
-                <Typography variant="subtitle1">© 2022 Riwi. Todos los derechos reservados.</Typography>
+            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <Typography variant="subtitle2" color="gray">© 2022 Riwi. Todos los derechos reservados.</Typography>
             </Box>
-            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '10px', width: '33%'}}>
-                <Typography variant="subtitle1">Powered by</Typography>
-                <img src={logoSiteKeeper} style={{height: '100px'}} alt="logo" />
+            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '10px', height: '50px'}}>
+                <Typography variant="subtitle2" color="gray">Powered by</Typography>
+                <img src={logoSiteKeeper} style={{height: '100%'}} alt="logo" />
             </Box>
         </Box>
     );
