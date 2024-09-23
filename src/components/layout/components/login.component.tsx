@@ -18,7 +18,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import logoRiwi from "../../../assets/img/logoRiwi.png";
-import { useLoginSubmit } from "../hooks/use-login-submit";
+import { LoginSubmit } from "../hooks/use-login-submit";
 import { useDispatch } from "react-redux";
 import { AxiosError } from "axios";
 
@@ -82,7 +82,7 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
     try {
       setIsLoading(true);
       setLoginError(null);
-      await useLoginSubmit({
+      await LoginSubmit({
         doc_number: String(documentNumber),
         password,
         dispatch,

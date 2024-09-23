@@ -6,7 +6,7 @@ interface Column<T> {
   renderCell?: (value: T) => React.ReactNode;
 }
 
-const defaultRenderCell = (value: any) => {
+const defaultRenderCell = (value: unknown) => {
   return String(value);
 };
 

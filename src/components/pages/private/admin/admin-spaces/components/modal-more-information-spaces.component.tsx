@@ -178,7 +178,7 @@ interface IModalMoreInformation {
   ];
 
   const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute' ,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -198,7 +198,7 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
     const [objects, setObjects] = useState<IObject[]>(objectsQ)
     async function getAllObjects() {
       const Obojetsresp = await ObjectsService.getAll()
-      // setObjects(Obojetsresp)
+      setObjects(Obojetsresp)
     }
   
     useEffect(() => {
@@ -208,7 +208,7 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
     const columns = [
       { id: "name", label: "Nombre", width: "20%", filter: "String" },
       { id: "description", label: "Descripción", width: "20%", filter: "String" },
-      { id: "quantity ", label: "Cantidad", width: "20%", filter: "String" },
+      { id: "quantity", label: "Cantidad", width: "20%", filter: "String" },
       { id: "space_id", label: "Espacio", width: "20%", filter: "String" },
       {
         id: "actions",

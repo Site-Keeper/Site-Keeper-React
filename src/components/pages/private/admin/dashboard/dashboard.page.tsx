@@ -1,7 +1,6 @@
 import { Box, Chip, Typography } from "@mui/material";
 import DashboardCardsMUI from "./components/AdminCards";
 import { TableAdmin } from "./components/table/table-admin.component";
-import DynamicIcon from "../../../../utilities/DynamicIcon";
 import { IReport } from "../../../../../models/interfaces/reports.interface";
 import { useEffect, useState } from "react";
 import { ReportsService } from "../../../../../services/Reports/reports.service";
@@ -77,7 +76,7 @@ export default function Dashboard() {
       label: "Tema",
       width: "20%",
       filter: "String",
-      renderCell: (value: IReport) => (
+      renderCell: () => (
         <Chip
           sx={{
             backgroundColor: "#E0F7FA", 

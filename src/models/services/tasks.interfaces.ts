@@ -7,9 +7,11 @@ export interface IGetTaskByRoutineReq {
 }
 
 export interface IGetTaskByRoutineResp extends ApiResponse<ITask[]> {
+
+  total: number|undefined
 }
 
-export interface IGetStatisticsTaskResp extends ApiResponse<any> {
+export interface IGetStatisticsTaskResp extends ApiResponse<unknown> {
 
   total: number
   completed : number

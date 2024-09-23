@@ -3,7 +3,7 @@ import { Box, Button, Chip, IconButton, Modal, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 import { ITask } from "../../../../../../models/interfaces/task.interface";
 import { TasksService } from "../../../../../../services/task/task.service";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
@@ -16,7 +16,7 @@ interface IModalMoreInformation {
 }
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -34,16 +34,15 @@ const style = {
 
 export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMoreInformation) {
   const [task, setTask] = useState<ITask[]>([])
-  async function getTaskByRoutines() {
-    console.log(id)
+  const  getTaskByRoutines = useCallback(async() =>{
     const tasksReq = await TasksService.getTaskByRoutines(id)
     const tasks = tasksReq.data
     setTask(tasks)
-  }
+  }, [id])
 
   useEffect(() => {
     getTaskByRoutines()
-  }, [id])
+  }, [getTaskByRoutines])
 
   const columns = [
     { id: "title", label: "Título", width: "20%", filter: "String" },

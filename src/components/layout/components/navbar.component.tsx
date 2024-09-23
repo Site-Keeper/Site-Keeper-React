@@ -55,9 +55,8 @@ const Navbar = () => {
       setRolePages(pagesPersonel)
     } else {
       setRolePages(pagesEmployed)
-      console.log(rolpage, user)
     }
-  }, [location]);
+  }, [location, checkAuthentication, user, rolpage]);
 
   return (
     <Box sx={{ display: "flex", position: "static", padding: "0 50px ", justifyContent: "space-between", alignItems: 'center', width: '100%', height: '100px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>

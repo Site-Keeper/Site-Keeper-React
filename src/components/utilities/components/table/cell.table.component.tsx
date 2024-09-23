@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface CellProps {
-  value: any;
-  renderCell: (value: any) => React.ReactNode;
+  value: unknown;
+  renderCell: (value: unknown) => React.ReactNode;
   width: string;
 } 
 
