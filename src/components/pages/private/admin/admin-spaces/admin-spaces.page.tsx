@@ -8,11 +8,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import { ModalMoreInformationSpaces } from "./components/modal-more-information-spaces.component";
+import { ModalFormCreateSpaces } from "./components/create-spaces-form.component";
 
 export function AdminSpaces() {
     const [spaces, setSpaces] = useState<ISpace[]>([])
     const [openInfo, setOpenInfo] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(0);
+    const [openModalCreate, setOpenModalCreate] = useState(false);
+    const handleOpenCreate = () => setOpenModalCreate(true);
+    const handleCloseCreate = () => setOpenModalCreate(false);
   
     async function getAllSpaces() {
       const spacesReq = await SpacesService.getAll()
@@ -119,10 +123,12 @@ export function AdminSpaces() {
               borderRadius: "50px",
               gap: '10px'
             }}
+            onClick={handleOpenCreate}
           >
             <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
             <Typography variant="subtitle2">Crear Espacio</Typography>
           </Button>
+          <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} />
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
         </Box>
       </div>
