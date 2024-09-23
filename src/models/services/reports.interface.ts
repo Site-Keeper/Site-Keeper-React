@@ -8,3 +8,10 @@ export interface IGetAllReportsReq {
 
 export interface IGetAllReportsResp extends ApiResponse<IReport[]> {
 }
+
+
+export interface IGetSummaryReportsResp {
+  total: number;
+  approvedTotal : number;
+  rejectedTotal : number;
+}

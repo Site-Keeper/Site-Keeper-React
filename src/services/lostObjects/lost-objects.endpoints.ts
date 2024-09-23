@@ -7,7 +7,8 @@ export const LOST_OBJECTS_API_ENDPOINTS = (id: string = "") =>{
         DELETE: `${resourse}/${id}`,
         CREATE: `${resourse}`,
         UPDATE: `${resourse}//${id}`,
+        GET_SUMMARY: `${resourse}/summary`,
     }
 }
 
-export type TEndpointKeys = 'GET_ALL' | 'GET_BY_ID' | 'DELETE' | 'CREATE' | 'UPDATE' 
+export type TEndpointKeys = 'GET_ALL' | 'GET_BY_ID' | 'DELETE' | 'CREATE' | 'UPDATE' | 'GET_SUMMARY';
