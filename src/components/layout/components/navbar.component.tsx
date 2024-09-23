@@ -67,7 +67,7 @@ const Navbar = () => {
       </Box>
       {(location.pathname == "/" || location.pathname == "/lost-objects" || location.pathname.includes("space")) && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
         {rolpage.map((page) => (
-          !(page.path.includes('admin')) ? ( 
+          !(page.name.includes('Gestión')) ? ( 
             <Button
               key={page.name}
               color="primary"
