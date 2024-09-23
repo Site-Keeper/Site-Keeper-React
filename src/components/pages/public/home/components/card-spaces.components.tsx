@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
     space: ISpace
+    setId: React.Dispatch<React.SetStateAction<number>>
 }
 
-export function CardSpaces({space}: Props){
+export function CardSpaces({space, setId}: Props){
     const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ export function CardSpaces({space}: Props){
                 </Box>
                 {isAuthenticated &&<Box sx={{display: "flex", alignItems: "center", justifyContent: 'flex-end', marginRight: "20px", gap: '10px'}}>
                     <Button variant="outlined" onClick={() => navigate(`/space/${space.id}`)} sx={{color: "secondary.main", borderColor:"secondary.main"}}>Ver</Button>
-                    <Button variant="contained" sx={{bgcolor: 'secondary.main'}}>Reportar</Button>
+                    <Button onClick={() => setId(space.id)} variant="contained" sx={{bgcolor: 'secondary.main'}}>Reportar</Button>
                 </Box>}
             </Box>
         </div>

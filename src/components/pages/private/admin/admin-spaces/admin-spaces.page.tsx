@@ -6,13 +6,17 @@ import { VisibilityOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import { ModalMoreInformationSpaces } from "./components/modal-more-information-spaces.component";
+import { ModalFormCreateSpaces } from "./components/create-spaces-form.component";
 
 export function AdminSpaces() {
     const [spaces, setSpaces] = useState<ISpace[]>([])
     const [openInfo, setOpenInfo] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(0);
+    const [openModalCreate, setOpenModalCreate] = useState(false);
+    const handleOpenCreate = () => setOpenModalCreate(true);
+    const handleCloseCreate = () => setOpenModalCreate(false);
   
     async function getAllSpaces() {
       const spacesReq = await SpacesService.getAll()
@@ -32,7 +36,7 @@ export function AdminSpaces() {
   
     
   
-    const columns = [
+    const columns : Column<ISpace>[] = [
       { id: "name", label: "name", width: "25%", filter: "String" },
       { id: "location", label: "Ubicación", width: "25%", filter: "String" },
       { id: "description", label: "Descripción", width: "25%", filter: "String" },
@@ -41,7 +45,12 @@ export function AdminSpaces() {
         label: "Actions",
         width: "25%",
         filter: "string",
-        renderCell: (value: ISpace) => (
+        renderCell: (value) => {
+          if (!(typeof value === "object" && "id" in value)) {
+            return null;
+          }
+
+          return (
           <Box
             sx={{
               width: "100%",
@@ -84,7 +93,7 @@ export function AdminSpaces() {
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>
-        ),
+        )},
       },
     ];
     return (
@@ -114,10 +123,12 @@ export function AdminSpaces() {
               borderRadius: "50px",
               gap: '10px'
             }}
+            onClick={handleOpenCreate}
           >
             <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
             <Typography variant="subtitle2">Crear Espacio</Typography>
           </Button>
+          <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} />
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
         </Box>
       </div>

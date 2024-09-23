@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import { TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -33,7 +33,7 @@ export function RoutineAdmin() {
 
   
 
-  const columns = [
+  const columns: Column<IRoutine>[] = [
     { id: "name", label: "name", width: "20%", filter: "String" },
     { id: "start_time", label: "Hora de Inicio", width: "20%", filter: "String" },
     { id: "end_time", label: "Hora de Fin", width: "20%", filter: "String" },
@@ -42,35 +42,21 @@ export function RoutineAdmin() {
       label: "frecuencia",
       width: "20%",
       filter: "String",
-      renderCell: (value: IRoutine) => (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >
-          {value.days.map((day: string) => (
-            <div
-              key={`${value.id} + ${day}`}
-              style={{
-                backgroundColor: "#8c8c8c",
-                width: "20px",
-                height: "20px",
-                display: "flex",
-                borderRadius: "50%",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "10px",
-                color: "#fff",
-              }}
-            >
-              {day.charAt(0).toUpperCase()}
-            </div>
-          ))}
-        </Box>)
+      renderCell: (value) => {
+        if (typeof value === 'object' && 'days' in value) {
+          const routine = value as IRoutine;
+          return (
+            <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+              {routine.days.map((day: string) => (
+                <div key={`${routine.id} + ${day}`} style={{ backgroundColor: "#8c8c8c", width: "20px", height: "20px", display: "flex", borderRadius: "50%", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "#fff" }}>
+                  {day.charAt(0).toUpperCase()}
+                </div>
+              ))}
+            </Box>
+          );
+        }
+        return null;
+      }
     },
     { id: "assignedTo", label: "Encargado", width: "20%", filter: "String" },
     {
@@ -78,51 +64,58 @@ export function RoutineAdmin() {
       label: "Actions",
       width: "170px",
       filter: "string",
-      renderCell: (value: IRoutine) => (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >  
-          <IconButton
+      renderCell: (value) => {
+        // Verifica si 'value' es un objeto y tiene la propiedad 'id'
+        if (!(typeof value === 'object' && 'id' in value)) {
+          return null;
+        }
+    
+        return (
+          <Box
             sx={{
-              backgroundColor: "#3B82F6",
-              ":hover": { backgroundColor: "#3269C2" },
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
             }}
-            key={`See-${value.id}`}
-            aria-label="see"
-            onClick={() => handleOpen(value.id)}
-          > 
-            <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
-          </IconButton>
-          <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
-          <IconButton
-            sx={{
-              backgroundColor: "#FBBF24",
-              ":hover": { backgroundColor: "#EEB31C" },
-            }}
-            key={`edit-${value.id}`}
-            aria-label="edit"
           >
-            <EditIcon sx={{ color: "#fff" }} />
-          </IconButton>
-          <IconButton
-            sx={{
-              backgroundColor: "#EF4444",
-              ":hover": { backgroundColor: "#E04040" },
-            }}
-            key={`delete-${value.id}`}
-            aria-label="delete"
-          >
-            <DeleteIcon sx={{ color: "#fff" }} />
-          </IconButton>
-        </Box>
-      ),
-    },
+            <IconButton
+              sx={{
+                backgroundColor: "#3B82F6",
+                ":hover": { backgroundColor: "#3269C2" },
+              }}
+              key={`See-${value.id}`}
+              aria-label="see"
+              onClick={() => handleOpen(value.id)}
+            >
+              <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
+            </IconButton>
+            <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
+            <IconButton
+              sx={{
+                backgroundColor: "#FBBF24",
+                ":hover": { backgroundColor: "#EEB31C" },
+              }}
+              key={`edit-${value.id}`}
+              aria-label="edit"
+            >
+              <EditIcon sx={{ color: "#fff" }} />
+            </IconButton>
+            <IconButton
+              sx={{
+                backgroundColor: "#EF4444",
+                ":hover": { backgroundColor: "#E04040" },
+              }}
+              key={`delete-${value.id}`}
+              aria-label="delete"
+            >
+              <DeleteIcon sx={{ color: "#fff" }} />
+            </IconButton>
+          </Box>
+        );
+      },
+    }    
   ];
   return (
     <div

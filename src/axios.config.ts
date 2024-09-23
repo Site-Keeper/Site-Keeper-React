@@ -22,6 +22,15 @@ const axiosJavaInstance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
+const axiosJavaInstanceImage: AxiosInstance = axios.create({
+  baseURL: javaBaseURL,
+  timeout: 10000,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+  withCredentials: true,
+});
+
 axiosNestInstance.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("token");
@@ -34,6 +43,20 @@ axiosNestInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+axiosJavaInstanceImage.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 
 axiosJavaInstance.interceptors.request.use(
   (config) => {
@@ -48,4 +71,4 @@ axiosJavaInstance.interceptors.request.use(
   }
 );
 
-export {axiosNestInstance, axiosJavaInstance}
+export {axiosNestInstance, axiosJavaInstance, axiosJavaInstanceImage}

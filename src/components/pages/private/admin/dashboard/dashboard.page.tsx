@@ -1,7 +1,6 @@
 import { Box, Chip, Typography } from "@mui/material";
 import DashboardCardsMUI from "./components/AdminCards";
 import { TableAdmin } from "./components/table/table-admin.component";
-import DynamicIcon from "../../../../utilities/DynamicIcon";
 import { IReport } from "../../../../../models/interfaces/reports.interface";
 import { useEffect, useState } from "react";
 import { ReportsService } from "../../../../../services/Reports/reports.service";
@@ -58,8 +57,8 @@ export default function Dashboard() {
   const [reports, setReports] = useState<IReport[]>(reportsQ);
   
   async function getAllReports(){
-    // const reports = await ReportsService.getAll()
-    // setReports(reports)
+    const reports = await ReportsService.getAll()
+    setReports(reports)
   }
 
   useEffect(() => {
@@ -77,10 +76,8 @@ export default function Dashboard() {
       label: "Tema",
       width: "20%",
       filter: "String",
-      renderCell: (value: IReport) => (
+      renderCell: () => (
         <Chip
-          icon={<DynamicIcon iconName={value.topic.icon} />}
-          label={value.topic.name} 
           sx={{
             backgroundColor: "#E0F7FA", 
             color: "#006064", 
