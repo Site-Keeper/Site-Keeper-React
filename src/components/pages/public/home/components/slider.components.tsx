@@ -17,9 +17,10 @@ import { CardSpaces } from './card-spaces.components';
 
 interface Props {
   Spaces: ISpace[]
+  setId: React.Dispatch<React.SetStateAction<number>>
 }
 
-export function Slider3d({Spaces}: Props ) {
+export function Slider3d({Spaces, setId}: Props ) {
   console.log(Spaces)
   return (
     <Box className="box-container" sx={{width : "100%", height: "650px",}}>
@@ -41,7 +42,7 @@ export function Slider3d({Spaces}: Props ) {
         className="mySwiper"
       >
         {Spaces.map((space:ISpace) =><SwiperSlide key={space.id}>
-          <CardSpaces key={space.id} space={space} ></CardSpaces>
+          <CardSpaces key={space.id} space={space} setId={setId}></CardSpaces>
           </SwiperSlide>)}
         <div className="swiper-button-prev">
           <IconButton aria-label="previous">

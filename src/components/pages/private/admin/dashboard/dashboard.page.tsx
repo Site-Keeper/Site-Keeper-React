@@ -58,8 +58,8 @@ export default function Dashboard() {
   const [reports, setReports] = useState<IReport[]>(reportsQ);
   
   async function getAllReports(){
-    // const reports = await ReportsService.getAll()
-    // setReports(reports)
+    const reports = await ReportsService.getAll()
+    setReports(reports)
   }
 
   useEffect(() => {
@@ -79,8 +79,6 @@ export default function Dashboard() {
       filter: "String",
       renderCell: (value: IReport) => (
         <Chip
-          icon={<DynamicIcon iconName={value.topic.icon} />}
-          label={value.topic.name} 
           sx={{
             backgroundColor: "#E0F7FA", 
             color: "#006064", 

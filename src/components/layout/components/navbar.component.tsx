@@ -12,7 +12,7 @@ import { IUser } from "../../../models/interfaces";
 import { emptyUserState } from "../../../state/redux/states/user";
 
 const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
-const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }];
+const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }, { name: "Gestión De Objetos Perdidos", path: '/admin-lost-objects' }] ;
 const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -65,9 +65,9 @@ const Navbar = () => {
         <img src={logo} style={{ height: "90%" }} alt="RIWI" onClick={() => navigate('/')} />
         {!(location.pathname == "/" || location.pathname == "/lost-objects") && <Typography variant="h2">{pagesAdmin.find((page) => page.path === location.pathname)?.name}</Typography>}
       </Box>
-      {(location.pathname == "/" || location.pathname == "/lost-objects") && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
+      {(location.pathname == "/" || location.pathname == "/lost-objects" || location.pathname.includes("space")) && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
         {rolpage.map((page) => (
-          page.name !== "Gestión De Usuarios" && page.name !== "Gestión De Rutinas" && page.name !== "Gestión De Espacios" ? ( 
+          !(page.name.includes('Gestión')) ? ( 
             <Button
               key={page.name}
               color="primary"
