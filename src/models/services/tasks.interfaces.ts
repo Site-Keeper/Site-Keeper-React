@@ -1,4 +1,5 @@
 import { ApiResponse } from "../api";
+import { IStatsTask } from "../interfaces/stats.interface";
 import { ITask } from "../interfaces/task.interface";
 
 
@@ -7,11 +8,11 @@ export interface IGetTaskByRoutineReq {
 }
 
 export interface IGetTaskByRoutineResp extends ApiResponse<ITask[]> {
+
+  total: number|undefined
 }
 
-export interface IGetStatisticsTaskResp extends ApiResponse<any> {
+export interface IGetStatisticsTaskResp extends ApiResponse<IStatsTask> {
 
-  total: number
-  completed : number
-  cancelled : number
+  as: number|undefined
 }

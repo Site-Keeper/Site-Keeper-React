@@ -24,7 +24,7 @@ export function Home() {
   }
 
   useEffect(() => {
-      if(id !== 0) setOpenModalCreateReport(true)
+      setOpenModalCreateReport(true)
   },[id])
   
   useEffect(() => {

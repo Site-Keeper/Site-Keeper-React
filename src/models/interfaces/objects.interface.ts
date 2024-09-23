@@ -6,6 +6,6 @@ export interface IObject {
     name : string,
     description : string,
     image : string
-    quantity : number
+    quantity:number
     space_id : number
 }

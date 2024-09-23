@@ -1,17 +1,13 @@
-import React from 'react';
-
-interface CellProps {
-  value: any;
-  renderCell: (value: any) => React.ReactNode;
+interface CellProps<T> {
+  value: T | T[keyof T] | string ;  
+  renderCell: (value: T | T[keyof T ] | string) => React.ReactNode;  
   width: string;
 } 
 
-const Cell: React.FC<CellProps> = ({ value, renderCell, width }) => {
+export const Cell = <T,>({ value, renderCell, width }: CellProps<T>) => {
   return (
     <div style={{ width: width, padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         {renderCell(value)}
     </div>
   );
 };
-
-export default Cell;

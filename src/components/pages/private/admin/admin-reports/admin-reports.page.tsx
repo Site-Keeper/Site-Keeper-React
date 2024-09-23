@@ -1,18 +1,14 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import { TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { useEffect, useState } from "react";
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
+import { useEffect, useState } from "react"
 import { ReportsService } from "../../../../../services/Reports/reports.service";
 import { IReport } from "../../../../../models/interfaces/reports.interface";
 
 export function ReportsAdmin() {
   const [reports, setReports] = useState<IReport[]>([])
-  const [openInfo, setOpenInfo] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<number>(0);
 
   async function getAllReports() {
     const response = await ReportsService.getAll()
@@ -24,13 +20,7 @@ export function ReportsAdmin() {
     getAllReports()
   }, [])
 
-  const handleOpen = (id: number) => {
-    setSelectedId(id);
-    setOpenInfo(true);
-  };
-  const handleClose = () => setOpenInfo(false);
-
-  const columns = [
+  const columns: Column<IReport>[] = [
     { id: "name", label: "Nombre", width: "20%", filter: "String" },
     { id: "space", label: "Espacio", width: "20%", filter: "String" },
     { id: "date", label: "Hora", width: "20%", filter: "String" },
@@ -46,7 +36,13 @@ export function ReportsAdmin() {
       label: "Actions",
       width: "170px",
       filter: "String",
-      renderCell: (value: IReport) => (
+      renderCell: (value) => {
+
+        if (!(typeof value === 'object' && 'id' in value)) {
+          return null;
+        }
+    
+        return (
         <Box
           sx={{
             width: "100%",
@@ -56,18 +52,6 @@ export function ReportsAdmin() {
             gap: "10px",
           }}
         >
-          <IconButton
-            sx={{
-              backgroundColor: "#3B82F6",
-              ":hover": { backgroundColor: "#3269C2" },
-            }}
-            key={`See-${value.id}`}
-            aria-label="see"
-            onClick={() => handleOpen(value.id)}
-          >
-            <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
-          </IconButton>
-          <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
           <IconButton
             sx={{
               backgroundColor: "#FBBF24",
@@ -89,7 +73,7 @@ export function ReportsAdmin() {
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
         </Box>
-      ),
+      )},
     },
   ];
 

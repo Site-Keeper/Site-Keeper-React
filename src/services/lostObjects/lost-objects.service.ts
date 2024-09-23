@@ -1,6 +1,6 @@
 import { axiosJavaInstance } from "../../axios.config";
 
-import { IGetAllLostObjectsRes, IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
+import { IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
 
 import { ILostObject } from "../../models/interfaces/lost-object.interface";
 

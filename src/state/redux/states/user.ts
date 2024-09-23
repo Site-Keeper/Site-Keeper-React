@@ -6,6 +6,7 @@ export const emptyUserState: IUser = {
   id: 0,
   name: "",
   doc_number: "",
+  email: "",
   role: {
     id: 0,
     name: "",

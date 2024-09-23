@@ -5,6 +5,9 @@ import { USersService } from '../../../../../../services/users/users.service';
 import { TasksService } from '../../../../../../services/task/task.service';
 import { ReportsService } from '../../../../../../services/Reports/reports.service';
 import { LostObjectsService } from '../../../../../../services/lostObjects/lost-objects.service';
+import { IStatsTask, IStatsUser } from '../../../../../../models/interfaces/stats.interface';
+import { IGetSummaryReportsResp } from '../../../../../../models/services/reports.interface';
+import { IGetLostObjectSummaryResp } from '../../../../../../models/services/lost-object.interfaces';
 
 interface StatCardProps {
     title: string;
@@ -61,10 +64,10 @@ const StatCard: React.FC<StatCardProps> = ({ title, total, icon, stats }) => (
 
 
 export default function DashboardCardsMUI() {
-    const [statsUser, setStatsUser] = useState({ total: 0, admin: 0, perssonel: 0, employed: 0 });
-    const [statsTask, setStatsTask] = useState({ total: 0, completed: 0, cancelled: 0 });
-    const [summaryReports, setSummaryReports] = useState({ total: 0, approvedTotal: 0, rejectedTotal: 0 });
-    const [summaryLostObject, setSummaryLostObject] = useState({ total: 0, claimedTotal: 0, lostTotal: 0 });
+    const [statsUser, setStatsUser] = useState<IStatsUser>({ total: 0, admin: 0, perssonel: 0, employed: 0 });
+    const [statsTask, setStatsTask] = useState<IStatsTask>({ total: 0, completed: 0, cancelled: 0 });
+    const [summaryReports, setSummaryReports] = useState<IGetSummaryReportsResp>({ total: 0, approvedTotal: 0, rejectedTotal: 0 });
+    const [summaryLostObject, setSummaryLostObject] = useState<IGetLostObjectSummaryResp>({ total: 0, claimedTotal: 0, lostTotal: 0 });
 
     async function getStatisticsUser() {
         const statistics = await USersService.getStats();
@@ -96,8 +99,8 @@ export default function DashboardCardsMUI() {
 
     const info = [
         { title: 'Usuarios', Total: statsUser.total, icon: 'PeopleAltOutlinedIcon', stats: [{ label: 'Admin', value: statsUser.admin }, { label: 'Personnel', value: statsUser.perssonel }, { label: 'Employed', value: statsUser.employed }] },
-        { title: 'Objetos Perdidos', Total: 50, icon: 'Inventory2OutlinedIcon', stats: [{ label: 'Recuperados', value: summaryLostObject.claimedTotal }, { label: 'No Encontrados', value: summaryLostObject.lostTotal }] },
-        { title: 'Reportes', Total: 250, icon: 'DescriptionOutlinedIcon', stats: [{ label: 'Completados', value: summaryReports.approvedTotal }, { label: 'Cancelados', value: summaryReports.rejectedTotal }] },
+        { title: 'Objetos Perdidos', Total: summaryLostObject.total, icon: 'Inventory2OutlinedIcon', stats: [{ label: 'Recuperados', value: summaryLostObject.claimedTotal }, { label: 'No Encontrados', value: summaryLostObject.lostTotal }] },
+        { title: 'Reportes', Total: summaryReports.total, icon: 'DescriptionOutlinedIcon', stats: [{ label: 'Completados', value: summaryReports.approvedTotal }, { label: 'Cancelados', value: summaryReports.rejectedTotal }] },
         { title: 'Tareas', Total: statsTask.total, icon: 'AssignmentOutlinedIcon', stats: [{ label: 'Completados', value: statsTask.completed }, { label: 'Cancelados', value: statsTask.cancelled }] },
     ]
     return (

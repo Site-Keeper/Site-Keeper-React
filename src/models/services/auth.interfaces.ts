@@ -5,5 +5,7 @@ export interface ILoginReq {
   password: string;
 }
 
-export interface ILoginResp extends ApiResponse<{ token: string }> {}
+export interface ILoginResp extends ApiResponse<{ token: string }> {
+  as: string| undefined
+}
 

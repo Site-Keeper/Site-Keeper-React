@@ -1,19 +1,15 @@
 import { ApiResponse } from "../api";
 import { IUser } from "../interfaces";
+import { IStatsUser } from "../interfaces/stats.interface";
 
 
-export interface IGetAllUserReq {
-  // parámetros necesarios para la solicitud
+export interface IGetAllUsersResp extends ApiResponse<IUser[]> {
+  total: number | undefined
 }
 
-export interface IGetAllUserResp extends ApiResponse<IUser[]> {
-}
 
-export interface IGetStatisticsUserResp extends ApiResponse<any> {
-  total: number;
-  admin: number;
-  perssonel: number;
-  employed: number;
+export interface IGetStatisticsUserResp extends ApiResponse<IStatsUser> {
+  as : string | undefined
 }
 
 export interface IPostUsersReq {
@@ -22,4 +18,6 @@ export interface IPostUsersReq {
   perssonel_type: string|undefined
 }
 
-export interface IPostUsersResp extends ApiResponse<IUser[]> {}
+export interface IPostUsersResp extends ApiResponse<IUser[]> {
+  total: number | undefined
+}

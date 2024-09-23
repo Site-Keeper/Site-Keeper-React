@@ -2,7 +2,7 @@ import { ApiResponse } from "../api";
 import { IReport } from "../interfaces/reports.interface";
 
 
-export interface IGetAllReportsReq {}
+
 
 
 
@@ -12,5 +12,8 @@ export interface IGetSummaryReportsResp {
   rejectedTotal : number;
 }
 
-export interface IGetAllReportsResp extends ApiResponse<IReport[]> {}
+export interface IGetAllReportsResp extends ApiResponse<IReport[]> {
+
+  total: number| undefined;
+}
 

@@ -2,16 +2,16 @@ import React from 'react';
 import getRenderCell from './getRenderCell';
 import { Typography } from '@mui/material';
 import Header from './header-table.component';
-import Cell from './cell.table.component';
 import ItemsPerPage from './items-per-page.component';
 import Pagination from './Pagination.component';
+import { Cell } from './cell.table.component';
 
 export interface Column<T> {
   id: number | string; 
   label: string;
   width: string;
   filter?: string;
-  renderCell?: (value: T) => React.ReactNode;
+  renderCell?: (value: T| T[keyof T] | string) => React.ReactNode ;
 }
 
 interface DataGridProps<T> {
@@ -125,11 +125,12 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
             const column = columns.find(col => col.id === columnId);
             if (!column) return null;
             const renderCell = column.renderCell || getRenderCell<T>(column);
-            const cellValueOp = column.renderCell? row : 'NUll';
+            const value = row[columnId as keyof T]
+            const rowop: T | string = column.renderCell ? row : "undefined";
             return (
               <Cell
                 key={String(columnId)}
-                value={row[columnId as keyof T] || cellValueOp }
+                value={value ||  rowop }
                 renderCell={renderCell}
                 width={column.width}
               />
