@@ -1,12 +1,15 @@
 import { ApiResponse } from "../api";
 import { IUser } from "../interfaces";
+import { IStatsUser } from "../interfaces/stats.interface";
 
 
-export interface IGetStatisticsUserResp extends ApiResponse<unknown> {
-  total: number;
-  admin: number;
-  perssonel: number;
-  employed: number;
+export interface IGetAllUsersResp extends ApiResponse<IUser[]> {
+  total: number | undefined
+}
+
+
+export interface IGetStatisticsUserResp extends ApiResponse<IStatsUser> {
+  as : string | undefined
 }
 
 export interface IPostUsersReq {

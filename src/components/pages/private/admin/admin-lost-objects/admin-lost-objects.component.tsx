@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import { TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -10,7 +10,7 @@ import { ILostObject } from "../../../../../models/interfaces/lost-object.interf
 export function AdminLostObjects() {
   const [ lostObjects, setLostObjects ] = useState<ILostObject[]>([])
 
-  const columns = [
+  const columns: Column<ILostObject>[] = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
     { id: "description", label: "Descripción", width: "20%", filter: "String" },
     { id: "spaceId", label: "Space", width: "20%", filter: "String" },
@@ -25,7 +25,11 @@ export function AdminLostObjects() {
       label: "Actions",
       width: "170px",
       filter: "string",
-      renderCell: (value: ILostObject) => (
+      renderCell: (value) => {
+        if (!(typeof value === 'object' && 'id' in value)) {
+          return null;
+        }
+        return(
         <Box
           sx={{
             width: "100%",
@@ -56,7 +60,7 @@ export function AdminLostObjects() {
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
         </Box>
-      ),
+      )},
     },
   ];
 

@@ -48,7 +48,7 @@ export default function SelectAutoWidth({ itemsPerPage, setItemsPerPage }: items
                 onClick={() => setModalOpen(!isModalOpen)}
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-                {<Typography variant='subtitle1'>{options.find(option => option.value === itemsPerPage)?.label}</Typography> || 'Select an option'}
+                {options.find(option => option.value === itemsPerPage)?.label ?? 'Select an option'}
                 {isModalOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </div>
 

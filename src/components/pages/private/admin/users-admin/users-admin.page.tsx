@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import { TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -15,7 +15,7 @@ export function UserAdmin() {
   const handleOpen = () => setOpenModalCreate(true);
   const handleClose = () => setOpenModalCreate(false);
 
-  const columns = [
+  const columns: Column<IUserToRows>[] = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
     { id: "email", label: "Email", width: "20%", filter: "String" },
     { id: "doc_number", label: "Documento", width: "20%", filter: "String" },
@@ -31,7 +31,12 @@ export function UserAdmin() {
       label: "Actions",
       width: "170px",
       filter: "string",
-      renderCell: (value: IUserToRows) => (
+      renderCell: (value) => {
+        if (!(typeof value === "object" && "id" in value)) {
+          return null;
+        }
+
+        return (
         <Box
           sx={{
             width: "100%",
@@ -62,7 +67,7 @@ export function UserAdmin() {
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
         </Box>
-      ),
+      )}
     },
   ];
 

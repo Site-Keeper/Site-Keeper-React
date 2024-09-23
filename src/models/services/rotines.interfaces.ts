@@ -1,8 +1,8 @@
 import { ApiResponse } from "../api";
-import { IUser } from "../interfaces";
+import { IRoutine } from "../interfaces/routines.interface";
 
 
 
-export interface IGetAllUserResp extends ApiResponse<IUser[]> {
+export interface IGetAllRoutinesResp extends ApiResponse<IRoutine[]> {
   total: number | undefined;
 }

@@ -6,7 +6,7 @@ import { VisibilityOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import { ModalMoreInformationSpaces } from "./components/modal-more-information-spaces.component";
 
 export function AdminSpaces() {
@@ -32,7 +32,7 @@ export function AdminSpaces() {
   
     
   
-    const columns = [
+    const columns : Column<ISpace>[] = [
       { id: "name", label: "name", width: "25%", filter: "String" },
       { id: "location", label: "Ubicación", width: "25%", filter: "String" },
       { id: "description", label: "Descripción", width: "25%", filter: "String" },
@@ -41,7 +41,12 @@ export function AdminSpaces() {
         label: "Actions",
         width: "25%",
         filter: "string",
-        renderCell: (value: ISpace) => (
+        renderCell: (value) => {
+          if (!(typeof value === "object" && "id" in value)) {
+            return null;
+          }
+
+          return (
           <Box
             sx={{
               width: "100%",
@@ -84,7 +89,7 @@ export function AdminSpaces() {
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>
-        ),
+        )},
       },
     ];
     return (

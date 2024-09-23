@@ -6,7 +6,7 @@ import { TasksService } from "../../../../../../services/task/task.service";
 import { useCallback, useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
 import DynamicIcon from "../../../../../utilities/DynamicIcon";
 
 interface IModalMoreInformation {
@@ -34,17 +34,18 @@ const style = {
 
 export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMoreInformation) {
   const [task, setTask] = useState<ITask[]>([])
-  const  getTaskByRoutines = useCallback(async() =>{
-    const tasksReq = await TasksService.getTaskByRoutines(id)
-    const tasks = tasksReq.data
-    setTask(tasks)
-  }, [id])
+
+  const getTaskByRoutines = useCallback(async () => {
+    const tasksReq = await TasksService.getTaskByRoutines(id);
+    const tasks = tasksReq.data;
+    setTask(tasks);
+  }, [id]);
 
   useEffect(() => {
-    getTaskByRoutines()
-  }, [getTaskByRoutines])
+    getTaskByRoutines();
+  }, [getTaskByRoutines]);
 
-  const columns = [
+  const columns: Column<ITask>[] = [
     { id: "title", label: "Título", width: "20%", filter: "String" },
     { id: "description", label: "Descripción", width: "20%", filter: "String" },
     { id: "spaceName", label: "Space", width: "20%", filter: "String" },
@@ -55,7 +56,12 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
       label: "Temas",
       width: "20%",
       filter: "String",
-      renderCell: (value: ITask) => (
+      renderCell: (value) => {
+        if (!(typeof value === "object" && "id" in value && "topic" in value)) {
+          return null;
+        }
+        
+        return (
         <Chip
           icon={<DynamicIcon iconName={value.topic.icon} />}
           label={value.topic.name}
@@ -65,14 +71,19 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
             fontWeight: "bold",
           }}
         />
-      ),
+      )},
     },
     {
       id: "actions",
       label: "Actions",
       width: "170px",
       filter: "string",
-      renderCell: (value: ITask) => (
+      renderCell: (value) => {
+        if (!(typeof value === "object" && "id" in value)) {
+          return null;
+        }
+
+        return (
         <Box
           sx={{
             width: "100%",
@@ -103,7 +114,7 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
         </Box>
-      ),
+      )}
     },
   ];
 

@@ -1,5 +1,5 @@
 import { axiosNestInstance} from "../../axios.config";
-import { IGetAllRoutineResp } from "../../models/services/spaces.interfaces";
+import { IGetAllRoutinesResp } from "../../models/services/rotines.interfaces";
 import { ROUTINES_API_ENDPOINTS, TEndpointKeys } from "./routines.endpoints";
 
 const getEnpoint = (method: TEndpointKeys): string => {
@@ -7,8 +7,8 @@ const getEnpoint = (method: TEndpointKeys): string => {
 };
 
 export class RoutinesService {
-    static getAll = async (): Promise<IGetAllRoutineResp> => {
+    static getAll = async (): Promise<IGetAllRoutinesResp> => {
         const endpoint = getEnpoint("GET_ALL");
-        return await axiosNestInstance.get<IGetAllRoutineResp>(endpoint).then(response => response.data);
+        return await axiosNestInstance.get<IGetAllRoutinesResp>(endpoint).then(response => response.data);
     };
 }

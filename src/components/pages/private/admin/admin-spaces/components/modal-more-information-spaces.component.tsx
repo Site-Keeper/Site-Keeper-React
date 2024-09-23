@@ -6,7 +6,7 @@ import { Button, IconButton, Modal, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AddCircleOutlineOutlined, Close } from "@mui/icons-material";
-import { TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
+import { Column, TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
 
 interface IModalMoreInformation {
     open: boolean;
@@ -205,7 +205,7 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
       getAllObjects()
     }, [id])
   
-    const columns = [
+    const columns : Column<IObject>[] = [
       { id: "name", label: "Nombre", width: "20%", filter: "String" },
       { id: "description", label: "Descripción", width: "20%", filter: "String" },
       { id: "quantity", label: "Cantidad", width: "20%", filter: "String" },
@@ -215,7 +215,12 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
         label: "Actions",
         width: "170px",
         filter: "string",
-        renderCell: (value: IObject) => (
+        renderCell: (value) => {
+          if (!(typeof value === 'object' && 'id' in value)) {
+            return null;
+          }
+
+          return (
           <Box
             sx={{
               width: "100%",
@@ -246,7 +251,7 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>
-        ),
+        )},
       },
     ];
   
