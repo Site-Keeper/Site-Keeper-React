@@ -11,10 +11,10 @@ import { useAuth } from "../../../hooks/useAuth";
 import { IUser } from "../../../models/interfaces";
 import { emptyUserState } from "../../../state/redux/states/user";
 
-const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
+const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/personnel-dashboard" }];
 const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }, { name: "Gestión De Objetos Perdidos", path: '/admin-lost-objects' }] ;
 const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Logout"];
 
 const Navbar = () => {
   const location = useLocation();
@@ -51,7 +51,7 @@ const Navbar = () => {
     checkAuthentication();
     if (user.role.name === "admin") {
       setRolePages(pagesAdmin)
-    } else if (user.role.name === "Perssonel") {
+    } else if (user.role.name === "perssonel") {
       setRolePages(pagesPersonel)
     } else {
       setRolePages(pagesEmployed)

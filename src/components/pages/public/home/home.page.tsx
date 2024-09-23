@@ -6,9 +6,6 @@ import { SearchInput } from './components/search.components';
 import { useEffect, useState } from 'react';
 import { SpacesService } from '../../../../services/spaces/spaces.service';
 
-
-
-
 export function Home() {
   const [spaces, setSpaces ]  = useState<ISpace[]>([])
   const [search, setSearch] = useState<string>("")
