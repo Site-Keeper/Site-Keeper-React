@@ -39,7 +39,7 @@ const pagesPersonnel: IPages[] = [
 
 export function SideBarAdmin() {
   const [pageState, setPageState] = useState(pagesPersonnel);
-  const { isAuthenticated, setIsAuthenticated, checkAuthentication } = useAuth();
+  const { checkAuthentication } = useAuth();
   let user: IUser = emptyUserState;
   if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
     user = JSON.parse(sessionStorage.getItem("user") ?? "");
