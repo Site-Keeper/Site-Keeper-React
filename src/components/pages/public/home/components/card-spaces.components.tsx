@@ -21,8 +21,8 @@ export function CardSpaces({space, setId,setSpaceName}: Props){
     }
 
     return(
-        <div style={{ width: "400px", height: "560px", background: '#fff',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', display: "flex", flexDirection: 'column', gap: "15px", borderRadius: '20px', justifyContent: 'space-around'}}>
-            <Box sx={{display: "flex", flexDirection: 'column', gap: '15px'}}>
+        <div style={{ width: "400px", height: "550px", background: '#fff',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', display: "flex", flexDirection: 'column', gap: "15px", borderRadius: '20px', justifyContent: 'space-between'}}>
+            <Box sx={{display: "flex", flexDirection: 'column',marginTop: '15px', gap: '15px'}}>
                 <Typography variant="h3" sx={{marginLeft:"20px"}}>{space.name}</Typography>
                 <img src={space.image} style={{width: "100%", height: '210px',}} alt="" />
                 <Box sx={{ display: "flex", alignItems: "center", marginLeft: "20px", marginRight: "20px", gap: '10px'}}>
