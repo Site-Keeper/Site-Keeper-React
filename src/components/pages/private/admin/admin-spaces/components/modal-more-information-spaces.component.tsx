@@ -33,14 +33,13 @@ interface IModalMoreInformation {
 
 export function ModalMoreInformationSpaces({ open, handleClose, id, objects }: IModalMoreInformation) {
     const columns : Column<IObject>[] = [
-      { id: "name", label: "Nombre", width: "20%", filter: "String" },
-      { id: "description", label: "Descripción", width: "20%", filter: "String" },
-      { id: "quantity", label: "Cantidad", width: "20%", filter: "String" },
-      { id: "space_id", label: "Espacio", width: "20%", filter: "String" },
+      { id: "name", label: "Nombre", width: "25%", filter: "String" },
+      { id: "description", label: "Descripción", width: "25%", filter: "String" },
+      { id: "spaceName", label: "Espacio", width: "25%", filter: "String" },
       {
         id: "actions",
         label: "Actions",
-        width: "170px",
+        width: "25%",
         filter: "string",
         renderCell: (value) => {
           if (!(typeof value === 'object' && 'id' in value)) {
