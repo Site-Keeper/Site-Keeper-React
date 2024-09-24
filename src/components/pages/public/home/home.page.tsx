@@ -12,6 +12,7 @@ export function Home() {
   const [search, setSearch] = useState<string>("")
   const [openmodalcreateReport, setOpenModalCreateReport] = useState<boolean>(false)
   const [id, setId] = useState<number>(0)
+  const [ spaceName, setSpaceName] = useState<string>("")
 
   const handleClose = () => setOpenModalCreateReport(false);
 
@@ -33,10 +34,10 @@ export function Home() {
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: 'column', alignItems: 'center', gap: '20px'}} >
       <Box sx={{ height: '400px', width: '100vw', position: 'relative'}}><img src={hero} style={{ position: "absolute", objectFit: 'cover',height: '100%', width: '100%'}}/></Box>
-      <ModalFormCreateReports open={openmodalcreateReport} handleClose={handleClose} id={id} setId={setId}></ModalFormCreateReports>
+      <ModalFormCreateReports spacesName={spaceName} open={openmodalcreateReport} handleClose={handleClose} id={id} setId={setId}></ModalFormCreateReports>
       <Box sx={{ height: "90px", width: "74%", alignContent: 'center'}}>
             <SearchInput setSearch={setSearch}></SearchInput>
       </Box>
-      <Slider3d Spaces={spaces} setId={setId}></Slider3d>
+      <Slider3d setSpaceName={setSpaceName} Spaces={spaces} setId={setId}></Slider3d>
     </Box>
 );}
