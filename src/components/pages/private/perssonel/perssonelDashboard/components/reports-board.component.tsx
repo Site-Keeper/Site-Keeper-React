@@ -2,7 +2,12 @@ import { Box, Typography } from '@mui/material'
 import DynamicIcon from '../../../../../utilities/DynamicIcon'
 import ReportsCard from './reports-card.component';
 
-const reportItems = [
+const reportItems: Array<{
+  name: string;
+  location: string;
+  status: 'Pendiente' | 'En progreso' | 'Completado' | 'Cancelado';  // Tipos específicos de status
+  description: string;
+}> = [
   { name: 'Baño Hombres', location: '5to Piso - Zona Oriental', status: 'Pendiente', description: 'Se rompió el envase de jabón está regado por toda la mesa' },
   { name: 'Baño Mujeres', location: '5to Piso - Zona Oriental', status: 'En progreso', description: 'Se rompió el envase de jabón está regado por toda la mesa' },
   { name: 'Baño Hombres', location: '5to Piso - Zona Oriental', status: 'Completado', description: 'Se rompió el envase de jabón está regado por toda la mesa' },
