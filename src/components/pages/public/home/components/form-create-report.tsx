@@ -2,6 +2,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Modal, Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material'; // Asegúrate de tener este ícono instalado
 import { useState } from 'react';
+import { ReportsService } from '../../../../../services/Reports/reports.service';
+import { ICreateReportReq } from '../../../../../models/services/reports.interface';
 
 interface IFormInput {
     reportTopic: string;
@@ -14,6 +16,7 @@ interface IProps {
     open: boolean;
     id: number;
     setId: React.Dispatch<React.SetStateAction<number>>;
+    spacesName: string;
 }
 
 const Topic = [
@@ -23,31 +26,24 @@ const Topic = [
     { value: 4, label: 'Otros' },
 ];
 
-export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps) => {
+export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesName}: IProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [imageError, setImageError] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        if (!imageFile) {
-            setImageError('Por favor, sube una imagen');
-            return;
-        }
-
         const topicnumber = Number(data.reportTopic);
-
-        const datareq = {
+        const datareq: ICreateReportReq = {
             name: data.reportName,
             description: data.reportDescription,
             isEvent: false,
-            topic_id: topicnumber,
-            date: new Date(),
-            space_id: id,
-            image: imageFile,
+            topicId: topicnumber,
+            theDate: new Date(),
+            spaceId: id,
+            image: imageFile? imageFile : undefined,
         };
-
-        console.log('Datos enviados:', datareq);
+        await ReportsService.create(datareq);
         handleClose();
     };
 
@@ -79,14 +75,14 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
                     padding: "30px",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "20px",
+                    gap: "10px",
                     border: "none", 
                   }}
             >
                 <Typography variant="h2" component="h2">
-                    Añadir Reporte
+                    Añadir Reporte para {spacesName}
                 </Typography>
-                <form style={{ display: 'flex', flexDirection: 'column', gap: '20px' }} onSubmit={handleSubmit(onSubmit)}>
+                <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         label="Nombre del Reporte"
                         fullWidth
