@@ -16,6 +16,7 @@ interface IProps {
     open: boolean;
     id: number;
     setId: React.Dispatch<React.SetStateAction<number>>;
+    spacesName: string;
 }
 
 const Topic = [
@@ -25,7 +26,7 @@ const Topic = [
     { value: 4, label: 'Otros' },
 ];
 
-export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps) => {
+export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesName}: IProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [imageError, setImageError] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
@@ -74,14 +75,14 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
                     padding: "30px",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "20px",
+                    gap: "10px",
                     border: "none", 
                   }}
             >
                 <Typography variant="h2" component="h2">
-                    Añadir Reporte
+                    Añadir Reporte para {spacesName}
                 </Typography>
-                <form style={{ display: 'flex', flexDirection: 'column', gap: '20px' }} onSubmit={handleSubmit(onSubmit)}>
+                <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         label="Nombre del Reporte"
                         fullWidth
