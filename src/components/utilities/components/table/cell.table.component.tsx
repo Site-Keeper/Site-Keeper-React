@@ -6,7 +6,7 @@ interface CellProps<T> {
 
 export const Cell = <T,>({ value, renderCell, width }: CellProps<T>) => {
   return (
-    <div style={{ width: width, padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div style={{ width: width, padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         {renderCell(value)}
     </div>
   );

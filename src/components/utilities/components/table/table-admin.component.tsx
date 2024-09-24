@@ -126,7 +126,7 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
             if (!column) return null;
             const renderCell = column.renderCell || getRenderCell<T>(column);
             const value = row[columnId as keyof T]
-            const rowop: T | string = column.renderCell ? row : "undefined";
+            const rowop: T | string = column.renderCell ? row : "N/A";
             return (
               <Cell
                 key={String(columnId)}

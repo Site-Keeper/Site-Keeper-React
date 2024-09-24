@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+
 import { IObject } from "../../../../../../models/interfaces";
-import { ObjectsService } from "../../../../../../services/objects/obejcts.service";
 import { Box } from "@mui/system";
 import { Button, IconButton, Modal, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,170 +11,8 @@ interface IModalMoreInformation {
     open: boolean;
     handleClose: React.Dispatch<React.SetStateAction<boolean>>;
     id: number
+    objects: IObject[]
   }
-
-  const objectsQ: IObject[] = [
-    {
-      id: 1,
-      name: "Laptop HP",
-      description: "Laptop HP con pantalla de 15 pulgadas",
-      image: "https://example.com/laptop-hp.jpg",
-      quantity: 1,
-      space_id: 101
-    },
-    {
-      id: 2,
-      name: "Mouse Inalámbrico",
-      description: "Mouse inalámbrico color negro",
-      image: "https://example.com/mouse.jpg",
-      quantity: 10,
-      space_id: 102
-    },
-    {
-      id: 3,
-      name: "Teclado Mecánico",
-      description: "Teclado mecánico RGB",
-      image: "https://example.com/teclado-mecanico.jpg",
-      quantity: 5,
-      space_id: 103
-    },
-    {
-      id: 4,
-      name: "Monitor Samsung",
-      description: "Monitor Samsung 24 pulgadas Full HD",
-      image: "https://example.com/monitor-samsung.jpg",
-      quantity: 2,
-      space_id: 104
-    },
-    {
-      id: 5,
-      name: "Proyector Epson",
-      description: "Proyector Epson con resolución 4K",
-      image: "https://example.com/proyector-epson.jpg",
-      quantity: 3,
-      space_id: 105
-    },
-    {
-      id: 6,
-      name: "Auriculares Bluetooth",
-      description: "Auriculares Bluetooth color azul",
-      image: "https://example.com/auriculares.jpg",
-      quantity: 20,
-      space_id: 106
-    },
-    {
-      id: 7,
-      name: "Silla Ergonómica",
-      description: "Silla ergonómica con soporte lumbar",
-      image: "https://example.com/silla-ergonomica.jpg",
-      quantity: 15,
-      space_id: 107
-    },
-    {
-      id: 8,
-      name: "Impresora Láser",
-      description: "Impresora láser multifuncional",
-      image: "https://example.com/impresora-laser.jpg",
-      quantity: 4,
-      space_id: 108
-    },
-    {
-      id: 9,
-      name: "Cámara de Seguridad",
-      description: "Cámara de seguridad con visión nocturna",
-      image: "https://example.com/camara-seguridad.jpg",
-      quantity: 8,
-      space_id: 109
-    },
-    {
-      id: 10,
-      name: "Mesa de Reuniones",
-      description: "Mesa de reuniones con capacidad para 10 personas",
-      image: "https://example.com/mesa-reuniones.jpg",
-      quantity: 1,
-      space_id: 110
-    },
-    {
-      id: 11,
-      name: "Proyector Portátil",
-      description: "Proyector portátil de alta definición",
-      image: "https://example.com/proyector-portatil.jpg",
-      quantity: 3,
-      space_id: 111
-    },
-    {
-      id: 12,
-      name: "Pantalla Interactiva",
-      description: "Pantalla interactiva táctil de 50 pulgadas",
-      image: "https://example.com/pantalla-interactiva.jpg",
-      quantity: 1,
-      space_id: 112
-    },
-    {
-      id: 13,
-      name: "Router WiFi",
-      description: "Router WiFi de última generación",
-      image: "https://example.com/router-wifi.jpg",
-      quantity: 5,
-      space_id: 113
-    },
-    {
-      id: 14,
-      name: "Cable HDMI",
-      description: "Cable HDMI de 2 metros",
-      image: "https://example.com/cable-hdmi.jpg",
-      quantity: 50,
-      space_id: 114
-    },
-    {
-      id: 15,
-      name: "Teléfono IP",
-      description: "Teléfono IP con pantalla táctil",
-      image: "https://example.com/telefono-ip.jpg",
-      quantity: 12,
-      space_id: 115
-    },
-    {
-      id: 16,
-      name: "Micrófono Inalámbrico",
-      description: "Micrófono inalámbrico de alta calidad",
-      image: "https://example.com/microfono.jpg",
-      quantity: 6,
-      space_id: 116
-    },
-    {
-      id: 17,
-      name: "Control Remoto",
-      description: "Control remoto para proyector",
-      image: "https://example.com/control-remoto.jpg",
-      quantity: 15,
-      space_id: 117
-    },
-    {
-      id: 18,
-      name: "Grabadora de Voz",
-      description: "Grabadora de voz digital",
-      image: "https://example.com/grabadora-voz.jpg",
-      quantity: 5,
-      space_id: 118
-    },
-    {
-      id: 19,
-      name: "Tablet Samsung",
-      description: "Tablet Samsung de 10 pulgadas",
-      image: "https://example.com/tablet-samsung.jpg",
-      quantity: 8,
-      space_id: 119
-    },
-    {
-      id: 20,
-      name: "Disco Duro Externo",
-      description: "Disco duro externo de 1TB",
-      image: "https://example.com/disco-duro.jpg",
-      quantity: 10,
-      space_id: 120
-    }
-  ];
 
   const style = {
     position: 'absolute' ,
@@ -194,17 +31,7 @@ interface IModalMoreInformation {
   };
 
 
-export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMoreInformation) {
-    const [objects, setObjects] = useState<IObject[]>(objectsQ)
-    async function getAllObjects() {
-      const Obojetsresp = await ObjectsService.getAll()
-      setObjects(Obojetsresp)
-    }
-  
-    useEffect(() => {
-      getAllObjects()
-    }, [id])
-  
+export function ModalMoreInformationSpaces({ open, handleClose, id, objects }: IModalMoreInformation) {
     const columns : Column<IObject>[] = [
       { id: "name", label: "Nombre", width: "20%", filter: "String" },
       { id: "description", label: "Descripción", width: "20%", filter: "String" },
@@ -219,7 +46,6 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
           if (!(typeof value === 'object' && 'id' in value)) {
             return null;
           }
-
           return (
           <Box
             sx={{
@@ -254,7 +80,7 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
         )},
       },
     ];
-  
+
     return (
       <Modal
         keepMounted
@@ -279,7 +105,7 @@ export function ModalMoreInformationSpaces({ open, handleClose, id }: IModalMore
           >
             <Close />
           </IconButton>
-  
+
           <Typography id="keep-mounted-modal-title" variant="h2" component="h2">
             Espacio {id}
           </Typography>

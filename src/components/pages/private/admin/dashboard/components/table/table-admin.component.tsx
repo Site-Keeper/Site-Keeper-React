@@ -100,7 +100,7 @@ export const TableAdmin = <T,>({ columns, rows, limit }: DataGridProps<T>) => {
   };
 
   return (
-    <div style={{borderRadius: '8px', margin: '20px 0', color: '#828282' }}>
+    <div style={{borderRadius: '8px', color: '#828282' }}>
       <Header
         columns={columns}
         onFilterChange={handleFilterChange}
