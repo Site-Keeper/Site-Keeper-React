@@ -5,7 +5,7 @@ interface IProp {
         name: string,
         location: string,
         description: string,
-        status: string
+        status: 'Pendiente' | 'En progreso' | 'Completado' | 'Cancelado'
     }
 }
 
