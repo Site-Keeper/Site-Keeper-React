@@ -37,7 +37,7 @@ export default function LostObjectCard({ lostObject }: IProp) {
                 </Box>
                 <Box display={'flex'} gap={'5px'}>
                     <LocationOnOutlinedIcon color='secondary' />
-                    <Typography variant='subtitle2'>{lostObject.spaceId}</Typography>
+                    <Typography variant='subtitle2'>{lostObject.location}</Typography>
                 </Box>
             </CardContent>
         </Card>

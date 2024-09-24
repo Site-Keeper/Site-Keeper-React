@@ -7,9 +7,6 @@ import { useEffect, useState } from 'react';
 import { SpacesService } from '../../../../services/spaces/spaces.service';
 import { ModalFormCreateReports } from './components/form-create-report';
 
-
-
-
 export function Home() {
   const [spaces, setSpaces ]  = useState<ISpace[]>([])
   const [search, setSearch] = useState<string>("")
