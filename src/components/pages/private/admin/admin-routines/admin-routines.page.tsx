@@ -58,7 +58,7 @@ export function RoutineAdmin() {
         return null;
       }
     },
-    { id: "assignedTo", label: "Encargado", width: "20%", filter: "String" },
+    { id: "assigned_to", label: "Encargado", width: "20%", filter: "String" },
     {
       id: "actions",
       label: "Actions",
