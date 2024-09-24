@@ -1,7 +1,7 @@
-import { axiosJavaInstance} from "../../axios.config";
+import { axiosJavaInstance, axiosJavaInstanceImage} from "../../axios.config";
 import { IReport } from "../../models/interfaces/reports.interface";
 
-import { IGetSummaryReportsResp } from "../../models/services/reports.interface";
+import { ICreateReportReq, IGetSummaryReportsResp } from "../../models/services/reports.interface";
 import { REPORTS_API_ENDPOINTS, TEndpointKeys } from "./reports.endpoints";
 
 const getEnpoint = (method: TEndpointKeys): string => {
@@ -18,6 +18,10 @@ export class ReportsService {
     static getSummary = async (): Promise<IGetSummaryReportsResp> => {
         const endpoint = getEnpoint("GET_SUMMARY");
         return await axiosJavaInstance.get<IGetSummaryReportsResp>(endpoint).then(response => response.data);
+    };
 
+    static create = async (req: ICreateReportReq): Promise<IReport> => {
+        const endpoint = getEnpoint("POST");
+        return await axiosJavaInstanceImage.post<IReport>(endpoint, req).then(response => response.data);
     };
 }

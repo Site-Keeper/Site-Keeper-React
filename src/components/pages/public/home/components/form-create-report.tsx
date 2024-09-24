@@ -2,6 +2,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Modal, Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material'; // Asegúrate de tener este ícono instalado
 import { useState } from 'react';
+import { ReportsService } from '../../../../../services/Reports/reports.service';
+import { ICreateReportReq } from '../../../../../models/services/reports.interface';
 
 interface IFormInput {
     reportTopic: string;
@@ -30,24 +32,17 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
     const [imageFile, setImageFile] = useState<File | null>(null);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        if (!imageFile) {
-            setImageError('Por favor, sube una imagen');
-            return;
-        }
-
         const topicnumber = Number(data.reportTopic);
-
-        const datareq = {
+        const datareq: ICreateReportReq = {
             name: data.reportName,
             description: data.reportDescription,
             isEvent: false,
-            topic_id: topicnumber,
-            date: new Date(),
-            space_id: id,
-            image: imageFile,
+            topicId: topicnumber,
+            theDate: new Date(),
+            spaceId: id,
+            image: imageFile? imageFile : undefined,
         };
-
-        console.log('Datos enviados:', datareq);
+        await ReportsService.create(datareq);
         handleClose();
     };
 

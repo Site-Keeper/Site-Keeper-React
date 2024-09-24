@@ -3,7 +3,15 @@ import { IReport } from "../interfaces/reports.interface";
 
 
 
-
+export interface ICreateReportReq {
+  name: string;
+  description: string;
+  isEvent: boolean;
+  spaceId: number;
+  theDate: Date;
+  topicId: number;
+  image?: File;
+}
 
 
 export interface IGetSummaryReportsResp {
