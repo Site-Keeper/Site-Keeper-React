@@ -2,6 +2,10 @@ import { Box } from "@mui/system";
 import DynamicIcon from "../../utilities/DynamicIcon";
 import { List, ListItemButton, Typography } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
+import { emptyUserState } from "../../../state/redux/states/user";
+import { IUser } from "../../../models/interfaces";
 
 interface IPages {
   icon: string;
@@ -22,7 +26,34 @@ const pages: IPages[] = [
   { icon: "Inventory2OutlinedIcon", name: "Gestión Objetos Perdidos", pathname: "/admin-lost-objects" },
 ];
 
+const pagesPersonnel: IPages[] = [
+  {
+    icon: "GridViewIcon",
+    name: "Personnel Dashboard",
+    pathname: "/personnel-dashboard",
+  },
+  { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/admin-routines" },
+  { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/admin-reports" },
+];
+
+
 export function SideBarAdmin() {
+  const [pageState, setPageState] = useState(pagesPersonnel);
+  const { checkAuthentication } = useAuth();
+  let user: IUser = emptyUserState;
+  if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
+    user = JSON.parse(sessionStorage.getItem("user") ?? "");
+  }
+
+  useEffect(() => {
+    checkAuthentication();
+    if (user.role.name === "admin") {
+      setPageState(pages)
+    } else if (user.role.name === "perssonel") {
+      setPageState(pagesPersonnel)
+    }
+  }, [checkAuthentication, user, pageState]);
+
   const location = useLocation();
 
   return (
@@ -44,7 +75,7 @@ export function SideBarAdmin() {
         alignItems: "center",
         gap: "20px",
       }}>
-      {pages.map((page) => {
+      {pageState.map((page) => {
         return (
           <ListItemButton
             component={Link}

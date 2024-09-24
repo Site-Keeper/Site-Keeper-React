@@ -7,9 +7,6 @@ import { useEffect, useState } from 'react';
 import { SpacesService } from '../../../../services/spaces/spaces.service';
 import { ModalFormCreateReports } from './components/form-create-report';
 
-
-
-
 export function Home() {
   const [spaces, setSpaces ]  = useState<ISpace[]>([])
   const [search, setSearch] = useState<string>("")
@@ -24,7 +21,9 @@ export function Home() {
   }
 
   useEffect(() => {
-      if(id !== 0) setOpenModalCreateReport(true)
+      if(id > 0){
+        setOpenModalCreateReport(true)
+      }
   },[id])
   
   useEffect(() => {
@@ -32,7 +31,7 @@ export function Home() {
   },[search])  
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: 'column', alignItems: 'center'}} >
+    <Box sx={{ width: "100%", display: "flex", flexDirection: 'column', alignItems: 'center', gap: '20px'}} >
       <Box sx={{ height: '400px', width: '100vw', position: 'relative'}}><img src={hero} style={{ position: "absolute", objectFit: 'cover',height: '100%', width: '100%'}}/></Box>
       <ModalFormCreateReports open={openmodalcreateReport} handleClose={handleClose} id={id} setId={setId}></ModalFormCreateReports>
       <Box sx={{ height: "90px", width: "74%", alignContent: 'center'}}>

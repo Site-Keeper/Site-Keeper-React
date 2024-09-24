@@ -1,8 +1,8 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Modal, Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material'; // Asegúrate de tener este ícono instalado
 import { useState } from 'react';
 
-// Definición del tipo de los valores del formulario
 interface IFormInput {
     reportTopic: string;
     reportName: string;
@@ -26,8 +26,8 @@ const Topic = [
 export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [imageError, setImageError] = useState<string | null>(null);
-    const [imageName, setImageName] = useState<string | null>(null); // Para mostrar el nombre del archivo seleccionado
-    const [imageFile, setImageFile] = useState<File | null>(null); // Para almacenar el archivo seleccionado
+    const [imageName, setImageName] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         if (!imageFile) {
@@ -44,7 +44,7 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
             topic_id: topicnumber,
             date: new Date(),
             space_id: id,
-            image: imageFile // Incluir el archivo de la imagen en la petición
+            image: imageFile,
         };
 
         console.log('Datos enviados:', datareq);
@@ -54,9 +54,9 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files.length > 0) {
-            setImageFile(files[0]); // Guardar el archivo seleccionado
-            setImageName(files[0].name); // Guardar el nombre del archivo seleccionado
-            setImageError(null); // Limpiar el error si había uno
+            setImageFile(files[0]);
+            setImageName(files[0].name);
+            setImageError(null);
         }
     };
 
@@ -68,19 +68,20 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
     return (
         <Modal open={open} onClose={handleclosemodal}>
             <Box
-                sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
+                 sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
                     width: "620px",
-                    bgcolor: 'background.paper',
+                    bgcolor: "background.paper",
                     boxShadow: 24,
                     padding: "30px",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "20px", // Más espacio entre los elementos
-                }}
+                    gap: "20px",
+                    border: "none", 
+                  }}
             >
                 <Typography variant="h2" component="h2">
                     Añadir Reporte
@@ -110,27 +111,33 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId }: IProps)
                             id="report-image"
                             type="file"
                             accept="image/*"
-                            style={{ display: 'none' }} // Ocultamos el input original
-                            onChange={handleImageChange} // Manejamos el cambio de archivo manualmente
+                            style={{ display: 'none' }} 
+                            onChange={handleImageChange}
                         />
                         <label htmlFor="report-image">
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                component="span"
+                            <Box
                                 sx={{
-                                    color: 'white',
-                                    bgcolor: 'secondary.main',
-                                    ':hover': { bgcolor: 'secondary.dark' },
+                                    border: '2px dashed #ccc',
+                                    borderRadius: '4px',
+                                    padding: '20px',
+                                    textAlign: 'center',
+                                    cursor: 'pointer',
+                                    bgcolor: '#f9f9f9',
+                                    '&:hover': {
+                                        bgcolor: '#f1f1f1',
+                                    },
                                 }}
                             >
-                                Subir Imagen
-                            </Button>
-                            {imageName && (
-                                <Typography variant="body2" sx={{ ml: 2 }}>
-                                    {imageName}
+                                <CloudUpload sx={{ fontSize: 40, color: '#777' }} />
+                                <Typography variant="body1" sx={{ mt: 1, color: 'text.primary' }}>
+                                    Seleccione o arrastre su imagen aquí
                                 </Typography>
-                            )}
+                                {imageName && (
+                                    <Typography variant="body2" sx={{ mt: 1, color: 'text.primary' }}>
+                                        {imageName}
+                                    </Typography>
+                                )}
+                            </Box>
                         </label>
                         {imageError && (
                             <FormHelperText error>{imageError}</FormHelperText>

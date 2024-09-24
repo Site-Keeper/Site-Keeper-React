@@ -6,16 +6,15 @@ import { useState, useEffect } from "react";
 import { LoginModal } from "./login.component";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import logo from '../../../assets/img/favicon-removebg-preview.png'
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { IUser } from "../../../models/interfaces";
 import { emptyUserState } from "../../../state/redux/states/user";
 
-const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
-const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }, { name: "Gestión De Objetos Perdidos", path: '/admin-lost-objects' }] ;
-const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
+const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/personnel-dashboard" }];
+const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }, { name: "Gestión De Objetos Perdidos", path: '/admin-lost-objects' }, {name : "Gestión De Reportes", path : '/admin-reports'}] ;
+const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/personnel-dashboard" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,8 +25,7 @@ const Navbar = () => {
   if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
     user = JSON.parse(sessionStorage.getItem("user") ?? "");
   }
-
-  const handleCloseModal = () => {
+  const   handleCloseModal = () => {
     setOpen(false);
     checkAuthentication(); // Verificar autenticación cuando se cierra el modal
   };
@@ -37,6 +35,7 @@ const Navbar = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     setIsAuthenticated(false); // Actualizar estado
+    window.location.reload();
     handleCloseUserMenu()
   };
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -51,7 +50,7 @@ const Navbar = () => {
     checkAuthentication();
     if (user.role.name === "admin") {
       setRolePages(pagesAdmin)
-    } else if (user.role.name === "Perssonel") {
+    } else if (user.role.name === "perssonel") {
       setRolePages(pagesPersonel)
     } else {
       setRolePages(pagesEmployed)
@@ -64,7 +63,7 @@ const Navbar = () => {
         <img src={logo} style={{ height: "90%" }} alt="RIWI" onClick={() => navigate('/')} />
         {!(location.pathname == "/" || location.pathname == "/lost-objects") && <Typography variant="h2">{pagesAdmin.find((page) => page.path === location.pathname)?.name}</Typography>}
       </Box>
-      {(location.pathname == "/" || location.pathname == "/lost-objects" || location.pathname.includes("space")) && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
+      { !location.pathname.includes("admin") && isAuthenticated && <Box sx={{ display: { xs: "none", md: "flex", gap: '20px' } }}>
         {rolpage.map((page) => (
           !(page.name.includes('Gestión')) ? ( 
             <Button

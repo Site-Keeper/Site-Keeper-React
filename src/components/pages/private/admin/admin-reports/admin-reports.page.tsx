@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Typography } from "@mui/material";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -22,15 +22,29 @@ export function ReportsAdmin() {
 
   const columns: Column<IReport>[] = [
     { id: "name", label: "Nombre", width: "20%", filter: "String" },
-    { id: "space", label: "Espacio", width: "20%", filter: "String" },
-    { id: "date", label: "Hora", width: "20%", filter: "String" },
+    { id: "spaceName", label: "Espacio", width: "20%", filter: "String" },
+    { id: "theDate", label: "Hora", width: "20%", filter: "String" },
+    { id: "status", label: "Estado", width: "20%", filter: "String" },
     {
-      id: "topic",
-      label: "Asunto",
+      id: "ss",
+      label: "Tema",
       width: "20%",
-      filter: "String"
+      filter: "String",
+      renderCell: (value) => {
+        if (!(typeof value === 'object' && 'id' in value)) {
+          return null;
+        }
+        return(
+        <Chip
+          key={value.id}
+          sx={{
+            backgroundColor: "#E0F7FA", 
+            color: "#006064", 
+            fontWeight: "bold",
+          }}
+        />
+      )}
     },
-    { id: "stuatus", label: "Estado", width: "20%", filter: "String" },
     {
       id: "actions",
       label: "Actions",

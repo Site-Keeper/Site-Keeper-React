@@ -6,5 +6,6 @@ export interface ILostObject {
     description: string,
     image: string,
     spaceId: number,
+    location: string,
     status: LostObjectStatus
 }

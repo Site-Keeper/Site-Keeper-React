@@ -104,7 +104,7 @@ export default function DashboardCardsMUI() {
         { title: 'Tareas', Total: statsTask.total, icon: 'AssignmentOutlinedIcon', stats: [{ label: 'Completados', value: statsTask.completed }, { label: 'Cancelados', value: statsTask.cancelled }] },
     ]
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
             {info.map((info, index) => (
                 <StatCard
                     key={index}
