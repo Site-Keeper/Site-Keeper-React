@@ -13,7 +13,7 @@ export function AdminLostObjects() {
   const columns: Column<ILostObject>[] = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
     { id: "description", label: "Descripción", width: "20%", filter: "String" },
-    { id: "spaceId", label: "Space", width: "20%", filter: "String" },
+    { id: "spaceName", label: "Space", width: "20%", filter: "String" },
     {
       id: "status",
       label: "Estados",

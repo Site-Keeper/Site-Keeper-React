@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ISpace } from "../../../../../models/interfaces";
+import { IObject, ISpace } from "../../../../../models/interfaces";
 import { SpacesService } from "../../../../../services/spaces/spaces.service";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { VisibilityOutlined } from "@mui/icons-material";
@@ -14,6 +14,7 @@ export function AdminSpaces() {
     const [spaces, setSpaces] = useState<ISpace[]>([])
     const [openInfo, setOpenInfo] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(0);
+    const [objects, setObjects] = useState<IObject[]>([])
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const handleOpenCreate = () => setOpenModalCreate(true);
     const handleCloseCreate = () => setOpenModalCreate(false);
@@ -27,9 +28,10 @@ export function AdminSpaces() {
       getAllSpaces()
     }, [])
   
-    const handleOpen = (id: number) => {
+    const handleOpen = (id: number, object: IObject[]) => {
       setSelectedId(id); // Establece el ID seleccionado
       setOpenInfo(true);
+      setObjects(object)
     };
     const handleClose = () => setOpenInfo(false);
   
@@ -37,9 +39,9 @@ export function AdminSpaces() {
     
   
     const columns : Column<ISpace>[] = [
-      { id: "name", label: "name", width: "25%", filter: "String" },
+      { id: "name", label: "name", width: "15%", filter: "String" },
       { id: "location", label: "Ubicación", width: "25%", filter: "String" },
-      { id: "description", label: "Descripción", width: "25%", filter: "String" },
+      { id: "description", label: "Descripción", width: "35%", filter: "String" },
       {
         id: "actions",
         label: "Actions",
@@ -49,7 +51,6 @@ export function AdminSpaces() {
           if (!(typeof value === "object" && "id" in value)) {
             return null;
           }
-
           return (
           <Box
             sx={{
@@ -67,11 +68,11 @@ export function AdminSpaces() {
               }}
               key={`See-${value.id}`}
               aria-label="see"
-              onClick={() => handleOpen(value.id)}
+              onClick={() => handleOpen(value.id, value.objects)}
             > 
               <VisibilityOutlined sx={{ color: "#fff" }} />
+              
             </IconButton>
-            <ModalMoreInformationSpaces id={selectedId} open={openInfo} handleClose={handleClose} />
             <IconButton
               sx={{
                 backgroundColor: "#FBBF24",
@@ -130,6 +131,7 @@ export function AdminSpaces() {
           </Button>
           <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} />
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
+          <ModalMoreInformationSpaces  id={selectedId} open={openInfo} handleClose={handleClose} objects={objects}/>
         </Box>
       </div>
     );

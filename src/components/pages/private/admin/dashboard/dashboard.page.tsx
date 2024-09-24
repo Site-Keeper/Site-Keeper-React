@@ -11,7 +11,7 @@ const reportsQ: IReport[] = [
     name: "Report 1",
     description: "Description for report 1",
     spaceName: "Space 1",
-    date: new Date("2024-09-01"),
+    theDate: new Date("2024-09-01"),
     topic: { id: 1, name: "Maintenance", icon: "EngineeringIcon" },
     status: "Pending"
   },
@@ -20,7 +20,7 @@ const reportsQ: IReport[] = [
     name: "Report 2",
     description: "Description for report 2",
     spaceName: "Space 2",
-    date: new Date("2024-09-02"),
+    theDate: new Date("2024-09-02"),
     topic: { id: 2, name: "Janitorial", icon: "CleanHandsIcon" },
     status: "In Progress"
   },
@@ -29,7 +29,7 @@ const reportsQ: IReport[] = [
     name: "Report 3",
     description: "Description for report 3",
     spaceName: "Space 3",
-    date: new Date("2024-09-03"),
+    theDate: new Date("2024-09-03"),
     topic: { id: 3, name: "Security", icon: "AdminPanelSettingsIcon" },
     status: "Completed"
   },
@@ -38,7 +38,7 @@ const reportsQ: IReport[] = [
     name: "Report 4",
     description: "Description for report 4",
     spaceName: "Space 4",
-    date: new Date("2024-09-04"),
+    theDate: new Date("2024-09-04"),
     topic: { id: 4, name: "Other", icon: "MoreHorizIcon" },
     status: "Pending"
   },
@@ -47,7 +47,7 @@ const reportsQ: IReport[] = [
     name: "Report 5",
     description: "Description for report 5",
     spaceName: "Space 5",
-    date: new Date("2024-09-05"),
+    theDate: new Date("2024-09-05"),
     topic: { id: 1, name: "Maintenance", icon: "EngineeringIcon" },
     status: "In Progress"
   }
@@ -70,7 +70,7 @@ export default function Dashboard() {
     {id: "description", label: "Descripción", width: "20%", filter: "String"},
     {id: "status", label: "Estado", width: "20%", filter: "String"},
     {id: "spaceName", label: "Espacio", width: "20%", filter: "String"},
-    {id: "date", label: "Fecha", width: "20%", filter: "Date"},
+    {id: "theDate", label: "Fecha", width: "20%", filter: "Date"},
     {
       id: "ss",
       label: "Tema",
