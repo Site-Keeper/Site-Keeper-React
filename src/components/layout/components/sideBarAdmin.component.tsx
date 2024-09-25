@@ -49,7 +49,7 @@ export function SideBarAdmin() {
     checkAuthentication();
     if (user.role.name === "admin") {
       setPageState(pages)
-    } else if (user.role.name === "perssonel") {
+    } else if (user.role.name === "personnel") {
       setPageState(pagesPersonnel)
     }
   }, [checkAuthentication, user, pageState]);

@@ -64,7 +64,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, total, icon, stats }) => (
 
 
 export default function DashboardCardsMUI() {
-    const [statsUser, setStatsUser] = useState<IStatsUser>({ total: 0, admin: 0, perssonel: 0, employed: 0 });
+    const [statsUser, setStatsUser] = useState<IStatsUser>({ total: 0, admin: 0, personnel: 0, employed: 0 });
     const [statsTask, setStatsTask] = useState<IStatsTask>({ total: 0, completed: 0, cancelled: 0 });
     const [summaryReports, setSummaryReports] = useState<IGetSummaryReportsResp>({ total: 0, approvedTotal: 0, rejectedTotal: 0 });
     const [summaryLostObject, setSummaryLostObject] = useState<IGetLostObjectSummaryResp>({ total: 0, claimedTotal: 0, lostTotal: 0 });
@@ -98,7 +98,7 @@ export default function DashboardCardsMUI() {
     }, []);
 
     const info = [
-        { title: 'Usuarios', Total: statsUser.total, icon: 'PeopleAltOutlinedIcon', stats: [{ label: 'Admin', value: statsUser.admin }, { label: 'Personnel', value: statsUser.perssonel }, { label: 'Employed', value: statsUser.employed }] },
+        { title: 'Usuarios', Total: statsUser.total, icon: 'PeopleAltOutlinedIcon', stats: [{ label: 'Admin', value: statsUser.admin }, { label: 'Personnel', value: statsUser.personnel }, { label: 'Employed', value: statsUser.employed }] },
         { title: 'Objetos Perdidos', Total: summaryLostObject.total, icon: 'Inventory2OutlinedIcon', stats: [{ label: 'Recuperados', value: summaryLostObject.claimedTotal }, { label: 'No Encontrados', value: summaryLostObject.lostTotal }] },
         { title: 'Reportes', Total: summaryReports.total, icon: 'DescriptionOutlinedIcon', stats: [{ label: 'Completados', value: summaryReports.approvedTotal }, { label: 'Cancelados', value: summaryReports.rejectedTotal }] },
         { title: 'Tareas', Total: statsTask.total, icon: 'AssignmentOutlinedIcon', stats: [{ label: 'Completados', value: statsTask.completed }, { label: 'Cancelados', value: statsTask.cancelled }] },

@@ -8,7 +8,7 @@ export interface ICreateReportReq {
   description: string;
   isEvent: boolean;
   spaceId: number;
-  theDate: Date;
+  theDate: string;
   topicId: number;
   image?: File;
 }

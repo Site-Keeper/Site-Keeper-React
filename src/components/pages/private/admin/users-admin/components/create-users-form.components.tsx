@@ -50,7 +50,7 @@ export const ModalFormCreateUsers = ({ handleClose, open }: IProps) => {
             return; 
         }
         const roleId = Number(data.role);
-        await USersService.postUser({ doc_numbers: documents, role_id: roleId, perssonel_type: data.personnelType });
+        await USersService.postUser({ doc_numbers: documents, role_id: roleId, personnel_type: data.personnelType });
         setDocumentError(null); 
         setDocuments([]);
         handleClose();

@@ -9,7 +9,7 @@ const getEnpoint = (method: TEndpointKeys): string => {
 
 export class ObjectsService {
     static getAll = async (): Promise<IObject[]> => {
-        const endpoint = getEnpoint("GET_ALL");
+        const endpoint = getEnpoint("GET_ALL");          
         return await axiosJavaInstance.get<IObject[]>(endpoint).then(response => response.data);
     };
 

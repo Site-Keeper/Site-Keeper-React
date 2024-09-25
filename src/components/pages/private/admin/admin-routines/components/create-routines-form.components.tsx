@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { IUser } from '../../../../../../models/interfaces';
 import { USersService } from '../../../../../../services/users/users.service';
 import { ICreateRoutineReq } from '../../../../../../models/services/rotines.interfaces';
+import { RoutinesService } from '../../../../../../services/routines/routines.service';
+import { Navigate } from 'react-router-dom';
+import { PrivateRoutes } from '../../../../../../models/routes/routes.model';
 
 // Definición del tipo de los valores del formulario
 interface IFormInput {
@@ -72,8 +75,8 @@ export const ModalFormCreateRoutines = ({ handleClose, open }: IProps) => {
             days: selectedDays,
             assigned_to: data.assigned_to,
         }
-
-        console.log(datareq)
+        await RoutinesService.create(datareq);
+        <Navigate replace to={PrivateRoutes.ADMIN_RUTINES} />
     };
 
     useEffect(() => {
