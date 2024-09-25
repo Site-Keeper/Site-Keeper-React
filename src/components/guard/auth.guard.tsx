@@ -11,6 +11,7 @@ export const AuthGuard = () => {
   if(sessionStorage.getItem("user") != null && sessionStorage.getItem("token")){
     user = JSON.parse(sessionStorage.getItem("user") ?? "");
   }
+  console.log(user)
   const location = useLocation();
   const currentPath = location.pathname;
   if(!user.id){

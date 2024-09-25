@@ -21,3 +21,9 @@ export interface IPostUsersReq {
 export interface IPostUsersResp extends ApiResponse<IUser[]> {
   total: number | undefined
 }
+
+export interface IUpdateUserReq {
+  name?: string
+  email?: string
+  passaword?: string
+}
