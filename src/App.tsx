@@ -17,6 +17,8 @@ import Space from './components/pages/private/client/space/space.page';
 import { AdminLostObjects } from './components/pages/private/admin/admin-lost-objects/admin-lost-objects.component';
 import { ReportsAdmin } from './components/pages/private/admin/admin-reports/admin-reports.page';
 import { PersonnelDashboard } from './components/pages/private/perssonel/perssonelDashboard/perssonelDashboard.page';
+import { MyProfile } from './components/pages/private/client/myProfile/my-profile.pgae';
+import { CompleteRegistrationGuard } from './components/guard/complete-registration';
 
 function App() {
   return (
@@ -24,25 +26,30 @@ function App() {
       <RiwiTheme>
         <RoutesWithNotFound>
           <Route path={'site-keeper'} element={<ClientHome />} />
-          <Route element={<ClientLayout />}>
-            <Route path={PublicRoutes.HOME} element={<Home />} />
-
-            <Route path={PrivateRoutes.LOST_OBJECTS} element={<LostObject />} />
-          </Route>
-          <Route element={<AuthGuard />}>
-
+          <Route element={<CompleteRegistrationGuard />}>
             <Route element={<ClientLayout />}>
-              <Route path={PrivateRoutes.SPACE} element={<Space />} />
-            </Route>
+              <Route path={PublicRoutes.HOME} element={<Home />} />
 
-            <Route element={<AdminLayout />}>
-              <Route path={PrivateRoutes.PERSONNEL_DASHBOARD} element={<PersonnelDashboard />} />
-              <Route path={PrivateRoutes.ADMIN_REPORTS} element={<ReportsAdmin />} />
-              <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
-              <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
-              <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin />} />
-              <Route path={PrivateRoutes.ADMIN_SPACES} element={<AdminSpaces />} />
-              <Route path={PrivateRoutes.ADMIN_LOST_OBJECTS} element={<AdminLostObjects />} />
+              <Route path={PrivateRoutes.LOST_OBJECTS} element={<LostObject />} />
+            </Route>
+            <Route element={<AuthGuard />}>
+              <Route element={<ClientLayout />}>
+                <Route path={PrivateRoutes.SPACE} element={<Space />} />
+              </Route>
+              <Route element={<AdminLayout />}>
+                <Route path={PrivateRoutes.PERSONNEL_DASHBOARD} element={<PersonnelDashboard />} />
+                <Route path={PrivateRoutes.ADMIN_REPORTS} element={<ReportsAdmin />} />
+                <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
+                <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
+                <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin />} />
+                <Route path={PrivateRoutes.ADMIN_SPACES} element={<AdminSpaces />} />
+                <Route path={PrivateRoutes.ADMIN_LOST_OBJECTS} element={<AdminLostObjects />} />
+              </Route>
+            </Route>
+          </Route>
+          <Route element={<AuthGuard/>}>
+            <Route element={<ClientLayout />}>
+              <Route path={PrivateRoutes.MY_PROFILE} element={<MyProfile />} />
             </Route>
           </Route>
         </RoutesWithNotFound>

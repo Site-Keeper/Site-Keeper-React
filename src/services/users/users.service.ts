@@ -1,9 +1,9 @@
 import { axiosNestInstance} from "../../axios.config";
-import {  IGetAllUsersResp, IGetStatisticsUserResp, IPostUsersReq, IPostUsersResp } from "../../models/services/users.interfaces";
+import {  IGetAllUsersResp, IGetStatisticsUserResp, IPostUsersReq, IPostUsersResp, IUpdateUserReq } from "../../models/services/users.interfaces";
 import { TEndpointKeys, USERS_API_ENDPOINTS } from "./users.endpoints";
 
-const getEnpoint = (method: TEndpointKeys): string => {
-    return USERS_API_ENDPOINTS()[method];
+const getEnpoint = (method: TEndpointKeys, id?: number): string => {
+    return USERS_API_ENDPOINTS(id)[method];
 };
 
 export class USersService {
@@ -21,4 +21,11 @@ export class USersService {
         const endpoint = getEnpoint("POST");
         return await axiosNestInstance.post<IPostUsersResp>(endpoint, req).then(response => response.data);
     }
+
+    static updateUser = async (req: IUpdateUserReq, id: number): Promise<IPostUsersResp> => {
+        const endpoint = getEnpoint("UPDATE", id);
+        return await axiosNestInstance.patch<IPostUsersResp>(endpoint, req).then(response => response.data);
+    }
+
+    
 }

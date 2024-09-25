@@ -15,7 +15,6 @@ import { CloudUpload } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { ISpace } from "../../../../../../models/interfaces";
 import { SpacesService } from "../../../../../../services/spaces/spaces.service";
-import LostObject from "../../../client/lostObjects/lost-objects.page";
 import { LostObjectsService } from "../../../../../../services/lostObjects/lost-objects.service";
 
 interface IFormInput {
