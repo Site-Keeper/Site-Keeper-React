@@ -9,6 +9,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import { ModalMoreInformationSpaces } from "./components/modal-more-information-spaces.component";
 import { ModalFormCreateSpaces } from "./components/create-spaces-form.component";
+import { ModalFormUpdateSpaces } from "./components/update-spaces-form.component";
 
 export function AdminSpaces() {
     const [spaces, setSpaces] = useState<ISpace[]>([])
@@ -16,8 +17,11 @@ export function AdminSpaces() {
     const [selectedId, setSelectedId] = useState<number>(0);
     const [objects, setObjects] = useState<IObject[]>([])
     const [openModalCreate, setOpenModalCreate] = useState(false);
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const handleOpenCreate = () => setOpenModalCreate(true);
     const handleCloseCreate = () => setOpenModalCreate(false);
+    const handleOpenUpdate = () => setOpenModalUpdate(true);
+    const handleCloseUpdate = () => setOpenModalUpdate(false);
   
     async function getAllSpaces() {
       const spacesReq = await SpacesService.getAll()
@@ -130,6 +134,7 @@ export function AdminSpaces() {
             <Typography variant="subtitle2">Crear Espacio</Typography>
           </Button>
           <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} />
+          <ModalFormUpdateSpaces handleClose={handleCloseUpdate} open={openModalUpdate} space={}/>
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
           <ModalMoreInformationSpaces  id={selectedId} open={openInfo} handleClose={handleClose} objects={objects}/>
         </Box>

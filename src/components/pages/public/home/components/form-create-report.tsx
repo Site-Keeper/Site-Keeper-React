@@ -39,10 +39,11 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
             description: data.reportDescription,
             isEvent: false,
             topicId: topicnumber,
-            theDate: new Date(),
+            theDate: new Date().toISOString().slice(0, 19),
             spaceId: id,
             image: imageFile? imageFile : undefined,
         };
+        console.log(datareq);
         await ReportsService.create(datareq);
         handleClose();
     };

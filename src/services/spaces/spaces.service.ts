@@ -23,4 +23,9 @@ export class SpacesService {
         return await axiosJavaInstanceImage.post<ISpace>(endpoint, req).then(response => response.data)
     }
 
+    static update = async(req: ICreateSpace): Promise<ISpace> => {
+        const endpoint = getEnpoint('PUT')
+        return await axiosJavaInstanceImage.put<ISpace>(endpoint, req).then(response => response.data)
+    }
+
 }
