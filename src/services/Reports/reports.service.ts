@@ -12,7 +12,6 @@ export class ReportsService {
     static getAll = async (): Promise<IReport[]> => {
         const endpoint = getEnpoint("GET_ALL");
         return await axiosJavaInstance.get<IReport[]>(endpoint).then(response => response.data);
-
     };
 
     static getSummary = async (): Promise<IGetSummaryReportsResp> => {

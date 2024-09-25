@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { IUser } from '../../../../../../models/interfaces';
 import { USersService } from '../../../../../../services/users/users.service';
 import { ICreateRoutineReq } from '../../../../../../models/services/rotines.interfaces';
+import { personnelTypeTranslate } from '../../../../../../models/enums/perssonelType.enum';
 
 // Definición del tipo de los valores del formulario
 interface IFormInput {
@@ -12,14 +13,7 @@ interface IFormInput {
     end_time: string;
     days: string[];
     assigned_to: number;
-    personnelType: personnelType;
-}
-
-export enum personnelType {
-    MAINTENANCE = 'Mantenimiento',
-    JANITORIAL = 'Limpieza',
-    SECURITY = 'Seguridad',
-    OTHER = 'Otro',
+    personnelType: personnelTypeTranslate;
 }
 
 interface IProps {
@@ -174,7 +168,7 @@ export const ModalFormCreateRoutines = ({ handleClose, open }: IProps) => {
                             {...register('personnelType', { required: 'Por favor selecciona un tipo de reserva' })}
                             fullWidth
                         >
-                            {Object.entries(personnelType).map(([key, value]) => (
+                            {Object.entries(personnelTypeTranslate).map(([key, value]) => (
                                 <MenuItem key={key} value={key}>
                                     {value}
                                 </MenuItem>

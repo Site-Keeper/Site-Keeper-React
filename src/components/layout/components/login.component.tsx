@@ -21,6 +21,7 @@ import logoRiwi from "../../../assets/img/logoRiwi.png";
 import { LoginSubmit } from "../hooks/use-login-submit";
 import { useDispatch } from "react-redux";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
   documentNumber: string;
@@ -54,6 +55,7 @@ const style = {
 
 export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -87,6 +89,7 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
         password,
         dispatch,
         handleCloseModal,
+        navigate
       });
       window.location.reload();
     } catch (error) {
