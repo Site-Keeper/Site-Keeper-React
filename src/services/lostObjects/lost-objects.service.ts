@@ -1,6 +1,6 @@
-import { axiosJavaInstance } from "../../axios.config";
+import { axiosJavaInstance, axiosJavaInstanceImage } from "../../axios.config";
 
-import { IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
+import { ICreateLostObjectReq, IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
 
 import { ILostObject } from "../../models/interfaces/lost-object.interface";
 
@@ -19,5 +19,10 @@ export class LostObjectsService {
     static get_summary = async (): Promise<IGetLostObjectSummaryResp> => {
         const endpoint = getEnpoint("GET_SUMMARY");
         return await axiosJavaInstance.get<IGetLostObjectSummaryResp>(endpoint).then(response => response.data);
+    };
+
+    static create = async (req: ICreateLostObjectReq, imageFile: File): Promise<ILostObject> => {
+        const endpoint = getEnpoint("CREATE");
+        return await axiosJavaInstanceImage.post<ILostObject>(endpoint,imageFile,{params : req}).then(response => response.data);
     };
 }

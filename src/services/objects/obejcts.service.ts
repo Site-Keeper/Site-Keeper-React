@@ -15,6 +15,6 @@ export class ObjectsService {
 
     static create = async (req: ICreateObjectsReq): Promise<IObject> => {
         const endpoint = getEnpoint("POST");
-        return await axiosJavaInstance.post<IObject>(endpoint, req).then(response => response.data);
+        return await axiosJavaInstance.post<IObject>(endpoint, null, {params : req}).then(response => response.data);
     };
 }
