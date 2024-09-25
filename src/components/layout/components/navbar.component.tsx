@@ -50,7 +50,7 @@ const Navbar = () => {
     checkAuthentication();
     if (user.role.name === "admin") {
       setRolePages(pagesAdmin)
-    } else if (user.role.name === "perssonel") {
+    } else if (user.role.name === "personnel") {
       setRolePages(pagesPersonel)
     } else {
       setRolePages(pagesEmployed)

@@ -1,11 +1,13 @@
 import { ApiResponse } from "../api";
 import { IRoutine } from "../interfaces/routines.interface";
 
-
-
 export interface IGetAllRoutinesResp extends ApiResponse<IRoutine[]> {
   total: number | undefined;
 }
+
+export type IGetRoutinesByUserResp = ApiResponse<IRoutine[]>;
+
+export type IGetTodayRoutine = ApiResponse<{todayRoutines: IRoutine}>;
 
 export interface ICreateRoutineReq {
   name: string;

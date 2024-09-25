@@ -1,6 +1,5 @@
 import { ITask } from "./task.interface";
 
-
 export interface IRoutine{
     id: number;
     name: string;
