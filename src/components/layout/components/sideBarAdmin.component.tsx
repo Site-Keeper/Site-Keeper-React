@@ -22,7 +22,34 @@ const pages: IPages[] = [
   { icon: "Inventory2OutlinedIcon", name: "Gestión Objetos Perdidos", pathname: "/admin-lost-objects" },
 ];
 
+const pagesPersonnel: IPages[] = [
+  {
+    icon: "GridViewIcon",
+    name: "Personnel Dashboard",
+    pathname: "/personnel-dashboard",
+  },
+  { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/personnel-routines" },
+  { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/personnel-reports" },
+];
+
+
 export function SideBarAdmin() {
+  const [pageState, setPageState] = useState(pagesPersonnel);
+  const { checkAuthentication } = useAuth();
+  let user: IUser = emptyUserState;
+  if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
+    user = JSON.parse(sessionStorage.getItem("user") ?? "");
+  }
+
+  useEffect(() => {
+    checkAuthentication();
+    if (user.role.name === "admin") {
+      setPageState(pages)
+    } else if (user.role.name === "personnel") {
+      setPageState(pagesPersonnel)
+    }
+  }, [checkAuthentication, user, pageState]);
+
   const location = useLocation();
 
   return (

@@ -17,6 +17,7 @@ import Space from './components/pages/private/client/space/space.page';
 import { AdminLostObjects } from './components/pages/private/admin/admin-lost-objects/admin-lost-objects.component';
 import { ReportsAdmin } from './components/pages/private/admin/admin-reports/admin-reports.page';
 import { PersonnelDashboard } from './components/pages/private/perssonel/perssonelDashboard/perssonelDashboard.page';
+import { PersonnelRoutines } from './components/pages/private/perssonel/personnelRoutines/personnel-routines.page';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
 
             <Route element={<AdminLayout />}>
               <Route path={PrivateRoutes.PERSONNEL_DASHBOARD} element={<PersonnelDashboard />} />
+              <Route path={PrivateRoutes.PERSONNEL_ROUTINES} element={<PersonnelRoutines />} />
               <Route path={PrivateRoutes.ADMIN_REPORTS} element={<ReportsAdmin />} />
               <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
               <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />

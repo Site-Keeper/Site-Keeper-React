@@ -1,5 +1,5 @@
+import { ReportStatus } from "../enums/status.enum"
 import { ITopic } from "./topic.interface"
-
 
 export interface IReport {
     id: number
@@ -8,5 +8,5 @@ export interface IReport {
     spaceName: string
     date: Date
     topic: ITopic
-    status: string
+    status: ReportStatus
 }
