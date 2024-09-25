@@ -1,13 +1,13 @@
+import { Box, Card, CardContent, CardHeader, Grid2, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, Typography, Box, Grid2 } from '@mui/material';
-import DynamicIcon from '../../../../../utilities/DynamicIcon';
-import { USersService } from '../../../../../../services/users/users.service';
-import { TasksService } from '../../../../../../services/task/task.service';
+import { IStatsTask, IStatsUser } from '../../../../../../models/interfaces/stats.interface';
+import { IGetLostObjectSummaryResp } from '../../../../../../models/services/lost-object.interfaces';
+import { IGetSummaryReportsResp } from '../../../../../../models/services/reports.interface';
 import { ReportsService } from '../../../../../../services/Reports/reports.service';
 import { LostObjectsService } from '../../../../../../services/lostObjects/lost-objects.service';
-import { IStatsTask, IStatsUser } from '../../../../../../models/interfaces/stats.interface';
-import { IGetSummaryReportsResp } from '../../../../../../models/services/reports.interface';
-import { IGetLostObjectSummaryResp } from '../../../../../../models/services/lost-object.interfaces';
+import { TasksService } from '../../../../../../services/task/task.service';
+import { USersService } from '../../../../../../services/users/users.service';
+import DynamicIcon from '../../../../../utilities/DynamicIcon';
 
 interface StatCardProps {
     title: string;
@@ -103,6 +103,7 @@ export default function DashboardCardsMUI() {
         { title: 'Reportes', Total: summaryReports.total, icon: 'DescriptionOutlinedIcon', stats: [{ label: 'Completados', value: summaryReports.approvedTotal }, { label: 'Cancelados', value: summaryReports.rejectedTotal }] },
         { title: 'Tareas', Total: statsTask.total, icon: 'AssignmentOutlinedIcon', stats: [{ label: 'Completados', value: statsTask.completed }, { label: 'Cancelados', value: statsTask.cancelled }] },
     ]
+    console.log(info);
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
             {info.map((info, index) => (
