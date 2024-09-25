@@ -21,8 +21,8 @@ export class LostObjectsService {
         return await axiosJavaInstance.get<IGetLostObjectSummaryResp>(endpoint).then(response => response.data);
     };
 
-    static create = async (req: ICreateLostObjectReq, imageFile: File): Promise<ILostObject> => {
+    static create = async (req: ICreateLostObjectReq): Promise<ILostObject> => {
         const endpoint = getEnpoint("CREATE");
-        return await axiosJavaInstanceImage.post<ILostObject>(endpoint,imageFile,{params : req}).then(response => response.data);
+        return await axiosJavaInstanceImage.post<ILostObject>(endpoint,req).then(response => response.data);
     };
 }

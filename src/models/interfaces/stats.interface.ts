@@ -1,7 +1,7 @@
 export interface IStatsUser {
     total: number;
     admin: number;
-    perssonel: number;
+    personnel: number;
     employed: number;
   }
   
