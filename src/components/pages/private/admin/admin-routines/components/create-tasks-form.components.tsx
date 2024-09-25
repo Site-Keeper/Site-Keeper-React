@@ -5,6 +5,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IObject, ISpace } from '../../../../../../models/interfaces';
 import { SpacesService } from '../../../../../../services/spaces/spaces.service';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { TasksService } from '../../../../../../services/task/task.service';
+import { ICreateTaskReq } from '../../../../../../models/services/tasks.interfaces';
 
 interface IFormInput {
     title: string;
@@ -18,16 +20,17 @@ interface IFormInput {
 interface IProps {
     handleClose: () => void;
     open: boolean;
+    routine_id: number;
 }
 
 const topics = [
-    { value: 'MAINTENANCE', label: 'Maintenance' },
-    { value: 'JANITORIAL', label: 'Janitorial' },
-    { value: 'SECURITY', label: 'Security' },
-    { value: 'OTHER', label: 'Other' }
+    { value: 1, label: 'Maintenance' },
+    { value: 2, label: 'Janitorial' },
+    { value: 3, label: 'Security' },
+    { value: 4, label: 'Other' }
 ];
 
-export const ModalFormCreateTasks = ({ handleClose, open }: IProps) => {
+export const ModalFormCreateTasks = ({ handleClose, open, routine_id }: IProps) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
     const [tasks, setTasks] = useState<IFormInput[]>([]);
     const [taskError, setTaskError] = useState<string | null>(null);
@@ -63,8 +66,20 @@ export const ModalFormCreateTasks = ({ handleClose, open }: IProps) => {
     };
 
     const onSubmit = async () => {
-        // Aquí puedes manejar la lógica al enviar sin validar
-        console.log('Enviar datos:', tasks);
+        console.log(tasks);
+        const taskreq: ICreateTaskReq[] = tasks.map((task) => ({
+            title: task.title,
+            description: task.description,
+            state: "PENDING",
+            space_id: task.space_id,
+            object_id: task.object_id? task.object_id : undefined,
+            topic_id: task.topic_id,
+            is_deleted: false,
+            routine_id: routine_id
+        }))
+        console.log(taskreq);
+        await TasksService.postTask(taskreq);
+        console.log('Enviar datos:', taskreq);
         setTaskError(null);
         setTasks([]);
         handleClose();

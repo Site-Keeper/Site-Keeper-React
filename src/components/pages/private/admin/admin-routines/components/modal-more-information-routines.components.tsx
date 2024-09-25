@@ -175,7 +175,7 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
             <Typography variant="subtitle1">Crear Rutinas</Typography>
           </Button>
           <TableAdmin rows={task} columns={columns} limit={5}></TableAdmin>
-          <ModalFormCreateTasks handleClose={handleCloseForm} open={openForm} />
+          <ModalFormCreateTasks routine_id={id} handleClose={handleCloseForm} open={openForm} />
         </Box>
       </Box>
     </Modal>

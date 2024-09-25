@@ -6,6 +6,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AddCircleOutlineOutlined, Close } from "@mui/icons-material";
 import { Column, TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
+import { useState } from "react";
+import { ModalFormCreateObject } from "./create-objects-form.component";
 
 interface IModalMoreInformation {
     open: boolean;
@@ -32,6 +34,16 @@ interface IModalMoreInformation {
 
 
 export function ModalMoreInformationSpaces({ open, handleClose, id, objects }: IModalMoreInformation) {
+    const [openForm, setOpenForm] = useState(false);
+
+    const handleOpenForm = () => {
+      setOpenForm(true);
+    };
+
+    const handleCloseForm = () => {
+      setOpenForm(false);
+    };
+
     const columns : Column<IObject>[] = [
       { id: "name", label: "Nombre", width: "25%", filter: "String" },
       { id: "description", label: "Descripción", width: "25%", filter: "String" },
@@ -121,11 +133,13 @@ export function ModalMoreInformationSpaces({ open, handleClose, id, objects }: I
                 borderRadius: "50px",
                 gap: '10px'
               }}
+              onClick={handleOpenForm}
             >
               <AddCircleOutlineOutlined sx={{ width: '25px', height: '25px' }} />
               <Typography variant="subtitle1">Crear objeto</Typography>
             </Button>
             <TableAdmin rows={objects} columns={columns} limit={5}></TableAdmin>
+            <ModalFormCreateObject open={openForm} handleClose={handleCloseForm} id={id} />
           </Box>
         </Box>
       </Modal>

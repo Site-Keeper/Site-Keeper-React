@@ -1,5 +1,5 @@
 import { axiosNestInstance} from "../../axios.config";
-import { IGetStatisticsTaskResp, IGetTaskByRoutineResp } from "../../models/services/tasks.interfaces";
+import { ICreateTaskReq, IGetStatisticsTaskResp, IGetTaskByRoutineResp } from "../../models/services/tasks.interfaces";
 import { TASKS_API_ENDPOINTS, TEndpointKeys } from "./tasks.endpoints";
 
 const getEnpoint = (method: TEndpointKeys, id: number | undefined): string => {
@@ -16,4 +16,9 @@ export class TasksService {
         const endpoint = getEnpoint("GET_STATS", undefined);
         return await axiosNestInstance.get<IGetStatisticsTaskResp>(endpoint).then(response => response.data);
     };
-}
+
+    static postTask = async (req: ICreateTaskReq[]): Promise<IGetStatisticsTaskResp[]> => {
+        const endpoint = getEnpoint("POST", undefined);
+        return await axiosNestInstance.post<IGetStatisticsTaskResp[]>(endpoint, req).then(response => response.data);
+    };
+}   
