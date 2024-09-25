@@ -51,6 +51,18 @@ function App() {
           </Route>
           <Route element={<AuthGuard/>}>
             <Route element={<ClientLayout />}>
+              <Route path={PrivateRoutes.SPACE} element={<Space />} />
+            </Route>
+
+            <Route element={<AdminLayout />}>
+              <Route path={PrivateRoutes.PERSONNEL_DASHBOARD} element={<PersonnelDashboard />} />
+              <Route path={PrivateRoutes.PERSONNEL_ROUTINES} element={<PersonnelRoutines />} />
+              <Route path={PrivateRoutes.ADMIN_REPORTS} element={<ReportsAdmin />} />
+              <Route path={PrivateRoutes.PRIVATE_DASHBOARD} element={<Dashboard />} />
+              <Route path={PrivateRoutes.ADMIN_USERS} element={<UserAdmin />} />
+              <Route path={PrivateRoutes.ADMIN_RUTINES} element={<RoutineAdmin />} />
+              <Route path={PrivateRoutes.ADMIN_SPACES} element={<AdminSpaces />} />
+              <Route path={PrivateRoutes.ADMIN_LOST_OBJECTS} element={<AdminLostObjects />} />
               <Route path={PrivateRoutes.MY_PROFILE} element={<MyProfile />} />
             </Route>
           </Route>
