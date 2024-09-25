@@ -7,9 +7,11 @@ import { useState } from "react";
 
 interface TaskCardProps {
     task: ITask;
+    setChangeTrigger: React.Dispatch<React.SetStateAction<boolean>>
+    changeTrigger: boolean
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({ task, setChangeTrigger, changeTrigger }: TaskCardProps) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -20,10 +22,10 @@ export default function TaskCard({ task }: TaskCardProps) {
             borderRadius="50px"
             height="auto"
             padding="10px 50px"
-            bgcolor= {`${statusColors[task.state as keyof typeof statusColors]}.main`}
+            bgcolor= {`${statusColors[task.state as keyof typeof statusColors]}.light`}
             mb={'15px'}
         >
-            <TaskModal open={open} onClose={() => setOpen(false)} task={task} />
+            <TaskModal open={open} onClose={() => setOpen(false)} task={task} setChangeTrigger={setChangeTrigger} changeTrigger={changeTrigger}/>
             <Box
                 display="flex"
                 flexDirection="column"
@@ -41,7 +43,7 @@ export default function TaskCard({ task }: TaskCardProps) {
                 </Typography>
             </Box>
             <IconButton sx={{mr: '15px', fontSize: '30px'}} onClick={() => setOpen(true)}>
-                <VisibilityIcon fontSize="inherit"/>
+                <VisibilityIcon fontSize="inherit" color="primary"/>
             </IconButton>
         </Box>
     );

@@ -2,6 +2,10 @@ import { Box } from "@mui/system";
 import DynamicIcon from "../../utilities/DynamicIcon";
 import { List, ListItemButton, Typography } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
+import { emptyUserState } from "../../../state/redux/states/user";
+import { IUser } from "../../../models/interfaces";
 
 interface IPages {
   icon: string;
@@ -71,7 +75,7 @@ export function SideBarAdmin() {
         alignItems: "center",
         gap: "20px",
       }}>
-      {pages.map((page) => {
+      {pageState.map((page) => {
         return (
           <ListItemButton
             component={Link}

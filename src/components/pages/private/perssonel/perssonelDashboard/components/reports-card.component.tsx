@@ -4,6 +4,8 @@ import { statusColors } from "../../../../../../models/enums/status-colors.enums
 
 interface IProp {
     item: IReport
+    setChangeTrigger: React.Dispatch<React.SetStateAction<boolean>>
+    changeTrigger: boolean
 }
 
 export default function ReportsCard({ item }: IProp) {

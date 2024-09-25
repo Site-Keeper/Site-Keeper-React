@@ -6,7 +6,7 @@ export interface IReport {
     name: string
     description: string
     spaceName: string
-    date: Date
+    theDate: Date
     topic: ITopic
     status: ReportStatus
 }

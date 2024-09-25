@@ -16,3 +16,22 @@ export interface IGetStatisticsTaskResp extends ApiResponse<IStatsTask> {
 
   as: number|undefined
 }
+
+
+export interface ICreateTaskReq {
+  title: string
+  description: string
+  state: string
+  space_id: number
+  object_id?: number
+  topic_id: string
+  routine_id: number
+  is_deleted: boolean
+}
+
+export type ICreateTaskResp = ApiResponse<ITask>
+
+export type IUpdateTaskReq = Partial<ITask>
+
+export type IUpdateTaskResp = ApiResponse<ITask>
+

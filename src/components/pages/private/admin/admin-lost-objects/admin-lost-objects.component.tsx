@@ -6,14 +6,19 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useEffect, useState } from "react";
 import { LostObjectsService } from "../../../../../services/lostObjects/lost-objects.service";
 import { ILostObject } from "../../../../../models/interfaces/lost-object.interface";
+import { ModalFormCreateObjectWithSpaces } from "./components/create-lost0objects-form.components";
 
 export function AdminLostObjects() {
   const [ lostObjects, setLostObjects ] = useState<ILostObject[]>([])
+  const [ openModalFormCreate, setOpenModalFormCreate ] = useState(false)
+
+  const handleCloseFormCreate = () => setOpenModalFormCreate(false);
+  const handleOpenFormCreate = () => setOpenModalFormCreate(true);
 
   const columns: Column<ILostObject>[] = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
     { id: "description", label: "Descripción", width: "20%", filter: "String" },
-    { id: "spaceId", label: "Space", width: "20%", filter: "String" },
+    { id: "spaceName", label: "Space", width: "20%", filter: "String" },
     {
       id: "status",
       label: "Estados",
@@ -96,16 +101,25 @@ export function AdminLostObjects() {
           variant="contained"
           sx={{
             height: "40px",
-            width: "220px",
+            width: "260px",
             backgroundColor: "success.main",
             borderRadius: "50px",
             gap: '10px'
           }}
+          onClick={handleOpenFormCreate}
         >
           <AddCircleOutlineIcon sx={{width: '25px', height: '25px'}}/>  
-          <Typography variant="subtitle2">Crear Usuarios</Typography>
+          <Typography variant="subtitle2">Crear Objeto Perdido</Typography>
         </Button>
         <TableAdmin rows={lostObjects} columns={columns} limit={5}></TableAdmin>
+        <ModalFormCreateObjectWithSpaces
+  open={openModalFormCreate}
+  handleClose={handleCloseFormCreate}
+  spaces={[
+    { id: "1", name: "Espacio A" },
+    { id: "2", name: "Espacio B" },
+  ]}
+/>
       </Box>
     </div>
   );

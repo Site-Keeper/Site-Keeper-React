@@ -8,11 +8,15 @@ import { IRoutine } from "../../../../../models/interfaces/routines.interface";
 import { RoutinesService } from "../../../../../services/routines/routines.service";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
+import { ModalFormCreateRoutines } from "./components/create-routines-form.components";
 
 export function RoutineAdmin() {
-  const [routines, setRoutines] = useState<IRoutine[]>([])
+  const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [openInfo, setOpenInfo] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(0);
+  const [openCreate,  setOpenCreate] = useState(false);
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
 
   async function getAllRoutine() {
     const routinesReq = await RoutinesService.getAll()
@@ -58,7 +62,7 @@ export function RoutineAdmin() {
         return null;
       }
     },
-    { id: "assignedTo", label: "Encargado", width: "20%", filter: "String" },
+    { id: "assigned_to", label: "Encargado", width: "20%", filter: "String" },
     {
       id: "actions",
       label: "Actions",
@@ -91,7 +95,6 @@ export function RoutineAdmin() {
             >
               <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
             </IconButton>
-            <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
             <IconButton
               sx={{
                 backgroundColor: "#FBBF24",
@@ -144,11 +147,14 @@ export function RoutineAdmin() {
             borderRadius: "50px",
             gap: '10px'
           }}
+          onClick={handleOpenCreate}
         >
           <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
           <Typography variant="subtitle2">Crear Rutinas</Typography>
         </Button>
         <TableAdmin rows={routines} columns={columns} limit={5}></TableAdmin>
+        <ModalFormCreateRoutines open={openCreate} handleClose={handleCloseCreate} />
+        <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
       </Box>
     </div>
   );

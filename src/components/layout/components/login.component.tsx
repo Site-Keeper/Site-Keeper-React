@@ -91,6 +91,7 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
         handleCloseModal,
         navigate
       });
+      window.location.reload();
     } catch (error) {
       const axiosError = error as AxiosError
       console.error(error);
