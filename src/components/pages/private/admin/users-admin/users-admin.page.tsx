@@ -20,7 +20,7 @@ export function UserAdmin() {
     { id: "email", label: "Email", width: "20%", filter: "String" },
     { id: "doc_number", label: "Documento", width: "20%", filter: "String" },
     {
-      id: "perssonel_type",
+      id: "personnel_type",
       label: "Tipo De Personal",
       width: "20%",
       filter: "String",

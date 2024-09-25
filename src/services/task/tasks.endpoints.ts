@@ -3,7 +3,8 @@ export const TASKS_API_ENDPOINTS = (id: number | undefined) => {
     return {
       GET_BY_ROUTINES: `${resourse}/ByRoutine/${id}`,
       GET_STATS: `${resourse}/statistics`,
+      POST: `${resourse}`,
     };
   };
 
-  export type TEndpointKeys = 'GET_BY_ROUTINES' | 'GET_STATS'
+  export type TEndpointKeys = 'GET_BY_ROUTINES' | 'GET_STATS' | 'POST'

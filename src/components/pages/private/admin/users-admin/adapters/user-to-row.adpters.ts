@@ -11,7 +11,7 @@ export function usersToRows(
             name: user.name,
             email: user.email,
             doc_number: user.doc_number,
-            perssonel_type: user.perssonel_type,
+            personnel_type: user.personnel_type,
             rol: user.role.name
         })
     });
