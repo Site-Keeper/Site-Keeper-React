@@ -6,6 +6,6 @@ export interface IUser{
     name: string;
     email: string
     doc_number: string;
-    perssonel_type?: perssonelType;
+    personnel_type?: perssonelType;
     role: IRole;
 }

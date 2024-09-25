@@ -76,12 +76,13 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
                     display: "flex",
                     flexDirection: "column",
                     gap: "10px",
-                    border: "none", 
+                    borderRadius: '20px' 
                   }}
             >
                 <Typography variant="h2" component="h2">
-                    Añadir Reporte para {spacesName}
+                    Añadir Reporte
                 </Typography>
+                <Typography variant='h3'>Espacios: {spacesName}</Typography>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         label="Nombre del Reporte"

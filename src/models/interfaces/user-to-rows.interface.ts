@@ -5,6 +5,6 @@ export interface IUserToRows{
     name: string;
     email: string
     doc_number: string;
-    perssonel_type?: perssonelType; 
+    personnel_type?: perssonelType; 
     rol: string;
 }
