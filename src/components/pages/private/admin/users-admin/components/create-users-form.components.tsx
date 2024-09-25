@@ -23,10 +23,10 @@ const roles = [
 ];
 
 const personnelTypes = [
-    { value: 'maintenance', label: 'Maintenance' },
-    { value: 'janitorial', label: 'Janitorial' },
-    { value: 'security', label: 'Security' },
-    { value: 'other', label: 'Other' }
+    { value: 'Maintenance', label: 'Mantenimiento' },
+    { value: 'Janitorial', label: 'Limpieza' },
+    { value: 'Security', label: 'Seguridad' },
+    { value: 'Other', label: 'Otro' }
 ];
 
 export const ModalFormCreateUsers = ({ handleClose, open }: IProps) => {
@@ -37,10 +37,9 @@ export const ModalFormCreateUsers = ({ handleClose, open }: IProps) => {
 
     const selectedRole = watch('role'); 
 
-    // Restablecer personnelType cuando el rol cambia
     useEffect(() => {
-        if (selectedRole !== '2') { // '2' es el valor para Personnel
-            setValue('personnelType', undefined); // Restablecer personnelType
+        if (selectedRole !== '2') { 
+            setValue('personnelType', undefined);
         }
     }, [selectedRole, setValue]);
 

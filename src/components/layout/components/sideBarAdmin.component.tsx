@@ -32,8 +32,8 @@ const pagesPersonnel: IPages[] = [
     name: "Personnel Dashboard",
     pathname: "/personnel-dashboard",
   },
-  { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/admin-routines" },
-  { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/admin-reports" },
+  { icon: "ClassOutlinedIcon", name: "Gestión Rutinas", pathname: "/personnel-routines" },
+  { icon: "DescriptionOutlinedIcon", name: "Gestión Reportes", pathname: "/personnel-reports" },
 ];
 
 
