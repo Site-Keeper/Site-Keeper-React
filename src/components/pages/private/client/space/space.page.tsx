@@ -35,7 +35,6 @@ export default function Space() {
   const [openCreateLostObjects, setOpenCreateLostObjects] = useState(false)
   const [openmodalcreateReport, setOpenModalCreateReport] = useState<boolean>(false)
   const [spaceid, setId] = useState<number>(0)
-
   const handleClose = () => setOpenModalCreateReport(false);
   const handleOpenCreate = () => { return setOpenCreateLostObjects(true)};
   const handleCloseCreate = () => setOpenCreateLostObjects(false);
@@ -44,12 +43,15 @@ export default function Space() {
     setLoader(true)
     const spacesreps = await SpacesService.getOne(id);
     setSpace(spacesreps);
+    console.log(spaceid);
     setLoader(false)
   }
   
   useEffect(() => {
     getSpace(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px', with: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>

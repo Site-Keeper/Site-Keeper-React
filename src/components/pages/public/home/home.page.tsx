@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material';
 import { Slider3d } from './components/slider.components';
 import { ISpace } from '../../../../models/interfaces';
 import hero from "../../../../assets/img/Home_export_p.png";
-import { SearchInput } from './components/search.components';
 import { useEffect, useState } from 'react';
 import { SpacesService } from '../../../../services/spaces/spaces.service';
 import { ModalFormCreateReports } from './components/form-create-report';
@@ -10,7 +9,6 @@ import { Loader } from '../../../utilities/components/loader.utility';
 
 export function Home() {
   const [spaces, setSpaces] = useState<ISpace[]>([])
-  const [search, setSearch] = useState<string>("")
   const [openmodalcreateReport, setOpenModalCreateReport] = useState<boolean>(false)
   const [id, setId] = useState<number>(0)
   const [spaceName, setSpaceName] = useState<string>("")
@@ -33,7 +31,7 @@ export function Home() {
 
   useEffect(() => {
     getSpaces()
-  }, [search])
+  }, [])
 
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: 'column', alignItems: 'center', gap: '20px' }} >
