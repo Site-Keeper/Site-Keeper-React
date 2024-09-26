@@ -4,17 +4,18 @@ import { Modal, Box, Button, TextField, Typography, FormControl, InputLabel, Sel
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { USersService } from '../../../../../../services/users/users.service';
-import { Loader } from '../../../../../utilities/components/loader.utility';
 
-// Definición del tipo de los valores del formulario
 interface IFormInput {
     role: string;
-    personnelType?: string; // Agregamos el tipo de personal
+    personnelType?: string;
 }
 
 interface IProps {
     handleClose: () => void;
     open: boolean;
+    setLoader: React.Dispatch<React.SetStateAction<boolean>>
+    trigger: boolean
+    setTrigger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const roles = [
@@ -30,12 +31,11 @@ const personnelTypes = [
     { value: 'Other', label: 'Otro' }
 ];
 
-export const ModalFormCreateUsers = ({ handleClose, open }: IProps) => {
+export const ModalFormCreateUsers = ({ handleClose, open, setLoader, setTrigger, trigger }: IProps) => {
     const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<IFormInput>();
     const [documents, setDocuments] = useState<number[]>([]);
     const [documentInput, setDocumentInput] = useState<number | null>(null);
     const [documentError, setDocumentError] = useState<string | null>(null);
-    const [loader, setLoader] = useState(false)
 
     const selectedRole = watch('role');
 
@@ -47,15 +47,22 @@ export const ModalFormCreateUsers = ({ handleClose, open }: IProps) => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         setLoader(true);
-        if (documents.length === 0) {
-            setDocumentError('Debe agregar al menos un documento');
-            return;
+        try {
+            if (documents.length === 0) {
+                setDocumentError('Debe agregar al menos un documento');
+                setLoader(false)
+                return;
+            }
+            const roleId = Number(data.role);
+            await USersService.postUser({ doc_numbers: documents, role_id: roleId, personnel_type: data.personnelType });
+            setTrigger(!trigger)
+            setDocumentError(null);
+            setDocuments([]);
+            handleClose();
+        } catch (error) {
+            console.log('Error al crear un usuario: ', error);
+            setLoader(false)
         }
-        const roleId = Number(data.role);
-        await USersService.postUser({ doc_numbers: documents, role_id: roleId, personnel_type: data.personnelType });
-        setDocumentError(null);
-        setDocuments([]);
-        handleClose();
         setLoader(false)
     };
 
@@ -73,7 +80,6 @@ export const ModalFormCreateUsers = ({ handleClose, open }: IProps) => {
 
     return (
         <>
-            <Loader isLoading={loader} />
             <Modal open={open} onClose={handleClose}>
                 <Box
                     sx={{

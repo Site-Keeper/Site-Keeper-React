@@ -4,6 +4,7 @@ import { IRoutine } from '../../../../../../models/interfaces/routines.interface
 import { useEffect, useState } from 'react';
 import { RoutinesService } from '../../../../../../services/routines/routines.service';
 import { Loader } from '../../../../../utilities/components/loader.utility';
+import Void from '../../../../../utilities/components/void.utility';
 
 const emptyRoutine: IRoutine = {
   id: 0,
@@ -22,8 +23,12 @@ export default function RoutineBoard() {
 
   const getRoutine = async () => {
     setLoader(true)
-    const response = await RoutinesService.getTodayRoutine();
-    setRoutine(response.data.todayRoutines);
+    try {
+      const response = await RoutinesService.getTodayRoutine();
+      setRoutine(response.data.todayRoutines);
+    } catch (error) {
+      console.log(error);
+    }
     setLoader(false)
   }
 
@@ -34,18 +39,19 @@ export default function RoutineBoard() {
   return (
     <Box height={'100%'} width={'50%'} gap={'30px'} padding={'30px'}>
       <Loader isLoading={loader} />
-      <Box width={'100%'} display={'flex'} alignItems={'center'} height={'100px'} mb={'20px'}>
-        <Box>
-          <Typography variant="subtitle1"> Tu Rutina de Hoy</Typography>
-          <Typography variant="h2">{routine.name}</Typography>
+        <Box width={'100%'} display={'flex'} alignItems={'center'} height={'100px'} mb={'20px'}>
+          <Box>
+            <Typography variant="subtitle1"> Tu Rutina de Hoy</Typography>
+            <Typography variant="h2">{routine ? routine.name : ''}</Typography>
+          </Box>
         </Box>
-      </Box>
-      {
+      {routine ?
         routine.tasks
           .sort((a, b) => a.id - b.id)
           .map((task) => (
             <TaskCard key={task.id} task={task} setChangeTrigger={setChangeTrigger} changeTrigger={changeTrigger} />
-          ))
+          )):
+          <Void/>
       }
     </Box>
   )

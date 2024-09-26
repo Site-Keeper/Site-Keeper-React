@@ -1,4 +1,5 @@
 import { axiosNestInstance} from "../../axios.config";
+import { IUser } from "../../models/interfaces";
 import {  IGetAllUsersResp, IGetStatisticsUserResp, IPostUsersReq, IPostUsersResp, IUpdateUserReq } from "../../models/services/users.interfaces";
 import { TEndpointKeys, USERS_API_ENDPOINTS } from "./users.endpoints";
 
@@ -27,5 +28,8 @@ export class USersService {
         return await axiosNestInstance.patch<IPostUsersResp>(endpoint, req).then(response => response.data);
     }
 
-    
+    static delete = async (id:number)=> {
+        const endpoint = getEnpoint("DELETE", id);
+        return await axiosNestInstance.delete<IUser>(endpoint).then(response => response.data);
+    }    
 }

@@ -33,5 +33,10 @@ export class ReportsService {
         const endpoint = getEnpoint("UPDATE_STATUS", req.id);
         return await axiosJavaInstanceImage.put<IReport>(endpoint, {status: req.status}).then(response => response.data);
     };
+
+    static delete = async (id: number): Promise<IReport> => {
+        const endpoint = getEnpoint("DELETE", id);
+        return await axiosJavaInstanceImage.delete<IReport>(endpoint).then(response => response.data);
+    };
     
 }

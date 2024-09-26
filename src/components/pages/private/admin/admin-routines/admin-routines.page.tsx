@@ -10,6 +10,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
 import { ModalFormCreateRoutines } from "./components/create-routines-form.components";
 import { ModalFormEditRoutines } from "./components/update-routines-form.components";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function RoutineAdmin() {
   const [routines, setRoutines] = useState<IRoutine[]>([]);
@@ -18,6 +19,20 @@ export function RoutineAdmin() {
   const [openCreate,  setOpenCreate] = useState(false);
   const [openUpdate,  setOpenUpdate] = useState(false);
   const [ routineEdit, setRoutineEdit] = useState<IRoutine>({} as IRoutine);
+  const [ loader, setLoader] = useState(false)
+  const [ trigger, setTrigger] = useState(false)
+
+
+  const deleteRoutine = async (id: number) => {
+    setLoader(true)
+    try {
+      await RoutinesService.delete(id)
+      setTrigger(!trigger)
+    } catch (error) {
+      console.log('Error al eliminar rutina:', error);
+    }
+    setLoader(false)
+  }
 
   function handleOpenEdit(routine: IRoutine) {
     setOpenUpdate(true);
@@ -29,23 +44,22 @@ export function RoutineAdmin() {
   const handleCloseCreate = () => setOpenCreate(false);
 
   async function getAllRoutine() {
+    setLoader(true)
     const routinesReq = await RoutinesService.getAll()
     const routines = routinesReq.data
     setRoutines(routines)
+    setLoader(false)
   }
 
   useEffect(() => {
     getAllRoutine()
-  }, [])
+  }, [trigger])
 
   const handleOpen = (id: number) => {
     setSelectedId(id); // Establece el ID seleccionado
     setOpenInfo(true);
   };
   const handleClose = () => setOpenInfo(false);
-
-
-  
 
   const columns: Column<IRoutine>[] = [
     { id: "name", label: "name", width: "20%", filter: "String" },
@@ -123,6 +137,7 @@ export function RoutineAdmin() {
               }}
               key={`delete-${value.id}`}
               aria-label="delete"
+              onClick={() => deleteRoutine(value.id)}
             >
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -141,6 +156,7 @@ export function RoutineAdmin() {
         padding: "30px",
       }}
     >
+      <Loader isLoading={loader}/>
       <Box
         sx={{
           width: "100%",
