@@ -21,3 +21,11 @@ export interface ICreateRoutineReq {
 export interface ICreateRoutineResp extends ApiResponse<IRoutine> {
   total: number | undefined;
 }
+
+export interface IUpdateRoutineReq {
+  name?: string;
+  start_time?: Date;
+  end_time?: Date;
+  days?: string[];
+  assigned_to?: number;
+}

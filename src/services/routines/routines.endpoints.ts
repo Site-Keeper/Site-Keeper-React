@@ -6,7 +6,8 @@ export const ROUTINES_API_ENDPOINTS = (id?: number) =>{
         GET_BY_USER: `${resourse}/ByUsers/${id}`,
         GET_TODAY_ROUTINE: `${resourse}/today`,
         POST: `${resourse}`,
+        UPDATE: `${resourse}/${id}`,
     }
 }
 
-export type TEndpointKeys = 'GET_ALL' | 'GET_BY_USER' | 'GET_TODAY_ROUTINE'| 'POST'
+export type TEndpointKeys = 'GET_ALL' | 'GET_BY_USER' | 'GET_TODAY_ROUTINE'| 'POST' | 'UPDATE';

@@ -9,11 +9,9 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IUserToRows } from "../../../../../../models/interfaces/user-to-rows.interface";
 import { USersService } from "../../../../../../services/users/users.service";
-import { IUpdateUserReq } from "../../../../../../models/services/users.interfaces";
 
 interface IProps {
     user: IUserToRows;
@@ -41,22 +39,13 @@ export const ModalFormUpdateUsers = ({ user, handleClose, open }: IProps) => {
     } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        const newObject: IUpdateUserReq = {
-            name: undefined,
-            email: undefined,
-            role: undefined, 
+        const newObject = {
+            name: data.name,
+            email: data.email,
+            role: data.role, 
         };
-        if ( data.name !== user.name) {
-            newObject.name = data.name;
-        }
-        if ( data.email !== user.email) {
-            newObject.email = data.email;
-        }
-        if ( data.role !== userRol?.value) {
-            newObject.role = data.role;
-        }
-        
         await USersService.updateUser(newObject, user.id);
+        console.log(newObject);
         handleClose(); 
     };
 

@@ -1,5 +1,5 @@
 import { axiosNestInstance} from "../../axios.config";
-import { ICreateRoutineReq, ICreateRoutineResp, IGetAllRoutinesResp, IGetRoutinesByUserResp, IGetTodayRoutine } from "../../models/services/rotines.interfaces";
+import { ICreateRoutineReq, ICreateRoutineResp, IGetAllRoutinesResp, IGetRoutinesByUserResp, IGetTodayRoutine, IUpdateRoutineReq } from "../../models/services/rotines.interfaces";
 import { ROUTINES_API_ENDPOINTS, TEndpointKeys } from "./routines.endpoints";
 
 const getEnpoint = (method: TEndpointKeys, id?: number): string => {
@@ -25,5 +25,10 @@ export class RoutinesService {
     static create = async (req: ICreateRoutineReq): Promise<ICreateRoutineResp> => {
         const endpoint = getEnpoint("POST");
         return await axiosNestInstance.post<ICreateRoutineResp>(endpoint, req).then(response => response.data);
+    };
+
+    static update = async (req: IUpdateRoutineReq, id: number): Promise<ICreateRoutineResp> => {
+        const endpoint = getEnpoint("UPDATE", id);
+        return await axiosNestInstance.patch<ICreateRoutineResp>(endpoint, req).then(response => response.data);
     };
 }

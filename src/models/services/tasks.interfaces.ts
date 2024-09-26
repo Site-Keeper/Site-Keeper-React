@@ -31,7 +31,10 @@ export interface ICreateTaskReq {
 
 export type ICreateTaskResp = ApiResponse<ITask>
 
-export type IUpdateTaskReq = Partial<ITask>
+export interface IUpdateTaskReq extends  Partial<ITask> {
+  space_id?: number
+}
 
-export type IUpdateTaskResp = ApiResponse<ITask>
+
+export type IUpdateTaskResp = ApiResponse<ITask> 
 
