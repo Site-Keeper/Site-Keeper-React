@@ -43,7 +43,7 @@ export const LoginSubmit = async ({
           break;
 
         case "personnel":
-          navigate("/admin-personnel");
+          navigate("/personnel-dashboard");
           break;
 
         default:

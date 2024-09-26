@@ -3,6 +3,7 @@ import TaskCard from './routine-card.component'
 import { IRoutine } from '../../../../../../models/interfaces/routines.interface';
 import { useEffect, useState } from 'react';
 import { RoutinesService } from '../../../../../../services/routines/routines.service';
+import { Loader } from '../../../../../utilities/components/loader.utility';
 
 const emptyRoutine: IRoutine = {
   id: 0,
@@ -14,14 +15,16 @@ const emptyRoutine: IRoutine = {
   tasks: []
 };
 
-
 export default function RoutineBoard() {
   const [routine, setRoutine] = useState<IRoutine>(emptyRoutine)
   const [changeTrigger, setChangeTrigger] = useState(false)
+  const [loader, setLoader] = useState(false)
 
   const getRoutine = async () => {
+    setLoader(true)
     const response = await RoutinesService.getTodayRoutine();
     setRoutine(response.data.todayRoutines);
+    setLoader(false)
   }
 
   useEffect(() => {
@@ -30,6 +33,7 @@ export default function RoutineBoard() {
 
   return (
     <Box height={'100%'} width={'50%'} gap={'30px'} padding={'30px'}>
+      <Loader isLoading={loader} />
       <Box width={'100%'} display={'flex'} alignItems={'center'} height={'100px'} mb={'20px'}>
         <Box>
           <Typography variant="subtitle1"> Tu Rutina de Hoy</Typography>
@@ -37,9 +41,11 @@ export default function RoutineBoard() {
         </Box>
       </Box>
       {
-        routine.tasks.map((task) => (
-          <TaskCard key={task.id} task={task} setChangeTrigger={setChangeTrigger} changeTrigger={changeTrigger}/>
-        ))
+        routine.tasks
+          .sort((a, b) => a.id - b.id)
+          .map((task) => (
+            <TaskCard key={task.id} task={task} setChangeTrigger={setChangeTrigger} changeTrigger={changeTrigger} />
+          ))
       }
     </Box>
   )

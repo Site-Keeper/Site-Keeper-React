@@ -22,11 +22,17 @@ interface IFormInput {
 interface IProps {
   handleClose: () => void;
   open: boolean;
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>
+  trigger: boolean
+  setTrigger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const ModalFormCreateSpaces = ({
   handleClose,
   open,
+  setLoader,
+  setTrigger,
+  trigger
 }: IProps) => {
   const {
     register,
@@ -38,18 +44,25 @@ export const ModalFormCreateSpaces = ({
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    if (!imageFile) {
-      setImageError("Por favor, sube una imagen");
-      return;
+    setLoader(true)
+    try {
+      if (!imageFile) {
+        setImageError("Por favor, sube una imagen");
+        return;
+      }
+      const datareq : ICreateSpace = {
+        name: data.spaceName,
+        location: data.spaceLocation,
+        description: data.reportDescription,
+        image: imageFile
+      }
+      await SpacesService.create(datareq)
+      handleClose();
+      setTrigger(!trigger);
+    } catch (error) {
+      console.log('error al crear espacio', error)
     }
-    const datareq : ICreateSpace = {
-      name: data.spaceName,
-      location: data.spaceLocation,
-      description: data.reportDescription,
-      image: imageFile
-    }
-    await SpacesService.create(datareq)
-    handleClose();
+    setLoader(true)
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

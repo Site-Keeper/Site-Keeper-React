@@ -34,4 +34,3 @@ export type ICreateTaskResp = ApiResponse<ITask>
 export type IUpdateTaskReq = Partial<ITask>
 
 export type IUpdateTaskResp = ApiResponse<ITask>
-

@@ -3,8 +3,9 @@ export const SPACES_API_ENDPOINTS = (id: string = "") => {
     return {
       GET_ALL: `${resourse}`,
       GET_BY_ID: `${resourse}/${id}`,
-      POST : `${resourse}`
+      POST : `${resourse}`,
+      DELETE: `${resourse}/${id}`,
     };
   };
 
-  export type TEndpointKeys = 'GET_ALL' | 'GET_BY_ID' | 'POST'
+  export type TEndpointKeys = 'GET_ALL' | 'GET_BY_ID' | 'POST' | 'DELETE'
