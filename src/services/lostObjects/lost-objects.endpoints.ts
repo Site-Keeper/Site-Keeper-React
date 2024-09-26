@@ -6,10 +6,10 @@ export const LOST_OBJECTS_API_ENDPOINTS = (id: string = "") =>{
         GET_BY_ID: `${resourse}/${id}`,
         DELETE: `${resourse}/${id}`,
         CREATE: `${resourse}`,
-        UPDATE: `${resourse}//${id}`,
+        PUT: `${resourse}/${id}`,
         GET_SUMMARY: `${resourse}/summary`,
         POST : `${resourse}`
     }
 }
 
-export type TEndpointKeys = 'GET_ALL' | 'GET_BY_ID' | 'DELETE' | 'CREATE' | 'UPDATE' | 'GET_SUMMARY' | 'POST';
+export type TEndpointKeys = 'GET_ALL' | 'GET_BY_ID' | 'DELETE' | 'CREATE' | 'PUT' | 'GET_SUMMARY' | 'POST';

@@ -27,6 +27,7 @@ export class SpacesService {
         const endpoint = getEnpoint('PUT', id)
         return await axiosJavaInstanceImage.put<ISpace>(endpoint, req).then(response => response.data)
     }
+    
     static delete = async (req : {id: string}) => {
         const endpoint = getEnpoint('DELETE', req.id)
         return await axiosJavaInstanceImage.delete<ISpace>(endpoint).then(response => response.data)

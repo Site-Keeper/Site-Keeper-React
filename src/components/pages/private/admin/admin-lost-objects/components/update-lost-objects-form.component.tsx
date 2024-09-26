@@ -1,75 +1,81 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import {
-    Modal,
-    Box,
-    Button,
-    Typography,
-    FormControl,
-    FormHelperText,
-    TextField,
-    MenuItem,
-    Select,
-    InputLabel,
-} from "@mui/material";
-import { CloudUpload } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ISpace } from "../../../../../../models/interfaces";
 import { SpacesService } from "../../../../../../services/spaces/spaces.service";
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { CloudUpload } from "@mui/icons-material";
 import { LostObjectsService } from "../../../../../../services/lostObjects/lost-objects.service";
+import { ILostObject } from "../../../../../../models/interfaces/lost-object.interface";
+import { IUpdateLostObject } from "../../../../../../models/services/lost-object.interfaces";
 
 interface IFormInput {
     name: string;
     description: string;
-    space: string; // Campo select para espacios
-    image: File | null; // Imagen como archivo
+    space: string;
 }
 
 interface IProps {
     handleClose: () => void;
     open: boolean;
-    spaces: Array<{ id: string; name: string }>; // Lista de espacios disponibles
+    object?: ILostObject;
+    id: number;
 }
 
-export const ModalFormCreateObjectWithSpaces = ({
+export const ModalFormUpdateLostObject = ({
     handleClose,
     open,
+    object,
+    id
 }: IProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        setValue,
     } = useForm<IFormInput>();
 
-    const [imageError, setImageError] = useState<string | null>(null);
-    const [imageName, setImageName] = useState<string | null>(null);
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageError, setImageError] = useState<string | undefined>();
+    const [imageFile, setImageFile] = useState<File | undefined>(undefined);
     const [spaces, setSpaces] = useState<ISpace[]>([]);
 
-    useEffect(() => {
-        const fetchSpaces = async () => {
-            const fetchedSpaces = await SpacesService.getAll();
-            setSpaces(fetchedSpaces);
-        };
-        fetchSpaces();
+    const fetchSpaces = useCallback(async () => {
+        const fetchedSpaces = await SpacesService.getAll();
+        setSpaces(fetchedSpaces);
     }, []);
 
+    useEffect(() => {
+        fetchSpaces();
+    }, [fetchSpaces]);
+
+    const updateFormValues = useCallback(() => {
+        if (object) {
+            setValue("name", object.name);
+            setValue("description", object.description);
+            setValue("space", object.spaceId ? object.spaceId.toString() : "");
+        }
+    }, [object, setValue]);
+
+    useEffect(() => {
+        if (open) {
+            updateFormValues();
+        }
+    }, [open, updateFormValues]);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        if (!imageFile) {
-            setImageError("Por favor, sube una imagen");
-            return;
-        }
+        if (!object) return;
 
-        const space_id = Number(data.space);
-
-        const newObject = {
+        const updatedObject: IUpdateLostObject = {
             name: data.name,
             description: data.description,
-            spaceId: space_id,
+            spaceId: Number(data.space),
             image: imageFile,
         };
-        await LostObjectsService.create(newObject);
-        console.log(newObject);
+
+        console.log(updatedObject);
+        
+
+        await LostObjectsService.update(updatedObject, String(id));
         handleClose();
     };
 
@@ -77,17 +83,12 @@ export const ModalFormCreateObjectWithSpaces = ({
         const files = e.target.files;
         if (files && files.length > 0) {
             setImageFile(files[0]);
-            setImageName(files[0].name);
-            setImageError(null);
+            setImageError(undefined);
         }
     };
 
-    const handleclosemodal = () => {
-        handleClose();
-    };
-
     return (
-        <Modal open={open} onClose={handleclosemodal}>
+        <Modal open={open} onClose={handleClose}>
             <Box
                 sx={{
                     position: "absolute",
@@ -95,7 +96,7 @@ export const ModalFormCreateObjectWithSpaces = ({
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     width: "620px",
-                    bgcolor: "background.paper",
+                    bgcolor: "white",
                     boxShadow: 24,
                     padding: "30px",
                     display: "flex",
@@ -105,7 +106,7 @@ export const ModalFormCreateObjectWithSpaces = ({
                 }}
             >
                 <Typography variant="h2" component="h2">
-                    Crear Nuevo Objeto
+                    Editar Objeto {object?.name}
                 </Typography>
                 <form
                     style={{ display: "flex", flexDirection: "column", gap: "20px" }}
@@ -134,7 +135,6 @@ export const ModalFormCreateObjectWithSpaces = ({
                         helperText={errors.description?.message}
                     />
 
-                    {/* Campo Select para Espacios */}
                     <FormControl fullWidth margin="normal" error={!!errors.space}>
                         <InputLabel>Espacio</InputLabel>
                         <Select
@@ -144,18 +144,21 @@ export const ModalFormCreateObjectWithSpaces = ({
                             })}
                             defaultValue=""
                         >
-                            {spaces.map((space) => (
+                            {spaces.length > 0 ? spaces.map((space) => (
                                 <MenuItem key={space.id} value={space.id}>
                                     {space.name}
                                 </MenuItem>
-                            ))}
+                            )) : (
+                                <MenuItem value="">
+                                    No spaces available
+                                </MenuItem>
+                            )}
                         </Select>
                         {errors.space && (
                             <FormHelperText>{errors.space.message}</FormHelperText>
                         )}
                     </FormControl>
 
-                    {/* Input de archivo para imagen */}
                     <FormControl fullWidth margin="normal">
                         <input
                             id="object-image"
@@ -185,14 +188,6 @@ export const ModalFormCreateObjectWithSpaces = ({
                                 >
                                     Seleccione o arrastre su imagen aquí
                                 </Typography>
-                                {imageName && (
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ mt: 1, color: "text.primary" }}
-                                    >
-                                        {imageName}
-                                    </Typography>
-                                )}
                             </Box>
                         </label>
                         {imageError && <FormHelperText error>{imageError}</FormHelperText>}
@@ -200,6 +195,7 @@ export const ModalFormCreateObjectWithSpaces = ({
 
                     <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
                         <Button
+                            type="button"
                             variant="contained"
                             sx={{
                                 color: "white",
@@ -224,7 +220,7 @@ export const ModalFormCreateObjectWithSpaces = ({
                                 ":hover": { bgcolor: "secondary.dark" },
                             }}
                         >
-                            Enviar
+                            Actualizar
                         </Button>
                     </Box>
                 </form>
