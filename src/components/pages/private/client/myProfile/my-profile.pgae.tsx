@@ -12,6 +12,7 @@ import { emptyUserState } from "../../../../../state/redux/states/user";
 import { IUser } from "../../../../../models/interfaces";
 import { useState } from "react";
 import { USersService } from "../../../../../services/users/users.service";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 interface IFormInput {
     name: string;
@@ -24,11 +25,12 @@ export const MyProfile = () => {
     const [changeName, setChangeName] = useState(false);
     const [changeEmail, setChangeEmail] = useState(false);
     const [changePassword, setChangePassword] = useState(false);
-    const [showPassword, setShowPassword] = useState(false); // Para mostrar/ocultar la contraseña
+    const [showPassword, setShowPassword] = useState(false);
+    const [loader, setLoader] = useState(false)
     const {
         register,
         handleSubmit,
-        reset, // Agregar reset de react-hook-form
+        reset,
         watch,
         formState: { errors }
     } = useForm<IFormInput>();
@@ -38,20 +40,48 @@ export const MyProfile = () => {
         user = JSON.parse(sessionStorage.getItem("user") ?? "");
     }
 
-    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        if (changePassword && data.password !== data.confirmPassword) {
-            alert("Las contraseñas no coinciden.");
-            return;
-        }
+    interface IUserUpdate extends Partial<IUser> {
+        password?: string;
+    }
 
-        const newObject = {
-            name: data.name,
-            email: data.email,
-            password: changePassword ? data.password : undefined,
-        };
-        await USersService.updateUser(newObject, user.id);
-        handleCancel()
-    };
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        setLoader(true);
+        try {
+            if (changePassword && data.password !== data.confirmPassword) {
+                alert("Las contraseñas no coinciden.");
+                return;
+            }
+    
+            const newObject: IUserUpdate = {};
+    
+            if (changeName && data.name !== user.name) {
+                newObject.name = data.name;
+            }
+    
+            if (changeEmail && data.email !== user.email) {
+                newObject.email = data.email;
+            }
+    
+            if (changePassword) {
+                newObject.password = data.password;
+            }
+    
+            if (Object.keys(newObject).length > 0) {
+                await USersService.updateUser(newObject, user.id);
+    
+                const updatedUser = { ...user, ...newObject };
+                sessionStorage.setItem("user", JSON.stringify(updatedUser));
+    
+                handleCancel();
+            } else {
+                alert("No se realizaron cambios.");
+            }
+        } catch (error) {
+            console.error("Error al actualizar usuario", error);
+        }
+        setLoader(false);
+    };    
+    
 
     const handleCancel = () => {
         reset({ 
@@ -70,6 +100,7 @@ export const MyProfile = () => {
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "70vh", width: "100vw" }}>
+            <Loader isLoading={loader}/>
             <Box
                 sx={{
                     width: "620px",

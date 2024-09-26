@@ -1,10 +1,13 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Chip, Typography } from '@mui/material'
 import DynamicIcon from '../../../../../utilities/DynamicIcon'
 import ReportsCard from './reports-card.component';
 import { ReportsService } from '../../../../../../services/Reports/reports.service';
 import { useEffect, useState } from 'react';
 import { IReport } from '../../../../../../models/interfaces/reports.interface';
 import Void from '../../../../../utilities/components/void.utility';
+import { IUser } from '../../../../../../models/interfaces';
+import { Loader } from '../../../../../utilities/components/loader.utility';
+import { personnelType } from '../../../../../../models/enums/perssonelType.enum';
 // import { IReport } from '../../../../../../models/interfaces/reports.interface';
 // import { ReportStatus } from '../../../../../../models/enums/status.enum';
 
@@ -89,32 +92,89 @@ import Void from '../../../../../utilities/components/void.utility';
 //   },
 // ];
 
+function getIconByPersonnelType(type: personnelType) {
+  switch (type) {
+    case personnelType.MAINTENANCE:
+      return 'EngineeringIcon';
+    case personnelType.JANITORIAL:
+      return 'CleanHandsIcon' ;
+    case personnelType.SECURITY:
+      return 'AdminPanelSettingsIcon';
+    default:
+      return 'MoreHorizIcon';
+  }
+}
 
 export default function ReportsBoard() {
   const [reports, setReports] = useState<IReport[]>([])
   const [changeTrigger, setChangeTrigger] = useState(false)
+  const [loader, setLoader] = useState(false)
 
   const getReports = async () => {
-    const response = await ReportsService.getAll()
-    setReports(response)
+    setLoader(true)
+    let personnel_type_id = 0
+    let user
+    if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
+      user = JSON.parse(sessionStorage.getItem("user") ?? "") as IUser;
+    }
+    console.log(user);
+
+    switch (user?.personnelType) {
+      case 'Maintenance':
+        personnel_type_id = 1
+        break;
+
+      case 'Janitorial':
+        personnel_type_id = 2
+        break;
+
+      case 'Security':
+        personnel_type_id = 3
+        break;
+
+      case 'Other':
+        personnel_type_id = 4
+        break;
+
+      default:
+        console.warn('No tiene personnel type');
+        break;
+    }
+    if (personnel_type_id != 0) {
+      const response = await ReportsService.getByTopic({ id: personnel_type_id });
+      const sortedResponse = response.sort((a, b) => a.id - b.id);
+      setReports(sortedResponse);
+    }
+    setLoader(false)
   }
-  useEffect(()=>{
+  useEffect(() => {
     getReports()
-  },[changeTrigger])
+  }, [changeTrigger])
 
   return (
     <Box height={'100%'} width={'50%'} gap={'30px'} padding={'30px'}>
+      <Loader isLoading={loader} />
       <Box width={'100%'} display={'flex'} justifyContent={'space-evenly'} alignItems={'center'} height={'100px'}>
         <Typography variant="h2"> Reportes</Typography>
-        <Box width={'25%'} height={'40%'} padding={'5px 10px'} display={'flex'} bgcolor={'#E0F7FA'} borderRadius={'20px'} justifyContent={'space-around'} alignItems={'center'}>
-          <DynamicIcon iconName={'CleanHandsIcon'} />
-          <Typography variant="h3">Limpieza</Typography>
-        </Box>
+        {reports.length > 0 &&
+        <Chip
+          icon={<DynamicIcon iconName={getIconByPersonnelType(reports[0].topicName)} />}
+          label={reports[0].topicName}
+          sx={{
+            backgroundColor: "#E0F7FA",
+            color: "#006064",
+            fontWeight: "bold",
+            fontSize: "25px",
+            width: "35%",
+            height: '50%',
+            borderRadius: "50px"
+          }}
+        />}
       </Box>
-        {reports.length > 0 ?
+      {reports.length > 0 ?
         reports.map((report) => (
-              <ReportsCard key={report.id} item={report} changeTrigger={changeTrigger} setChangeTrigger={setChangeTrigger} />
-            )): <Void/> }
+          <ReportsCard key={report.id} item={report} changeTrigger={changeTrigger} setChangeTrigger={setChangeTrigger} />
+        )) : <Void />}
     </Box>
   )
 }

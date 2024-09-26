@@ -4,6 +4,7 @@ import { IRoutine } from '../../../../../models/interfaces/routines.interface';
 import { RoutinesService } from '../../../../../services/routines/routines.service';
 import { ITask } from '../../../../../models/interfaces/task.interface';
 import RoutineColumn from './components/routine-column.component';
+import { Loader } from '../../../../utilities/components/loader.utility';
 
 const days: Array<'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday'> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
@@ -18,14 +19,17 @@ const colorMap: Record<'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday
 
 export const PersonnelRoutines = () => {
   const [routines, setRoutines] = useState<IRoutine[]>([]);
+  const [loader, setLoader] = useState(false)
 
   const getRoutines = async () => {
+    setLoader(true)
     let user;
     if (sessionStorage.getItem("user") != null && sessionStorage.getItem("token")) {
       user = JSON.parse(sessionStorage.getItem("user") ?? "");
     }
     const response = await RoutinesService.getById(user.id);
     setRoutines(response.data);
+    setLoader(false)
   }
 
   useEffect(() => {
@@ -35,6 +39,7 @@ export const PersonnelRoutines = () => {
   return (
     <>
       <Box sx={{ width: '100%', p: 2, bgcolor: 'background.default' }}>
+        <Loader isLoading={loader} />
         <Typography variant="h4" align="center" color="primary" mb={'20px'}>
           Rutina Semanal
         </Typography>

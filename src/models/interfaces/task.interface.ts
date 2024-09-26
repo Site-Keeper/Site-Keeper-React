@@ -6,7 +6,14 @@ export interface ITask{
     title: string;
     description: string;
     state: ReportStatus;
-    spaceName: string;
+    spaceName?: string;
+    space?:ITodaySpace;
     object_id: number;
     topic : ITopic
+}
+
+export interface ITodaySpace {
+    id:       number;
+    name:     string;
+    location: string;
 }
