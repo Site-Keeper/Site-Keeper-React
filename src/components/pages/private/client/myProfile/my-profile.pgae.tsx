@@ -13,6 +13,7 @@ import { IUser } from "../../../../../models/interfaces";
 import { useState } from "react";
 import { USersService } from "../../../../../services/users/users.service";
 import { Loader } from "../../../../utilities/components/loader.utility";
+import { IUpdateUserReq } from "../../../../../models/services/users.interfaces";
 
 interface IFormInput {
     name: string;
@@ -40,10 +41,6 @@ export const MyProfile = () => {
         user = JSON.parse(sessionStorage.getItem("user") ?? "");
     }
 
-    interface IUserUpdate extends Partial<IUser> {
-        password?: string;
-    }
-
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         setLoader(true);
         try {
@@ -52,7 +49,7 @@ export const MyProfile = () => {
                 return;
             }
     
-            const newObject: IUserUpdate = {};
+            const newObject: IUpdateUserReq = {};
     
             if (changeName && data.name !== user.name) {
                 newObject.name = data.name;

@@ -12,6 +12,7 @@ export interface ICreateReportReq {
   theDate: string;
   topicId: number;
   image?: File;
+  objectId?: number
 }
 
 export interface IUpdateStatusReq {
