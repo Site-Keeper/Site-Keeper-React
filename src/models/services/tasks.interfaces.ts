@@ -29,6 +29,10 @@ export interface ICreateTaskReq {
   is_deleted: boolean
 }
 
-export interface ICreateTaskResp extends ApiResponse<ITask> {
-  ALGO?: String | undefined 
+export type ICreateTaskResp = ApiResponse<ITask>
+
+export interface IUpdateTaskReq extends  Partial<ITask> {
+  space_id?: number
 }
+
+export type IUpdateTaskResp = ApiResponse<ITask>

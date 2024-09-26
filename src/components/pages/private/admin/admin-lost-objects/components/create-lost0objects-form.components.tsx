@@ -66,8 +66,9 @@ export const ModalFormCreateObjectWithSpaces = ({
             name: data.name,
             description: data.description,
             spaceId: space_id,
+            image: imageFile,
         };
-        await LostObjectsService.create(newObject, imageFile);
+        await LostObjectsService.create(newObject);
         console.log(newObject);
         handleClose();
     };

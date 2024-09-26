@@ -10,6 +10,7 @@ import { Column, TableAdmin } from "../../../../utilities/components/table/table
 import { ModalMoreInformationSpaces } from "./components/modal-more-information-spaces.component";
 import { ModalFormCreateSpaces } from "./components/create-spaces-form.component";
 import { ModalFormUpdateSpaces } from "./components/update-spaces-form.component";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function AdminSpaces() {
     const [spaces, setSpaces] = useState<ISpace[]>([])
@@ -22,15 +23,33 @@ export function AdminSpaces() {
     const handleOpenCreate = () => setOpenModalCreate(true);
     const handleCloseCreate = () => setOpenModalCreate(false);
     const handleCloseUpdate = () => setOpenModalUpdate(false);
-  
+    const [loader, setLoader] = useState(false)
+    const [trigger, setTrigger] = useState(false)
     async function getAllSpaces() {
-      const spacesReq = await SpacesService.getAll()
-      setSpaces(spacesReq)
+      setLoader(true)
+      try {
+        const spacesReq = await SpacesService.getAll()
+        setSpaces(spacesReq)
+      } catch (error) {
+        console.log('Error al cargar los espacios', error);
+      }
+      setLoader(false)
+    }
+
+    async function deleteSpace(id: number) {
+      setLoader(true)
+      try {
+        await SpacesService.delete({id: `${id}`})
+        setTrigger(!trigger)
+      } catch (error) {
+        console.log('error al eliminar el espacio', error);
+      }
+      setLoader(false)
     }
   
     useEffect(() => {
       getAllSpaces()
-    }, [openModalUpdate])
+    }, [trigger]);
   
     const handleOpen = (id: number, object: IObject[]) => {
       setSelectedId(id); // Establece el ID seleccionado
@@ -38,7 +57,7 @@ export function AdminSpaces() {
       setObjects(object)
     };
     const handleClose = () => setOpenInfo(false);
-
+    
     const handleOpenUpdate = (id: number) => {
       setSelectedId(id);
       setSpace(spaces.find((space) => space.id === id) as ISpace);
@@ -98,6 +117,7 @@ export function AdminSpaces() {
               }}
               key={`delete-${value.id}`}
               aria-label="delete"
+              onClick={() => deleteSpace(value.id)}
             >
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -115,6 +135,7 @@ export function AdminSpaces() {
           padding: "30px",
         }}
       >
+        <Loader isLoading={loader} />
         <Box
           sx={{
             width: "100%",
@@ -137,7 +158,7 @@ export function AdminSpaces() {
             <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
             <Typography variant="subtitle2">Crear Espacio</Typography>
           </Button>
-          <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} />
+          <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} setLoader={setLoader} setTrigger={setTrigger} trigger />
           <ModalFormUpdateSpaces handleClose={handleCloseUpdate} open={openModalUpdate} space={space} id={selectedId}/>
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
           <ModalMoreInformationSpaces  id={selectedId} open={openInfo} handleClose={handleClose} objects={objects}/>

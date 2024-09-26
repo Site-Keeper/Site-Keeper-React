@@ -1,9 +1,9 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { Modal, Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material'; // Asegúrate de tener este ícono instalado
+import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { ReportsService } from '../../../../../services/Reports/reports.service';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ICreateReportReq } from '../../../../../models/services/reports.interface';
+import { ReportsService } from '../../../../../services/Reports/reports.service';
 
 interface IFormInput {
     reportTopic: string;

@@ -1,16 +1,52 @@
 import { Box, Typography } from '@mui/material'
-import DynamicIcon from '../../../../../utilities/DynamicIcon'
+import TaskCard from './routine-card.component'
+import { IRoutine } from '../../../../../../models/interfaces/routines.interface';
+import { useEffect, useState } from 'react';
+import { RoutinesService } from '../../../../../../services/routines/routines.service';
+import { Loader } from '../../../../../utilities/components/loader.utility';
+
+const emptyRoutine: IRoutine = {
+  id: 0,
+  name: 'Tu Rutina de Hoy',
+  start_time: new Date(),
+  end_time: new Date(),
+  days: [],
+  assigned_to: '',
+  tasks: []
+};
 
 export default function RoutineBoard() {
+  const [routine, setRoutine] = useState<IRoutine>(emptyRoutine)
+  const [changeTrigger, setChangeTrigger] = useState(false)
+  const [loader, setLoader] = useState(false)
+
+  const getRoutine = async () => {
+    setLoader(true)
+    const response = await RoutinesService.getTodayRoutine();
+    setRoutine(response.data.todayRoutines);
+    setLoader(false)
+  }
+
+  useEffect(() => {
+    getRoutine();
+  }, [changeTrigger]);
+
   return (
     <Box height={'100%'} width={'50%'} gap={'30px'} padding={'30px'}>
-      <Box width={'100%'} display={'flex'} justifyContent={'space-evenly'} alignItems={'center'} height={'100px'}>
-        <Typography variant="h2"> Tu Rutina de Hoy</Typography>
-        <Box width={'140px'} height={'40%'} padding={'5px 10px'} display={'flex'} bgcolor={'#E0F7FA'} borderRadius={'20px'} justifyContent={'space-between'} alignItems={'center'}>
-          <DynamicIcon iconName={'CleanHandsIcon'} />
-          <Typography variant="h3">Limpieza</Typography>
+      <Loader isLoading={loader} />
+      <Box width={'100%'} display={'flex'} alignItems={'center'} height={'100px'} mb={'20px'}>
+        <Box>
+          <Typography variant="subtitle1"> Tu Rutina de Hoy</Typography>
+          <Typography variant="h2">{routine.name}</Typography>
         </Box>
       </Box>
+      {
+        routine.tasks
+          .sort((a, b) => a.id - b.id)
+          .map((task) => (
+            <TaskCard key={task.id} task={task} setChangeTrigger={setChangeTrigger} changeTrigger={changeTrigger} />
+          ))
+      }
     </Box>
   )
 }

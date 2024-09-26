@@ -5,18 +5,22 @@ import Grid from '@mui/material/Grid2';
 import { useEffect, useState } from 'react';
 import { LostObjectsService } from '../../../../../../services/lostObjects/lost-objects.service';
 import Void from '../../../../../utilities/components/void.utility';
+import { Loader } from '../../../../../utilities/components/loader.utility';
 
 export default function LostObjectsGrid() {
 
   const [lostObjects, setLostObjects] = useState<ILostObject[]>([])
+  const [loader, setLoader] = useState(false)
 
   async function getAll() {
+    setLoader(true)
     try {
       const response = await LostObjectsService.get_all()
       setLostObjects(response)
     } catch (error) {
       console.log(error);
     }
+    setLoader(false)
   }
 
   useEffect(() => {
@@ -25,6 +29,7 @@ export default function LostObjectsGrid() {
 
   return (
     <Box width={'100%'}>
+      <Loader isLoading={loader} />
       {lostObjects.length > 0 ? (
         <Grid container>
           {lostObjects.map((lostObject: ILostObject) => (

@@ -15,7 +15,7 @@ const axiosNestInstance: AxiosInstance = axios.create({
 
 const axiosJavaInstance: AxiosInstance = axios.create({
   baseURL: javaBaseURL,
-  timeout: 10000,
+  timeout: 100000,
   headers: {
     "Content-Type": "application/json",
   },

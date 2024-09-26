@@ -9,12 +9,22 @@ import { RoutinesService } from "../../../../../services/routines/routines.servi
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
 import { ModalFormCreateRoutines } from "./components/create-routines-form.components";
+import { ModalFormEditRoutines } from "./components/update-routines-form.components";
 
 export function RoutineAdmin() {
   const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [openInfo, setOpenInfo] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(0);
   const [openCreate,  setOpenCreate] = useState(false);
+  const [openUpdate,  setOpenUpdate] = useState(false);
+  const [ routineEdit, setRoutineEdit] = useState<IRoutine>({} as IRoutine);
+
+  function handleOpenEdit(routine: IRoutine) {
+    setOpenUpdate(true);
+    setRoutineEdit(routine);
+  }
+  const handleCloseUpdate = () => setOpenUpdate(false);
+
   const handleOpenCreate = () => setOpenCreate(true);
   const handleCloseCreate = () => setOpenCreate(false);
 
@@ -102,7 +112,7 @@ export function RoutineAdmin() {
               }}
               key={`edit-${value.id}`}
               aria-label="edit"
-              
+              onClick={() => handleOpenEdit(value)}
             >
               <EditIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -156,6 +166,7 @@ export function RoutineAdmin() {
         <TableAdmin rows={routines} columns={columns} limit={5}></TableAdmin>
         <ModalFormCreateRoutines open={openCreate} handleClose={handleCloseCreate} />
         <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
+        <ModalFormEditRoutines routine={routineEdit}  open={openUpdate} handleClose={handleCloseUpdate} />
       </Box>
     </div>
   );

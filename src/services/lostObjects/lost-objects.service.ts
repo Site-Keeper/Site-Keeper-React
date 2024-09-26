@@ -6,8 +6,8 @@ import { ILostObject } from "../../models/interfaces/lost-object.interface";
 
 import { LOST_OBJECTS_API_ENDPOINTS, TEndpointKeys } from "./lost-objects.endpoints";
 
-const getEnpoint = (method: TEndpointKeys): string => {
-    return LOST_OBJECTS_API_ENDPOINTS()[method];
+const getEnpoint = (method: TEndpointKeys, id?:string): string => {
+    return LOST_OBJECTS_API_ENDPOINTS(id)[method];
 };
 
 export class LostObjectsService {
@@ -21,8 +21,13 @@ export class LostObjectsService {
         return await axiosJavaInstance.get<IGetLostObjectSummaryResp>(endpoint).then(response => response.data);
     };
 
-    static create = async (req: ICreateLostObjectReq, imageFile: File): Promise<ILostObject> => {
+    static create = async (req: ICreateLostObjectReq): Promise<ILostObject> => {
         const endpoint = getEnpoint("CREATE");
-        return await axiosJavaInstanceImage.post<ILostObject>(endpoint,imageFile,{params : req}).then(response => response.data);
+        return await axiosJavaInstanceImage.post<ILostObject>(endpoint,req).then(response => response.data);
+    };
+
+    static delete = async (req: {id: string})=> {
+        const endpoint = getEnpoint("DELETE", req.id);
+        return await axiosJavaInstanceImage.delete<ILostObject>(endpoint).then(response => response.data);
     };
 }
