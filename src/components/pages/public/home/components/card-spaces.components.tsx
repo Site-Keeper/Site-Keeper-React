@@ -32,7 +32,7 @@ export function CardSpaces({space, setId,setSpaceName}: Props){
                 <Typography variant="body1" sx={{margin: "0 20px", color: '#8A8A8A'}}>{space.description}</Typography>
             </Box>
             <Box sx={{display: "flex", flexDirection: 'column', gap: '15px', marginBottom: '20px'}}>
-                <Box sx={{display: "flex", alignItems: "center", marginLeft: "20px", gap: '10px'}}>
+                <Box sx={{display: "flex", alignItems: "center", marginLeft: "20px",gap: '10px', flexWrap: 'wrap', overflow: 'hidden', maxHeight: '80px'}}>
                     {space.objects.map((object: IObject) => <Chip key={object.name} sx={{color : "secondary.main", borderColor: 'secondary.main'}} label={object.name} variant="outlined" />)}
                 </Box>
                 {isAuthenticated &&<Box sx={{display: "flex", alignItems: "center", justifyContent: 'flex-end', marginRight: "20px", gap: '10px'}}>
