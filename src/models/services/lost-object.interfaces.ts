@@ -13,3 +13,11 @@ export interface IGetLostObjectSummaryResp {
     claimedTotal : number
     lostTotal : number
 }
+
+
+export interface ICreateLostObjectReq {
+    name : string
+    description : string
+    spaceId : number
+    image : File
+}

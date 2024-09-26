@@ -8,6 +8,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Column, TableAdmin } from "../../../../../utilities/components/table/table-admin.component";
 import DynamicIcon from "../../../../../utilities/DynamicIcon";
+import { ModalFormCreateTasks } from "./create-tasks-form.components";
+import { ModalUpdateFormTask } from "./update-tasks-form.components";
 
 interface IModalMoreInformation {
   open: boolean;
@@ -34,6 +36,26 @@ const style = {
 
 export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMoreInformation) {
   const [task, setTask] = useState<ITask[]>([])
+  const [openForm, setOpenForm] = useState(false);
+  const [openFormUpdate, setOpenFormUpdate] = useState(false);
+  const [taskUpdate, setTaskUpdate] = useState<ITask>();
+
+  const handleOpenFormUpdate = (task: ITask) => {
+    setOpenFormUpdate(true);
+    setTaskUpdate(task);
+  };
+
+  const handleCloseFormUpdate = () => {
+    setOpenFormUpdate(false);
+  };
+
+  const handleOpenForm = () => {
+    setOpenForm(true);
+  };
+
+  const handleCloseForm = () => {
+    setOpenForm(false);
+  };
 
   const getTaskByRoutines = useCallback(async () => {
     const tasksReq = await TasksService.getTaskByRoutines(id);
@@ -79,7 +101,7 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
       width: "170px",
       filter: "string",
       renderCell: (value) => {
-        if (!(typeof value === "object" && "id" in value)) {
+        if (!(typeof value === "object" && "id" in value && "title" in value)){
           return null;
         }
 
@@ -100,6 +122,7 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
             }}
             key={`edit-${value.id}`}
             aria-label="edit"
+            onClick={() => handleOpenFormUpdate(value)}
           >
             <EditIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -159,11 +182,14 @@ export function ModalMoreInformationRoutines({ open, handleClose, id }: IModalMo
               borderRadius: "50px",
               gap: '10px'
             }}
+            onClick={handleOpenForm}
           >
             <AddCircleOutlineOutlined sx={{ width: '25px', height: '25px' }} />
             <Typography variant="subtitle1">Crear Rutinas</Typography>
           </Button>
           <TableAdmin rows={task} columns={columns} limit={5}></TableAdmin>
+          <ModalFormCreateTasks routine_id={id} handleClose={handleCloseForm} open={openForm} />
+          <ModalUpdateFormTask handleClose={handleCloseFormUpdate} open={openFormUpdate} task={taskUpdate} />
         </Box>
       </Box>
     </Modal>

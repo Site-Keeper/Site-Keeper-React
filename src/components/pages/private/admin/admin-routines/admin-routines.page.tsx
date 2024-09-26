@@ -8,30 +8,58 @@ import { IRoutine } from "../../../../../models/interfaces/routines.interface";
 import { RoutinesService } from "../../../../../services/routines/routines.service";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { ModalMoreInformationRoutines } from "./components/modal-more-information-routines.components";
+import { ModalFormCreateRoutines } from "./components/create-routines-form.components";
+import { ModalFormEditRoutines } from "./components/update-routines-form.components";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function RoutineAdmin() {
-  const [routines, setRoutines] = useState<IRoutine[]>([])
+  const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [openInfo, setOpenInfo] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(0);
+  const [openCreate,  setOpenCreate] = useState(false);
+  const [openUpdate,  setOpenUpdate] = useState(false);
+  const [ routineEdit, setRoutineEdit] = useState<IRoutine>({} as IRoutine);
+  const [ loader, setLoader] = useState(false)
+  const [ trigger, setTrigger] = useState(false)
+
+
+  const deleteRoutine = async (id: number) => {
+    setLoader(true)
+    try {
+      await RoutinesService.delete(id)
+      setTrigger(!trigger)
+    } catch (error) {
+      console.log('Error al eliminar rutina:', error);
+    }
+    setLoader(false)
+  }
+
+  function handleOpenEdit(routine: IRoutine) {
+    setOpenUpdate(true);
+    setRoutineEdit(routine);
+  }
+  const handleCloseUpdate = () => setOpenUpdate(false);
+
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
 
   async function getAllRoutine() {
+    setLoader(true)
     const routinesReq = await RoutinesService.getAll()
     const routines = routinesReq.data
     setRoutines(routines)
+    setLoader(false)
   }
 
   useEffect(() => {
     getAllRoutine()
-  }, [])
+  }, [trigger])
 
   const handleOpen = (id: number) => {
     setSelectedId(id); // Establece el ID seleccionado
     setOpenInfo(true);
   };
   const handleClose = () => setOpenInfo(false);
-
-
-  
 
   const columns: Column<IRoutine>[] = [
     { id: "name", label: "name", width: "20%", filter: "String" },
@@ -58,7 +86,7 @@ export function RoutineAdmin() {
         return null;
       }
     },
-    { id: "assignedTo", label: "Encargado", width: "20%", filter: "String" },
+    { id: "assigned_to", label: "Encargado", width: "20%", filter: "String" },
     {
       id: "actions",
       label: "Actions",
@@ -91,7 +119,6 @@ export function RoutineAdmin() {
             >
               <VisibilityOutlinedIcon sx={{ color: "#fff" }} />
             </IconButton>
-            <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
             <IconButton
               sx={{
                 backgroundColor: "#FBBF24",
@@ -99,6 +126,7 @@ export function RoutineAdmin() {
               }}
               key={`edit-${value.id}`}
               aria-label="edit"
+              onClick={() => handleOpenEdit(value)}
             >
               <EditIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -109,6 +137,7 @@ export function RoutineAdmin() {
               }}
               key={`delete-${value.id}`}
               aria-label="delete"
+              onClick={() => deleteRoutine(value.id)}
             >
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -127,6 +156,7 @@ export function RoutineAdmin() {
         padding: "30px",
       }}
     >
+      <Loader isLoading={loader}/>
       <Box
         sx={{
           width: "100%",
@@ -144,11 +174,15 @@ export function RoutineAdmin() {
             borderRadius: "50px",
             gap: '10px'
           }}
+          onClick={handleOpenCreate}
         >
           <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
           <Typography variant="subtitle2">Crear Rutinas</Typography>
         </Button>
         <TableAdmin rows={routines} columns={columns} limit={5}></TableAdmin>
+        <ModalFormCreateRoutines open={openCreate} handleClose={handleCloseCreate} />
+        <ModalMoreInformationRoutines id={selectedId} open={openInfo} handleClose={handleClose} />
+        <ModalFormEditRoutines routine={routineEdit}  open={openUpdate} handleClose={handleCloseUpdate} />
       </Box>
     </div>
   );

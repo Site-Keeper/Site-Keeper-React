@@ -15,9 +15,16 @@ export interface IGetStatisticsUserResp extends ApiResponse<IStatsUser> {
 export interface IPostUsersReq {
   doc_numbers: number[]
   role_id: number
-  perssonel_type: string|undefined
+  personnel_type: string|undefined
 }
 
 export interface IPostUsersResp extends ApiResponse<IUser[]> {
   total: number | undefined
+}
+
+export interface IUpdateUserReq {
+  name?: string
+  email?: string
+  password?: string
+  role?: number
 }

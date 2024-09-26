@@ -1,14 +1,29 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useEffect, useState } from "react";
 import { LostObjectsService } from "../../../../../services/lostObjects/lost-objects.service";
 import { ILostObject } from "../../../../../models/interfaces/lost-object.interface";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function AdminLostObjects() {
   const [ lostObjects, setLostObjects ] = useState<ILostObject[]>([])
+  const [loader, setLoader] = useState(false)
+  const [trigger, setTrigger] = useState(false)
+
+
+  const deleteLostObject = async(id:number) => {
+    setLoader(true)
+    try {
+      await LostObjectsService.delete({id: `${id}`})
+      setTrigger(!trigger)
+    } catch (error) {
+      console.log('Error al eliminar el objeto perdido', error);
+      
+    }
+    setLoader(false)
+  }
 
   const columns: Column<ILostObject>[] = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
@@ -56,6 +71,7 @@ export function AdminLostObjects() {
             }}
             key={`delete-${value.id}`}
             aria-label="delete"
+            onClick={() => deleteLostObject(value.id)}
           >
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -65,13 +81,15 @@ export function AdminLostObjects() {
   ];
 
   async function getAllLostObjects(){
+    setLoader(true)
     const lostObjects = await LostObjectsService.get_all()
     setLostObjects(lostObjects)
+    setLoader(false)
   }
 
   useEffect(() => {
     getAllLostObjects()
-  }, [])
+  }, [trigger])
   
 
   return (
@@ -84,6 +102,7 @@ export function AdminLostObjects() {
         padding: "30px",
       }}
     >
+      <Loader isLoading={loader} />
       <Box
         sx={{
           width: "100%",
@@ -92,19 +111,6 @@ export function AdminLostObjects() {
           borderRadius: "15px",
         }}
       >
-        <Button
-          variant="contained"
-          sx={{
-            height: "40px",
-            width: "220px",
-            backgroundColor: "success.main",
-            borderRadius: "50px",
-            gap: '10px'
-          }}
-        >
-          <AddCircleOutlineIcon sx={{width: '25px', height: '25px'}}/>  
-          <Typography variant="subtitle2">Crear Usuarios</Typography>
-        </Button>
         <TableAdmin rows={lostObjects} columns={columns} limit={5}></TableAdmin>
       </Box>
     </div>

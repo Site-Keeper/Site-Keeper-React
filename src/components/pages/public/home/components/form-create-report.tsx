@@ -1,9 +1,9 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { Modal, Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material'; // Asegúrate de tener este ícono instalado
+import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { ReportsService } from '../../../../../services/Reports/reports.service';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ICreateReportReq } from '../../../../../models/services/reports.interface';
+import { ReportsService } from '../../../../../services/Reports/reports.service';
 
 interface IFormInput {
     reportTopic: string;
@@ -32,6 +32,8 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
     const [imageName, setImageName] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
 
+    console.log(id)
+
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const topicnumber = Number(data.reportTopic);
         const datareq: ICreateReportReq = {
@@ -39,7 +41,7 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
             description: data.reportDescription,
             isEvent: false,
             topicId: topicnumber,
-            theDate: new Date(),
+            theDate: new Date().toISOString().slice(0, 19),
             spaceId: id,
             image: imageFile? imageFile : undefined,
         };
@@ -76,12 +78,13 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
                     display: "flex",
                     flexDirection: "column",
                     gap: "10px",
-                    border: "none", 
+                    borderRadius: '20px' 
                   }}
             >
                 <Typography variant="h2" component="h2">
-                    Añadir Reporte para {spacesName}
+                    Añadir Reporte
                 </Typography>
+                <Typography variant='h3'>Espacios: {spacesName}</Typography>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         label="Nombre del Reporte"

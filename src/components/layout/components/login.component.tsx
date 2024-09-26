@@ -9,7 +9,6 @@ import {
   IconButton,
   OutlinedInput,
   FormControl,
-  Link,
   Box,
   FormHelperText,
   Modal
@@ -21,6 +20,7 @@ import logoRiwi from "../../../assets/img/logoRiwi.png";
 import { LoginSubmit } from "../hooks/use-login-submit";
 import { useDispatch } from "react-redux";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
   documentNumber: string;
@@ -54,6 +54,7 @@ const style = {
 
 export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -87,6 +88,7 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
         password,
         dispatch,
         handleCloseModal,
+        navigate
       });
       window.location.reload();
     } catch (error) {
@@ -231,13 +233,6 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
             width: "100%",
           }}
         >
-          <Link
-            color={"secondary"}
-            sx={{ width: "max-content", cursor: "pointer" }}
-            onClick={() => window.open("/forgot-password", "_blank")}
-          >
-            {"Olvide mi contraseña"}
-          </Link>
         </Box>
       </Box>
     </Modal>

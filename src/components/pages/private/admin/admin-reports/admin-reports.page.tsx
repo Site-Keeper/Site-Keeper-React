@@ -1,24 +1,42 @@
-import { Box, Button, Chip, IconButton, Typography } from "@mui/material";
+import { Box,  Chip, IconButton } from "@mui/material";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useEffect, useState } from "react"
 import { ReportsService } from "../../../../../services/Reports/reports.service";
 import { IReport } from "../../../../../models/interfaces/reports.interface";
+import DynamicIcon from "../../../../utilities/DynamicIcon";
+import { personnelType } from "../../../../../models/enums/perssonelType.enum";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function ReportsAdmin() {
   const [reports, setReports] = useState<IReport[]>([])
+  const [loader, setLoader] = useState(false)
+  const [trigger, setTrigger] = useState(false)
+
+  const deleteReport = async (id: number) => {
+    setLoader(true)
+    try {
+      await ReportsService.delete(id)
+      setTrigger(!trigger)
+    } catch (error) {
+      console.log('error al eliminar reporte:', error);
+      
+    }
+    setLoader(false)
+  }
 
   async function getAllReports() {
+    setLoader(true)
     const response = await ReportsService.getAll()
     const reports = response
     setReports(reports)
+    setLoader(false)
   }
 
   useEffect(() => {
     getAllReports()
-  }, [])
+  }, [trigger])
 
   const columns: Column<IReport>[] = [
     { id: "name", label: "Nombre", width: "20%", filter: "String" },
@@ -34,13 +52,28 @@ export function ReportsAdmin() {
         if (!(typeof value === 'object' && 'id' in value)) {
           return null;
         }
+
+        function getIconByPersonnelType(type: personnelType) {
+          switch (type) {
+            case personnelType.MAINTENANCE:
+              return 'EngineeringIcon';
+            case personnelType.JANITORIAL:
+              return 'CleanHandsIcon' ;
+            case personnelType.SECURITY:
+              return 'AdminPanelSettingsIcon';
+            default:
+              return 'MoreHorizIcon';
+          }
+        }
+
         return(
-        <Chip
-          key={value.id}
+          <Chip
+          icon={<DynamicIcon iconName={getIconByPersonnelType(reports[0].topicName)} />}
+          label={reports[0].topicName}
           sx={{
-            backgroundColor: "#E0F7FA", 
-            color: "#006064", 
-            fontWeight: "bold",
+            backgroundColor: "#E0F7FA",
+            color: "#006064",
+            fontWeight: "bold"
           }}
         />
       )}
@@ -83,6 +116,7 @@ export function ReportsAdmin() {
             }}
             key={`delete-${value.id}`}
             aria-label="delete"
+            onClick={() => deleteReport(value.id)}
           >
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -101,6 +135,7 @@ export function ReportsAdmin() {
         padding: "30px",
       }}
     >
+      <Loader isLoading={loader} />
       <Box
         sx={{
           width: "100%",
@@ -109,19 +144,6 @@ export function ReportsAdmin() {
           borderRadius: "15px",
         }}
       >
-        <Button
-          variant="contained"
-          sx={{
-            height: "40px",
-            width: "220px",
-            backgroundColor: "success.main",
-            borderRadius: "50px",
-            gap: '10px'
-          }}
-        >
-          <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
-          <Typography variant="subtitle2">Crear Rutinas</Typography>
-        </Button>
         <TableAdmin rows={reports} columns={columns} limit={5}></TableAdmin>
       </Box>
     </div>

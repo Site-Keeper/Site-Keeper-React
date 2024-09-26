@@ -11,10 +11,9 @@ import { useAuth } from "../../../hooks/useAuth";
 import { IUser } from "../../../models/interfaces";
 import { emptyUserState } from "../../../state/redux/states/user";
 
-const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/personnel-dashboard" }];
+const pagesEmployed = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }];
 const pagesAdmin = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/admin-dashboard" }, { name: 'Gestión De Usuarios', path: '/admin-users' }, { name: 'Gestión De Rutinas', path: '/admin-routines' }, { name: "Gestión De Espacios", path: '/admin-spaces' }, { name: "Gestión De Objetos Perdidos", path: '/admin-lost-objects' }, {name : "Gestión De Reportes", path : '/admin-reports'}] ;
 const pagesPersonel = [{ name: "Home", path: "/" }, { name: "Objetos Perdidos", path: "/lost-objects" }, { name: "Dashboard", path: "/personnel-dashboard" }];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,12 +49,14 @@ const Navbar = () => {
     checkAuthentication();
     if (user.role.name === "admin") {
       setRolePages(pagesAdmin)
-    } else if (user.role.name === "perssonel") {
+    } else if (user.role.name === "personnel") {
       setRolePages(pagesPersonel)
     } else {
       setRolePages(pagesEmployed)
     }
   }, [location, checkAuthentication, user, rolpage]);
+
+  const settings = [{name: "Perfil", action: ()=> navigate('my-profile') }, {name: "Dashboard", action: ()=> navigate(`/${user.role.name}-dashboard`)}, {name: "Logout", action: ()=> handleLogout}];
 
   return (
     <Box sx={{ display: "flex", position: "static", padding: "0 50px ", justifyContent: "space-between", alignItems: 'center', width: '100%', height: '100px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
@@ -106,9 +107,9 @@ const Navbar = () => {
           onClose={handleCloseUserMenu}
         >
           {settings.map((setting) => (
-            <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleCloseUserMenu}>
+            <MenuItem key={setting.name} onClick={setting.action}>
               <Typography sx={{ textAlign: "center" }}>
-                {setting}
+                {setting.name}
               </Typography>
             </MenuItem>
           ))}

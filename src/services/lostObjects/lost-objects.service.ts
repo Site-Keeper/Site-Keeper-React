@@ -1,13 +1,13 @@
-import { axiosJavaInstance } from "../../axios.config";
+import { axiosJavaInstance, axiosJavaInstanceImage } from "../../axios.config";
 
-import { IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
+import { ICreateLostObjectReq, IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
 
 import { ILostObject } from "../../models/interfaces/lost-object.interface";
 
 import { LOST_OBJECTS_API_ENDPOINTS, TEndpointKeys } from "./lost-objects.endpoints";
 
-const getEnpoint = (method: TEndpointKeys): string => {
-    return LOST_OBJECTS_API_ENDPOINTS()[method];
+const getEnpoint = (method: TEndpointKeys, id?:string): string => {
+    return LOST_OBJECTS_API_ENDPOINTS(id)[method];
 };
 
 export class LostObjectsService {
@@ -19,5 +19,15 @@ export class LostObjectsService {
     static get_summary = async (): Promise<IGetLostObjectSummaryResp> => {
         const endpoint = getEnpoint("GET_SUMMARY");
         return await axiosJavaInstance.get<IGetLostObjectSummaryResp>(endpoint).then(response => response.data);
+    };
+
+    static create = async (req: ICreateLostObjectReq): Promise<ILostObject> => {
+        const endpoint = getEnpoint("CREATE");
+        return await axiosJavaInstanceImage.post<ILostObject>(endpoint,req).then(response => response.data);
+    };
+
+    static delete = async (req: {id: string})=> {
+        const endpoint = getEnpoint("DELETE", req.id);
+        return await axiosJavaInstanceImage.delete<ILostObject>(endpoint).then(response => response.data);
     };
 }

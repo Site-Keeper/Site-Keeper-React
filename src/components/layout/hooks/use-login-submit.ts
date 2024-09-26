@@ -28,21 +28,34 @@ export const LoginSubmit = async ({
 }: TProps) => {
   try {
     const response = await AuthService.login({ doc_number, password });
-    const decodedToken = jwtDecode(response.data.token);
-    
+    const decodedToken: IUser = jwtDecode(response.data.token);
+    console.log("asd");
+    console.log("rola", decodedToken.role.name);
     storeToken(response.data.token);
-    dispatch(setUser(decodedToken as IUser));
+    console.log("roli", decodedToken.role.name);
+    dispatch(setUser(decodedToken));
+    console.log("role", decodedToken.role.name);
+
     if (navigate) {
-      // (decodedToken as IUser).role.name == "admin"
-      //   ? navigate("/admin-spaces")
-      //   : navigate("/");
-      navigate("/");
+      switch (decodedToken.role.name) {
+        case "admin":
+          navigate("/admin-dashboard");
+          break;
+
+        case "personnel":
+          navigate("/personnel-dashboard");
+          break;
+
+        default:
+          window.location.reload();
+          break;
+      }
     } else if (handleCloseModal) {
       handleCloseModal();
     }
   } catch (error: unknown) {
-    const axiosError = error as AxiosError
-    console.warn(axiosError.response?.data)
-    throw error
+    const axiosError = error as AxiosError;
+    console.warn(axiosError.response?.data);
+    throw error;
   }
 };
