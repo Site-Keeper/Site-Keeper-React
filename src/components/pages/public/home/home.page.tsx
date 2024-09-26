@@ -65,9 +65,6 @@ export function Home() {
         </Box>
       </Box>
       <ModalFormCreateReports spacesName={spaceName} open={openmodalcreateReport} handleClose={handleClose} id={id} setId={setId}></ModalFormCreateReports>
-      <Box sx={{ height: "90px", width: "74%", alignContent: 'center' }}>
-        <SearchInput setSearch={setSearch}></SearchInput>
-      </Box>
       <Slider3d setSpaceName={setSpaceName} Spaces={spaces} setId={setId}></Slider3d>
     </Box>
   );

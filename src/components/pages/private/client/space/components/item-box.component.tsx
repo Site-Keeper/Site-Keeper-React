@@ -1,14 +1,16 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useState } from "react";
 import { IObject } from "../../../../../../models/interfaces";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import DynamicIcon from "../../../../../utilities/DynamicIcon";
+import { ModalFormCreateReportsByObjects } from "./form-create-report";
 
 interface IProps {
     object: IObject;
+    spaceID:number
 }
 
-export default function ItemBox({ object }: IProps) {
+export default function ItemBox({ object, spaceID }: IProps) {
     const boxStyle: CSSProperties = {
         border: "1px solid #ccc",
         padding: "10px",
@@ -27,6 +29,10 @@ export default function ItemBox({ object }: IProps) {
         borderRadius: "33px",
         cursor: "pointer",
     }
+
+    const [open,setOpen] = useState(false)
+
+    const handleClose = () => setOpen(false);
     
     return (
         <div style={boxStyle}>
@@ -36,9 +42,10 @@ export default function ItemBox({ object }: IProps) {
             </Box>
             <Typography variant="body1">Cantidad: {object.quantity}</Typography>
             <Typography variant="body1">{object.description}</Typography>
-            <button onClick={() => console.log("Reportar", object.id)} style={buttonStyle}>
+            <button onClick={() => setOpen(true)} style={buttonStyle}>
                 <Typography variant="subtitle1">Reportar</Typography>
             </button>
+            <ModalFormCreateReportsByObjects open={open} handleClose={handleClose} objectId={object.id} objectName={object.name} id={spaceID} />
         </div>
     );
 };

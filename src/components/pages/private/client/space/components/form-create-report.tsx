@@ -2,8 +2,8 @@ import { CloudUpload } from '@mui/icons-material'; // Asegúrate de tener este �
 import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ICreateReportReq } from '../../../../../models/services/reports.interface';
-import { ReportsService } from '../../../../../services/Reports/reports.service';
+import { ICreateReportReq } from '../../../../../../models/services/reports.interface';
+import { ReportsService } from '../../../../../../services/Reports/reports.service';
 
 interface IFormInput {
     reportTopic: string;
@@ -15,8 +15,8 @@ interface IProps {
     handleClose: () => void;
     open: boolean;
     id: number;
-    setId: React.Dispatch<React.SetStateAction<number>>;
-    spacesName: string;
+    objectId: number
+    objectName:string
 }
 
 const Topic = [
@@ -26,13 +26,11 @@ const Topic = [
     { value: 4, label: 'Otros' },
 ];
 
-export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesName}: IProps) => {
+export const ModalFormCreateReportsByObjects = ({ handleClose, open, id, objectId,objectName}: IProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [imageError, setImageError] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
-
-    console.log(id)
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const topicnumber = Number(data.reportTopic);
@@ -43,6 +41,7 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
             topicId: topicnumber,
             theDate: new Date().toISOString().slice(0, 19),
             spaceId: id,
+            objectId: objectId,
             image: imageFile? imageFile : undefined,
         };
         await ReportsService.create(datareq);
@@ -60,7 +59,6 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
 
     const handleclosemodal = () => {
         handleClose();
-        setId(0);
     };
 
     return (
@@ -84,7 +82,7 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
                 <Typography variant="h2" component="h2">
                     Añadir Reporte
                 </Typography>
-                <Typography variant='h3'>Espacios: {spacesName}</Typography>
+                <Typography variant='h3'>Objeto: ${objectName}</Typography>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         label="Nombre del Reporte"

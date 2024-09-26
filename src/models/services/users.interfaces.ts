@@ -25,6 +25,6 @@ export interface IPostUsersResp extends ApiResponse<IUser[]> {
 export interface IUpdateUserReq {
   name?: string
   email?: string
-  passaword?: string
+  password?: string
   role?: number
 }
