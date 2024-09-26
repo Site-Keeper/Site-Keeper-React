@@ -11,6 +11,7 @@ import DynamicIcon from "../../../../utilities/DynamicIcon";
 
 
 export default function Dashboard() {
+
   const emptyReport: IReport = {
     id: 0,
     name: "",
@@ -29,6 +30,7 @@ export default function Dashboard() {
 
   const [reports, setReports] = useState<IReport[]>([emptyReport]);
   const [loader, setLoader] = useState(false)
+
   async function getAllReports(){
     setLoader(true)
     const reports = await ReportsService.getAll()

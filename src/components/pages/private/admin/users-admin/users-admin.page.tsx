@@ -1,19 +1,28 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
-import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { USersService } from "../../../../../services/users/users.service";
-import { usersToRows } from "./adapters/user-to-row.adpters";
 import { IUserToRows } from "../../../../../models/interfaces/user-to-rows.interface";
+import { USersService } from "../../../../../services/users/users.service";
+import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
+import { usersToRows } from "./adapters/user-to-row.adpters";
 import { ModalFormCreateUsers } from "./components/create-users-form.components";
+import { ModalFormUpdateUsers } from "./components/update-users-form.components";
 
 export function UserAdmin() {
   const [ users, setUsers ] = useState<IUserToRows[]>([])
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const handleOpen = () => setOpenModalCreate(true);
   const handleClose = () => setOpenModalCreate(false);
+  const [ userEdit, setUserEdit ] = useState<IUserToRows>({} as IUserToRows)
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
+
+  const handleCloseEdit = () => setOpenEdit(false);
+  function handleOpenEdit(user: IUserToRows) {
+    setOpenEdit(true);
+    setUserEdit(user);
+  }
 
   const columns: Column<IUserToRows>[] = [
     { id: "name", label: "Name", width: "20%", filter: "String" },
@@ -53,6 +62,7 @@ export function UserAdmin() {
             }}
             key={`edit-${value.id}`}
             aria-label="delete"
+            onClick={() => handleOpenEdit(value)}
           >
             <EditIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -116,6 +126,7 @@ export function UserAdmin() {
         </Button>
         <ModalFormCreateUsers handleClose={handleClose} open={openModalCreate} />
         <TableAdmin rows={users} columns={columns} limit={5}></TableAdmin>
+        <ModalFormUpdateUsers user={userEdit} handleClose={handleCloseEdit} open={openEdit} />
       </Box>
     </div>
   );

@@ -26,4 +26,5 @@ export interface IUpdateUserReq {
   name?: string
   email?: string
   passaword?: string
+  role?: number
 }
