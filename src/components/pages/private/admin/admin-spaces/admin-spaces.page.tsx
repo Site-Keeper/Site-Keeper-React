@@ -20,7 +20,6 @@ export function AdminSpaces() {
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const handleOpenCreate = () => setOpenModalCreate(true);
     const handleCloseCreate = () => setOpenModalCreate(false);
-    const handleOpenUpdate = () => setOpenModalUpdate(true);
     const handleCloseUpdate = () => setOpenModalUpdate(false);
   
     async function getAllSpaces() {
@@ -38,6 +37,12 @@ export function AdminSpaces() {
       setObjects(object)
     };
     const handleClose = () => setOpenInfo(false);
+
+    const handleOpenUpdate = (id: number) => {
+      
+      setSelectedId(id);
+      setOpenModalUpdate(true);
+    }
   
   
     
@@ -84,6 +89,7 @@ export function AdminSpaces() {
               }}
               key={`edit-${value.id}`}
               aria-label="edit"
+              onClick={() => handleOpenUpdate}
             >
               <EditIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -134,7 +140,7 @@ export function AdminSpaces() {
             <Typography variant="subtitle2">Crear Espacio</Typography>
           </Button>
           <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} />
-          <ModalFormUpdateSpaces handleClose={handleCloseUpdate} open={openModalUpdate} space={}/>
+          <ModalFormUpdateSpaces handleClose={handleCloseUpdate} open={openModalUpdate} space={spaces.find(space => {space.id == selectedId})}/>
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
           <ModalMoreInformationSpaces  id={selectedId} open={openInfo} handleClose={handleClose} objects={objects}/>
         </Box>

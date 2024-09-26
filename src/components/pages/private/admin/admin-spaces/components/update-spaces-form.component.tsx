@@ -3,6 +3,8 @@ import { ICreateSpace } from "../../../../../../models/services/spaces.interface
 import { SpacesService } from "../../../../../../services/spaces/spaces.service";
 import { useState } from "react";
 import { ISpace } from "../../../../../../models/interfaces";
+import { Modal } from "@mui/material";
+import { Box } from "@mui/system";
 
 interface IFormInput {
     reportDescription: string;
@@ -45,6 +47,12 @@ export const ModalFormUpdateSpaces = ({
 
         await SpacesService.update(datareq)
         handleClose();
+
+        return(
+            <Box>
+
+            </Box>
+        )
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +67,14 @@ export const ModalFormUpdateSpaces = ({
     const handleclosemodal = () => {
         handleClose();
     };
+
+    return(
+        <Modal open={open} onClose={handleclosemodal}>
+            <Box>
+
+            </Box>
+        </Modal>
+    )
 
 
 }
