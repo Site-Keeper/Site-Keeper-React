@@ -8,6 +8,8 @@ import { LostObjectsService } from '../../../../../../services/lostObjects/lost-
 import { TasksService } from '../../../../../../services/task/task.service';
 import { USersService } from '../../../../../../services/users/users.service';
 import DynamicIcon from '../../../../../utilities/DynamicIcon';
+import { Loader } from '../../../../../utilities/components/loader.utility';
+
 
 interface StatCardProps {
     title: string;
@@ -68,34 +70,32 @@ export default function DashboardCardsMUI() {
     const [statsTask, setStatsTask] = useState<IStatsTask>({ total: 0, completed: 0, cancelled: 0 });
     const [summaryReports, setSummaryReports] = useState<IGetSummaryReportsResp>({ total: 0, approvedTotal: 0, rejectedTotal: 0 });
     const [summaryLostObject, setSummaryLostObject] = useState<IGetLostObjectSummaryResp>({ total: 0, claimedTotal: 0, lostTotal: 0 });
-
-    async function getStatisticsUser() {
-        const statistics = await USersService.getStats();
-        setStatsUser(statistics.data);
-    }
-    async function getStatisticsTask() {
-        const statistics = await TasksService.getStats();
-        setStatsTask(statistics.data);
-    }
-
-    async function getSummaryReports() {
-        const summaryReports = await ReportsService.getSummary();
-        setSummaryReports(summaryReports);
-    }
-
-    async function getSummaryLostObject() {
-        const getSummaryLostObject = await LostObjectsService.get_summary();
-        setSummaryLostObject(getSummaryLostObject);
-    }
-
-
+    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
-        getStatisticsUser();
-        getStatisticsTask();
-        getSummaryReports();
-        getSummaryLostObject();
+        const getAllStatistics = async () => {
+            setLoader(true);
+            try {
+                const [userStats, taskStats, summaryReports, summaryLostObject] = await Promise.all([
+                    USersService.getStats(),
+                    TasksService.getStats(),
+                    ReportsService.getSummary(),
+                    LostObjectsService.get_summary()
+                ]);
+    
+                setStatsUser(userStats.data);
+                setStatsTask(taskStats.data);
+                setSummaryReports(summaryReports);
+                setSummaryLostObject(summaryLostObject);
+            } catch (error) {
+                console.error("Error al obtener estadísticas:", error);
+            }
+            setLoader(false)
+        };
+    
+        getAllStatistics();
     }, []);
+    
 
     const info = [
         { title: 'Usuarios', Total: statsUser.total, icon: 'PeopleAltOutlinedIcon', stats: [{ label: 'Admin', value: statsUser.admin }, { label: 'Personnel', value: statsUser.personnel }, { label: 'Employed', value: statsUser.employed }] },
@@ -106,6 +106,7 @@ export default function DashboardCardsMUI() {
     console.log(info);
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+            <Loader isLoading={loader} />
             {info.map((info, index) => (
                 <StatCard
                     key={index}

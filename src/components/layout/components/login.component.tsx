@@ -9,7 +9,6 @@ import {
   IconButton,
   OutlinedInput,
   FormControl,
-  Link,
   Box,
   FormHelperText,
   Modal
@@ -234,13 +233,6 @@ export const LoginModal = ({ handleCloseModal, showLoginModal }: LoginProps) => 
             width: "100%",
           }}
         >
-          <Link
-            color={"secondary"}
-            sx={{ width: "max-content", cursor: "pointer" }}
-            onClick={() => window.open("/forgot-password", "_blank")}
-          >
-            {"Olvide mi contraseña"}
-          </Link>
         </Box>
       </Box>
     </Modal>

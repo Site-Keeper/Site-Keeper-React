@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   Box,
@@ -12,6 +12,7 @@ import { ITask } from '../../../../../../models/interfaces/task.interface';
 import { ReportStatus } from '../../../../../../models/enums/status.enum';
 import { statusColors } from '../../../../../../models/enums/status-colors.enums';
 import { TasksService } from '../../../../../../services/task/task.service';
+import { Loader } from '../../../../../utilities/components/loader.utility';
 
 interface TaskModalProps {
   open: boolean;
@@ -23,7 +24,9 @@ interface TaskModalProps {
 }
 
 const TaskModal: React.FC<TaskModalProps> = ({ open, onClose, task, onlyView, setChangeTrigger, changeTrigger }) => {
+  const [loader, setLoader] = useState(false)
   const onStateChange = async (newState: ReportStatus) => {
+    setLoader(true)
     console.log('newStatus:', newState);
     const newTask = { id: task.id, state: newState };
     try {
@@ -33,6 +36,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, onClose, task, onlyView, se
     } catch (error) {
       console.error('Error updating task status:', error);
     }
+    setLoader(false)
   };
 
   const handleStateChange = (event: SelectChangeEvent<ReportStatus>) => {
@@ -40,6 +44,9 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, onClose, task, onlyView, se
   };
 
   return (
+    <>
+      
+      <Loader isLoading={loader} />
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
@@ -61,7 +68,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, onClose, task, onlyView, se
         <Typography variant="h2">{task.title}</Typography>
         <Typography variant="subtitle1">{task.description}</Typography>
         <Typography variant="body1" color="text.secondary">
-          Espacio: {task.spaceName}
+          Espacio: {task.space?.name}
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Asunto: {task.topic?.name ?? 'N/A'}
@@ -86,6 +93,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, onClose, task, onlyView, se
         )}
       </Box>
     </Modal>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import { SearchInput } from './components/search.components';
 import { useEffect, useState } from 'react';
 import { SpacesService } from '../../../../services/spaces/spaces.service';
 import { ModalFormCreateReports } from './components/form-create-report';
+import { Loader } from '../../../utilities/components/loader.utility';
 
 export function Home() {
   const [spaces, setSpaces] = useState<ISpace[]>([])
@@ -13,12 +14,15 @@ export function Home() {
   const [openmodalcreateReport, setOpenModalCreateReport] = useState<boolean>(false)
   const [id, setId] = useState<number>(0)
   const [spaceName, setSpaceName] = useState<string>("")
+  const [loader, setLoader] = useState(false)
 
   const handleClose = () => setOpenModalCreateReport(false);
 
   async function getSpaces() {
+    setLoader(true)
     const spacesRes = await SpacesService.getAll()
     setSpaces(spacesRes)
+    setLoader(false)
   }
 
   useEffect(() => {
@@ -33,6 +37,7 @@ export function Home() {
 
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: 'column', alignItems: 'center', gap: '20px' }} >
+      <Loader isLoading={loader}/>
       <Box sx={{ height: '450px', width: '100vw', position: 'relative' }}>
         <img src={hero} style={{ position: "absolute", objectFit: 'cover', height: '100%', width: '100%' }} />
         <Box

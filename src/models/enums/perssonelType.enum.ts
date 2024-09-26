@@ -1,6 +1,6 @@
 export enum personnelType {
     MAINTENANCE = 'Maintenance',
-    JANITORIAL = ' Janitorial',
+    JANITORIAL = 'Janitorial',
     SECURITY = 'Security',
     OTHER = 'Other',
   }

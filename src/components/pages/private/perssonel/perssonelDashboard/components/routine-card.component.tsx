@@ -39,7 +39,7 @@ export default function TaskCard({ task, setChangeTrigger, changeTrigger }: Task
                 <Typography
                     variant="subtitle1"
                 >
-                    {task.spaceName}
+                    {task.space?.name}
                 </Typography>
             </Box>
             <IconButton sx={{mr: '15px', fontSize: '30px'}} onClick={() => setOpen(true)}>

@@ -1,6 +1,5 @@
 import { personnelType } from "../enums/perssonelType.enum";
 
-
 export interface IUserToRows{
     id: number;
     name: string;

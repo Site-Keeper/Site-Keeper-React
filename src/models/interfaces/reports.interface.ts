@@ -1,12 +1,18 @@
+import { personnelType } from "../enums/perssonelType.enum";
 import { ReportStatus } from "../enums/status.enum"
-import { ITopic } from "./topic.interface"
 
 export interface IReport {
-    id: number
-    name: string
-    description: string
-    spaceName: string
-    theDate: Date
-    topic: ITopic
-    status: ReportStatus
+    id:          number;
+    name:        string;
+    description: string;
+    isEvent:     boolean;
+    image?:       string;
+    topicId:     number;
+    topicName:   personnelType;
+    status:      ReportStatus;
+    theDate:     Date;
+    spaceId:     number;
+    spaceName:   string;
+    objectId?:    number;
+    objectName?:  string;
 }

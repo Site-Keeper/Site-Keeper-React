@@ -1,4 +1,3 @@
-
 import { personnelType } from "../enums/perssonelType.enum";
 import { IRole } from "./role.interface";
 
@@ -7,6 +6,6 @@ export interface IUser{
     name: string;
     email: string
     doc_number: string;
-    personnel_type?: personnelType;
+    personnelType?: personnelType;
     role: IRole;
 }

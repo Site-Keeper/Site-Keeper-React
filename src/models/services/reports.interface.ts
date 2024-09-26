@@ -1,4 +1,5 @@
 import { ApiResponse } from "../api";
+import { ReportStatus } from "../enums/status.enum";
 import { IReport } from "../interfaces/reports.interface";
 
 
@@ -13,6 +14,10 @@ export interface ICreateReportReq {
   image?: File;
 }
 
+export interface IUpdateStatusReq {
+  id:number,
+  status: ReportStatus
+}
 
 export interface IGetSummaryReportsResp {
   total: number;

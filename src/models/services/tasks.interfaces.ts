@@ -35,6 +35,4 @@ export interface IUpdateTaskReq extends  Partial<ITask> {
   space_id?: number
 }
 
-
-export type IUpdateTaskResp = ApiResponse<ITask> 
-
+export type IUpdateTaskResp = ApiResponse<ITask>
