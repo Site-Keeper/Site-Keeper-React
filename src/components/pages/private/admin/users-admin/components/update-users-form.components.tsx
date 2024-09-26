@@ -1,11 +1,7 @@
 import {
     Box,
     Button,
-    FormControl,
-    InputLabel,
-    MenuItem,
     Modal,
-    Select,
     TextField,
     Typography,
 } from "@mui/material";
@@ -17,6 +13,9 @@ interface IProps {
     user: IUserToRows;
     handleClose: () => void;
     open: boolean;
+    setLoader: React.Dispatch<React.SetStateAction<boolean>>
+    trigger: boolean
+    setTrigger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface IFormInput {
@@ -27,9 +26,9 @@ interface IFormInput {
     role: number; // Añadir el campo de rol
 }
 
-const roles = [{ value: 1, label: "admin" }, { value: 2, label: "personnel" }, { value: 3, label: "employed"}]; // Lista de roles
+const roles = [{ value: 1, label: "admin" }, { value: 2, label: "personnel" }, { value: 3, label: "employed" }]; // Lista de roles
 
-export const ModalFormUpdateUsers = ({ user, handleClose, open }: IProps) => {
+export const ModalFormUpdateUsers = ({ user, handleClose, open, setLoader, trigger, setTrigger }: IProps) => {
     const userRol = roles.find((rol) => rol.label === user.rol);
     const {
         register,
@@ -39,14 +38,21 @@ export const ModalFormUpdateUsers = ({ user, handleClose, open }: IProps) => {
     } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        const newObject = {
-            name: data.name,
-            email: data.email,
-            role: data.role, 
-        };
-        await USersService.updateUser(newObject, user.id);
-        console.log(newObject);
-        handleClose(); 
+        setLoader(true)
+        try {
+            const newObject = {
+                name: data.name,
+                email: data.email,
+                role: data.role,
+            };
+            await USersService.updateUser(newObject, user.id);
+            console.log(newObject);
+            handleClose();
+        } catch (error) {
+            console.log('error al actualizar el usuario:', error);
+        }
+        setTrigger(!trigger)
+        setLoader(false)
     };
 
     const handleCancel = () => {
@@ -110,22 +116,6 @@ export const ModalFormUpdateUsers = ({ user, handleClose, open }: IProps) => {
                             error={!!errors.email}
                             helperText={errors.email?.message}
                         />
-                        <FormControl fullWidth>
-                            <InputLabel id="role-label">Rol</InputLabel>
-                            <Select
-                                labelId="role-label"
-                                {...register("role", { required: "El rol es requerido" })}
-                                defaultValue={userRol?.value}
-                                error={!!errors.role}
-                            >
-                                {roles.map((role) => (
-                                    <MenuItem key={role.value} value={role.value}>
-                                        {role.label} {/* Mostrar la etiqueta del rol */}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {errors.role && <Typography color="error">{errors.role.message}</Typography>}
-                        </FormControl>
                         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
                             <Button
                                 variant="contained"

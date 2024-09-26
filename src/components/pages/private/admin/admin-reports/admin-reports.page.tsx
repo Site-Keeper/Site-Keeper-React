@@ -7,19 +7,36 @@ import { ReportsService } from "../../../../../services/Reports/reports.service"
 import { IReport } from "../../../../../models/interfaces/reports.interface";
 import DynamicIcon from "../../../../utilities/DynamicIcon";
 import { personnelType } from "../../../../../models/enums/perssonelType.enum";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function ReportsAdmin() {
   const [reports, setReports] = useState<IReport[]>([])
+  const [loader, setLoader] = useState(false)
+  const [trigger, setTrigger] = useState(false)
+
+  const deleteReport = async (id: number) => {
+    setLoader(true)
+    try {
+      await ReportsService.delete(id)
+      setTrigger(!trigger)
+    } catch (error) {
+      console.log('error al eliminar reporte:', error);
+      
+    }
+    setLoader(false)
+  }
 
   async function getAllReports() {
+    setLoader(true)
     const response = await ReportsService.getAll()
     const reports = response
     setReports(reports)
+    setLoader(false)
   }
 
   useEffect(() => {
     getAllReports()
-  }, [])
+  }, [trigger])
 
   const columns: Column<IReport>[] = [
     { id: "name", label: "Nombre", width: "20%", filter: "String" },
@@ -99,6 +116,7 @@ export function ReportsAdmin() {
             }}
             key={`delete-${value.id}`}
             aria-label="delete"
+            onClick={() => deleteReport(value.id)}
           >
             <DeleteIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -117,6 +135,7 @@ export function ReportsAdmin() {
         padding: "30px",
       }}
     >
+      <Loader isLoading={loader} />
       <Box
         sx={{
           width: "100%",

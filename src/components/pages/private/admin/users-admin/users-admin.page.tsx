@@ -9,16 +9,37 @@ import { Column, TableAdmin } from "../../../../utilities/components/table/table
 import { usersToRows } from "./adapters/user-to-row.adpters";
 import { ModalFormCreateUsers } from "./components/create-users-form.components";
 import { ModalFormUpdateUsers } from "./components/update-users-form.components";
+import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function UserAdmin() {
-  const [ users, setUsers ] = useState<IUserToRows[]>([])
+  const [users, setUsers] = useState<IUserToRows[]>([])
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const handleOpen = () => setOpenModalCreate(true);
-  const handleClose = () => setOpenModalCreate(false);
-  const [ userEdit, setUserEdit ] = useState<IUserToRows>({} as IUserToRows)
+  const [userEdit, setUserEdit] = useState<IUserToRows>({} as IUserToRows)
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [loader, setLoader] = useState(false)
+  const [trigger, setTrigger] = useState(false)
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+    setTrigger((prevTrigger) => !prevTrigger);
+  };
+  
+  const handleClose = () => {
+    setOpenModalCreate(false);
+    setTrigger((prevTrigger) => !prevTrigger); 
+  };
 
-  const handleCloseEdit = () => setOpenEdit(false);
+  const deleteUser = async (id: number) => {
+    setLoader(true)
+    try {
+      await USersService.delete(id)
+      setTrigger(!trigger)
+    } catch (error) {
+      console.log('Error al eliminar usuario:', error);
+    }
+    setLoader(false)
+  }
+
   function handleOpenEdit(user: IUserToRows) {
     setOpenEdit(true);
     setUserEdit(user);
@@ -46,51 +67,55 @@ export function UserAdmin() {
         }
 
         return (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >
-          <IconButton
+          <Box
             sx={{
-              backgroundColor: "#3B82F6",
-              ":hover": { backgroundColor: "#3269C2" },
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
             }}
-            key={`edit-${value.id}`}
-            aria-label="delete"
-            onClick={() => handleOpenEdit(value)}
           >
-            <EditIcon sx={{ color: "#fff" }} />
-          </IconButton>
-          <IconButton
-            sx={{
-              backgroundColor: "#EF4444",
-              ":hover": { backgroundColor: "#E04040" },
-            }}
-            key={`delete-${value.id}`}
-            aria-label="delete"
-          >
-            <DeleteIcon sx={{ color: "#fff" }} />
-          </IconButton>
-        </Box>
-      )}
+            <IconButton
+              sx={{
+                backgroundColor: "#3B82F6",
+                ":hover": { backgroundColor: "#3269C2" },
+              }}
+              key={`edit-${value.id}`}
+              aria-label="delete"
+              onClick={() => handleOpenEdit(value)}
+            >
+              <EditIcon sx={{ color: "#fff" }} />
+            </IconButton>
+            <IconButton
+              sx={{
+                backgroundColor: "#EF4444",
+                ":hover": { backgroundColor: "#E04040" },
+              }}
+              key={`delete-${value.id}`}
+              aria-label="delete"
+              onClick={() => deleteUser(value.id)}
+            >
+              <DeleteIcon sx={{ color: "#fff" }} />
+            </IconButton>
+          </Box>
+        )
+      }
     },
   ];
 
-  async function getAllUser(){
+  async function getAllUser() {
+    setLoader(true)
     const usersReq = await USersService.getAll()
     const user = usersToRows(usersReq.data)
     setUsers(user)
+    setLoader(false)
   }
 
   useEffect(() => {
     getAllUser()
-  }, [])
-  
+  }, [trigger])
+
 
   return (
     <div
@@ -102,6 +127,7 @@ export function UserAdmin() {
         padding: "30px",
       }}
     >
+      <Loader isLoading={loader} />
       <Box
         sx={{
           width: "100%",
@@ -121,12 +147,12 @@ export function UserAdmin() {
           }}
           onClick={handleOpen}
         >
-          <AddCircleOutlineIcon sx={{width: '25px', height: '25px'}}/>  
+          <AddCircleOutlineIcon sx={{ width: '25px', height: '25px' }} />
           <Typography variant="subtitle2">Crear Usuarios</Typography>
         </Button>
-        <ModalFormCreateUsers handleClose={handleClose} open={openModalCreate} />
+        <ModalFormCreateUsers handleClose={handleClose} open={openModalCreate} setLoader={setLoader} setTrigger={setTrigger} trigger/>
         <TableAdmin rows={users} columns={columns} limit={5}></TableAdmin>
-        <ModalFormUpdateUsers user={userEdit} handleClose={handleCloseEdit} open={openEdit} />
+        <ModalFormUpdateUsers user={userEdit} handleClose={handleCloseEdit} open={openEdit} setLoader={setLoader} setTrigger={setTrigger} trigger />
       </Box>
     </div>
   );

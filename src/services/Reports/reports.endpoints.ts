@@ -6,7 +6,8 @@ export const REPORTS_API_ENDPOINTS = (id: number = 0) => {
       POST: `${resourse}`,
       UPDATE_STATUS: `${resourse}/${id}/status`,
       GET_BY_TOPIC: `${resourse}/topic/${id}`,
+      DELETE: `${resourse}/${id}`,
     };
   };
 
-  export type TEndpointKeys = 'GET_ALL' | 'GET_SUMMARY' | 'POST' | 'UPDATE_STATUS' | 'GET_BY_TOPIC';
+  export type TEndpointKeys = 'GET_ALL' | 'GET_SUMMARY' | 'POST' | 'UPDATE_STATUS' | 'GET_BY_TOPIC' | 'DELETE';

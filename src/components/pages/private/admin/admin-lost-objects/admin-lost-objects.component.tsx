@@ -12,6 +12,7 @@ export function AdminLostObjects() {
   const [loader, setLoader] = useState(false)
   const [trigger, setTrigger] = useState(false)
 
+
   const deleteLostObject = async(id:number) => {
     setLoader(true)
     try {

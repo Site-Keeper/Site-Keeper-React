@@ -31,4 +31,9 @@ export class RoutinesService {
         const endpoint = getEnpoint("UPDATE", id);
         return await axiosNestInstance.patch<ICreateRoutineResp>(endpoint, req).then(response => response.data);
     };
+
+    static delete = async ( id: number): Promise<ICreateRoutineResp> => {
+        const endpoint = getEnpoint("DELETE", id);
+        return await axiosNestInstance.delete<ICreateRoutineResp>(endpoint).then(response => response.data);
+    };
 }

@@ -30,7 +30,7 @@ export default function RoutineColumn({ task, day, colorMap }: IProp) {
       </Typography>
       <br />
       <Typography variant="body2">
-        {`Espacio: ${task.spaceName}`}
+        {`${task.description}`}
       </Typography>
     </Paper>
   );
