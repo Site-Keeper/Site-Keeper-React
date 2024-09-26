@@ -1,6 +1,6 @@
 import { axiosJavaInstance, axiosJavaInstanceImage} from "../../axios.config";
 import { ISpace } from "../../models/interfaces";
-import { ICreateSpace } from "../../models/services/spaces.interfaces";
+import { ICreateSpace, IUpdateSpace } from "../../models/services/spaces.interfaces";
 import { SPACES_API_ENDPOINTS, TEndpointKeys } from "./spaces.endpoints";
 
 const getEnpoint = (method: TEndpointKeys, id?: string): string => {
@@ -23,8 +23,8 @@ export class SpacesService {
         return await axiosJavaInstanceImage.post<ISpace>(endpoint, req).then(response => response.data)
     }
 
-    static update = async(req: ICreateSpace): Promise<ISpace> => {
-        const endpoint = getEnpoint('PUT')
+    static update = async(req: IUpdateSpace, id: string): Promise<ISpace> => {
+        const endpoint = getEnpoint('PUT', id)
         return await axiosJavaInstanceImage.put<ISpace>(endpoint, req).then(response => response.data)
     }
 

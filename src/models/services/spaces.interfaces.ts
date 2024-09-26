@@ -15,3 +15,10 @@ export interface ICreateSpace {
   description : string
   image : File
 }
+
+export interface IUpdateSpace {
+  name: string
+  location : string
+  description : string
+  image? : File
+}
