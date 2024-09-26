@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -6,11 +6,27 @@ import { useEffect, useState } from "react";
 import { LostObjectsService } from "../../../../../services/lostObjects/lost-objects.service";
 import { ILostObject } from "../../../../../models/interfaces/lost-object.interface";
 import { Loader } from "../../../../utilities/components/loader.utility";
+import { AddCircleOutline } from "@mui/icons-material";
+import { ModalFormCreateObjectWithSpaces } from "./components/create-lost-objects-form.components";
+import { ModalFormUpdateLostObject } from "./components/update-lost-objects-form.component";
 
 export function AdminLostObjects() {
   const [ lostObjects, setLostObjects ] = useState<ILostObject[]>([])
+  const [ lostObject, setLostObject] = useState<ILostObject>({} as ILostObject)
   const [loader, setLoader] = useState(false)
   const [trigger, setTrigger] = useState(false)
+  const [selectedId, setSelectedId] = useState<number>(0);
+  const [openCreate,  setOpenCreate] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
+  const handleCloseUpdate = () => setOpenUpdate(false);
+
+  const handleOpenUpdate = (id: number) => {
+    setSelectedId(id);
+    setLostObject(lostObjects.find((lostObject) => lostObject.id === id) as ILostObject);
+    setOpenUpdate(true);
+  }
 
 
   const deleteLostObject = async(id:number) => {
@@ -60,7 +76,8 @@ export function AdminLostObjects() {
               ":hover": { backgroundColor: "#3269C2" },
             }}
             key={`edit-${value.id}`}
-            aria-label="delete"
+            aria-label="edit"
+            onClick={() => handleOpenUpdate(value.id)}
           >
             <EditIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -111,7 +128,23 @@ export function AdminLostObjects() {
           borderRadius: "15px",
         }}
       >
+      <Button
+        variant="contained"
+        onClick={handleOpenCreate}
+        sx={{
+          height: "40px",
+          width: "220px",
+          backgroundColor: "success.main",
+          borderRadius: "50px",
+          gap: '10px'
+        }}
+      >
+        <AddCircleOutline sx={{ width: '25px', height: '25px' }} />
+        <Typography variant="subtitle2">Crear Objeto</Typography>
+      </Button>
         <TableAdmin rows={lostObjects} columns={columns} limit={5}></TableAdmin>
+          <ModalFormCreateObjectWithSpaces open={openCreate} handleClose={handleCloseCreate} />
+          <ModalFormUpdateLostObject handleClose={handleCloseUpdate} open={openUpdate} object={lostObject} id={selectedId}/>
       </Box>
     </div>
   );

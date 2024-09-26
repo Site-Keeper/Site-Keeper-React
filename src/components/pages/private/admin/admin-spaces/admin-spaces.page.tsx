@@ -9,16 +9,20 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Column, TableAdmin } from "../../../../utilities/components/table/table-admin.component";
 import { ModalMoreInformationSpaces } from "./components/modal-more-information-spaces.component";
 import { ModalFormCreateSpaces } from "./components/create-spaces-form.component";
+import { ModalFormUpdateSpaces } from "./components/update-spaces-form.component";
 import { Loader } from "../../../../utilities/components/loader.utility";
 
 export function AdminSpaces() {
     const [spaces, setSpaces] = useState<ISpace[]>([])
+    const [space, setSpace] = useState<ISpace>({} as ISpace)
     const [openInfo, setOpenInfo] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(0);
     const [objects, setObjects] = useState<IObject[]>([])
     const [openModalCreate, setOpenModalCreate] = useState(false);
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const handleOpenCreate = () => setOpenModalCreate(true);
     const handleCloseCreate = () => setOpenModalCreate(false);
+    const handleCloseUpdate = () => setOpenModalUpdate(false);
     const [loader, setLoader] = useState(false)
     const [trigger, setTrigger] = useState(false)
     async function getAllSpaces() {
@@ -45,7 +49,7 @@ export function AdminSpaces() {
   
     useEffect(() => {
       getAllSpaces()
-    }, [trigger])
+    }, [trigger]);
   
     const handleOpen = (id: number, object: IObject[]) => {
       setSelectedId(id); // Establece el ID seleccionado
@@ -53,6 +57,12 @@ export function AdminSpaces() {
       setObjects(object)
     };
     const handleClose = () => setOpenInfo(false);
+    
+    const handleOpenUpdate = (id: number) => {
+      setSelectedId(id);
+      setSpace(spaces.find((space) => space.id === id) as ISpace);
+      setOpenModalUpdate(true);
+    }
   
     const columns : Column<ISpace>[] = [
       { id: "name", label: "name", width: "15%", filter: "String" },
@@ -96,6 +106,7 @@ export function AdminSpaces() {
               }}
               key={`edit-${value.id}`}
               aria-label="edit"
+              onClick={() => handleOpenUpdate(value.id)}
             >
               <EditIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -148,6 +159,7 @@ export function AdminSpaces() {
             <Typography variant="subtitle2">Crear Espacio</Typography>
           </Button>
           <ModalFormCreateSpaces handleClose={handleCloseCreate} open={openModalCreate} setLoader={setLoader} setTrigger={setTrigger} trigger />
+          <ModalFormUpdateSpaces handleClose={handleCloseUpdate} open={openModalUpdate} space={space} id={selectedId}/>
           <TableAdmin rows={spaces} columns={columns} limit={5}></TableAdmin>
           <ModalMoreInformationSpaces  id={selectedId} open={openInfo} handleClose={handleClose} objects={objects}/>
         </Box>

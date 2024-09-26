@@ -45,6 +45,7 @@ export const ModalFormCreateReports = ({ handleClose, open, id, setId,  spacesNa
             spaceId: id,
             image: imageFile? imageFile : undefined,
         };
+        console.log(datareq);
         await ReportsService.create(datareq);
         handleClose();
     };

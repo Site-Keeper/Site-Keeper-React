@@ -21,3 +21,10 @@ export interface ICreateLostObjectReq {
     spaceId : number
     image : File
 }
+
+export interface IUpdateLostObject {
+    name : string
+    description : string
+    spaceId : number
+    image? : File
+}

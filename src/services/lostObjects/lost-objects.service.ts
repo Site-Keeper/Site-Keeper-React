@@ -1,6 +1,6 @@
 import { axiosJavaInstance, axiosJavaInstanceImage } from "../../axios.config";
 
-import { ICreateLostObjectReq, IGetLostObjectSummaryResp } from "../../models/services/lost-object.interfaces";
+import { ICreateLostObjectReq, IGetLostObjectSummaryResp, IUpdateLostObject } from "../../models/services/lost-object.interfaces";
 
 import { ILostObject } from "../../models/interfaces/lost-object.interface";
 
@@ -25,6 +25,11 @@ export class LostObjectsService {
         const endpoint = getEnpoint("CREATE");
         return await axiosJavaInstanceImage.post<ILostObject>(endpoint,req).then(response => response.data);
     };
+
+    static update = async(req: IUpdateLostObject, id: string): Promise<ILostObject> => {
+        const endpoint = getEnpoint('PUT', id)
+        return await axiosJavaInstanceImage.put<ILostObject>(endpoint, req).then(response => response.data)
+    }
 
     static delete = async (req: {id: string})=> {
         const endpoint = getEnpoint("DELETE", req.id);
